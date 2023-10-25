@@ -10,6 +10,7 @@ from langchain.schema.messages import SystemMessage
 from langchain.schema import BaseOutputParser
 from langchain.prompts.chat import ChatPromptTemplate
 from langchain.prompts import HumanMessagePromptTemplate
+from langchain.chains.api.prompt import API_RESPONSE_PROMPT, API_URL_PROMPT
 
 from langchain.agents import create_json_agent, AgentExecutor
 from langchain.agents.agent_toolkits import JsonToolkit
@@ -84,11 +85,17 @@ class JSONOutputParser(BaseOutputParser):
 
 #print(chat_result)
 headers = {"Content-Type": "application/json"}
-chain = APIChain.from_llm_and_api_docs(llm, primo_api_docs, headers=headers, verbose=True)
+# https://github.com/langchain-ai/langchain/blob/3d74d5e24dd62bb3878fe34de5f9eefa6d1d26c7/libs/langchain/langchain/chains/api/prompt.py#L4
+get_request_chain = LLMChain(llm=llm, prompt=API_URL_PROMPT)
+print(API_URL_PROMPT)
+print(get_request_chain)
+#chain = get_request_chain | JsonToolkit() | TextRequestsWrapper(headers=headers, verbose=True)
+#chain = APIChain.from_llm_and_api_docs(llm, primo_api_docs, headers=headers, verbose=True)
+human_input_prefix = "Generate a GET request to search the Primo API to find books to answer the human's input question: "
+human_input_text = "I'm looking for books to help with my research on bio engineering. I want books that are available onsite in the library."
+human_input_question = "{} {}".format(human_input_prefix, human_input_text)
 
-human_input_question = """
-I'm looking for books to help with my research on bio engineering. I want books that are available onsite in the library.
-"""
 #api_result = chain.run("Generate a GET request to search the Primo API to find books about dogs.")
-api_result = chain.invoke("Generate a GET request to search the Primo API to find books to answer the human's input question. {human_input_question}".format(human_input_question=human_input_question))
+#api_result = chain.invoke("Generate a GET request to search the Primo API to find books to answer the human's input question. {human_input_question}".format(human_input_question=human_input_question))
+api_result = get_request_chain.run(question=human_input_question, api_docs=primo_api_docs)
 print(api_result)
