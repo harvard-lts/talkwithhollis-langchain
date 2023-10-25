@@ -55,10 +55,11 @@ primo_api_docs = f"""
     q=title,contains,pop music,AND;sub,contains,korean
   lang=<language> (language ISO 639-1 language code e.g. 'sp' or 'en' should be automatically deteted based on human input question)\n\n
   Hard-coded parameters (must equal these exact values):\n\n
+  facet=tlevel,include,available\n\n
   scope=default_scope\n\n
   tab=books\n\n
   vid=HVD2\n\n
-  limit=10\n\n
+  limit=1\n\n
   offset=0\n\n
   API Key:\n\n
   apikey={primo_api_key}\n\n
@@ -84,6 +85,9 @@ class JSONOutputParser(BaseOutputParser):
 headers = {"Content-Type": "application/json"}
 chain = APIChain.from_llm_and_api_docs(llm, primo_api_docs, headers=headers, verbose=True)
 
+human_input_question = """
+I'm looking for books to help with my research on bio engineering.
+"""
 #api_result = chain.run("Generate a GET request to search the Primo API to find books about dogs.")
-api_result = chain.invoke("Generate a GET request to search the Primo API to find books about dogs and cats.")
+api_result = chain.invoke("Generate a GET request to search the Primo API to find books to answer the human's input question. {human_input_question}".format(human_input_question=human_input_question))
 print(api_result)
