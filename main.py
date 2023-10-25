@@ -92,5 +92,5 @@ chain = APIChain.from_llm_and_api_docs(llm, primo_api_docs, headers=headers, ver
     llm=OpenAI(temperature=0), toolkit=json_toolkit, verbose=True
 )
 #api_result = chain.run("Generate a GET request to search the Primo API to find books about dogs.")
-api_result = chain.invoke("Generate a GET request to search the Primo API to find books about dogs.")
+api_result = chain.invoke("Generate a GET request to search the Primo API to find books about dogs and cats.")
 print(api_result)
