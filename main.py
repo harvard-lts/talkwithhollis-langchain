@@ -80,17 +80,10 @@ class JSONOutputParser(BaseOutputParser):
 #chain = chat_template | chat_model | JSONOutputParser()
 #chat_result = chain.invoke({"subject": "dogs"})
 
-r = requests.get('https://developers.exlibrisgroup.com/wp-content/uploads/primo/openapi/primoSearch.json')
-primo_api_spec = r.json()
-
-json_spec = JsonSpec(dict_=primo_api_spec, max_value_length=4000)
-json_toolkit = JsonToolkit(spec=json_spec)
-
 #print(chat_result)
 headers = {"Content-Type": "application/json"}
-chain = APIChain.from_llm_and_api_docs(llm, primo_api_docs, headers=headers, verbose=True) | create_json_agent(
-    llm=OpenAI(temperature=0), toolkit=json_toolkit, verbose=True
-)
+chain = APIChain.from_llm_and_api_docs(llm, primo_api_docs, headers=headers, verbose=True)
+
 #api_result = chain.run("Generate a GET request to search the Primo API to find books about dogs.")
 api_result = chain.invoke("Generate a GET request to search the Primo API to find books about dogs and cats.")
 print(api_result)
