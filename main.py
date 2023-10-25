@@ -54,8 +54,9 @@ primo_api_docs = f"""
     In the following example, the system searches for all records in which the title field contains the words pop and music and the subject field contains the word korean:
     q=title,contains,pop music,AND;sub,contains,korean
   lang=<language> (language ISO 639-1 language code e.g. 'sp' or 'en' should be automatically deteted based on human input question)\n\n
+  (facet should be generated based on human input question. please always set the 'tlevel' facet. the default 'tlevel' value should be 'facet=tlevel,include,available' to return books that are available onsite OR in storage. if they want books that are available on-site only, use this facet query: 'facet=tlevel,include,available_onsite' \n\n
+  facet=tlevel,include,<available or available_onsite>
   Hard-coded parameters (must equal these exact values):\n\n
-  facet=tlevel,include,available\n\n
   scope=default_scope\n\n
   tab=books\n\n
   vid=HVD2\n\n
@@ -86,7 +87,7 @@ headers = {"Content-Type": "application/json"}
 chain = APIChain.from_llm_and_api_docs(llm, primo_api_docs, headers=headers, verbose=True)
 
 human_input_question = """
-I'm looking for books to help with my research on bio engineering.
+I'm looking for books to help with my research on bio engineering. I want books that are available onsite in the library.
 """
 #api_result = chain.run("Generate a GET request to search the Primo API to find books about dogs.")
 api_result = chain.invoke("Generate a GET request to search the Primo API to find books to answer the human's input question. {human_input_question}".format(human_input_question=human_input_question))
