@@ -1,0 +1,301 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.0",
+    "title": "Ex Libris APIs",
+    "description": "For more information on how to use these APIs, including how to create an API key required for authentication, see [Alma REST APIs](https://developers.exlibrisgroup.com/alma/apis).",
+    "termsOfService": "https://developers.exlibrisgroup.com/about/terms"
+  },
+  "externalDocs": {
+    "description": "Detailed documentation on these APIs at the Ex Libris Developer Network.",
+    "url": "https://developers.exlibrisgroup.com/alma/apis/"
+  },
+  "servers": [
+    {
+      "url": "https://api-eu.hosted.exlibrisgroup.com"
+    },
+    {
+      "url": "https://api-na.hosted.exlibrisgroup.com"
+    },
+    {
+      "url": "https://api-ap.hosted.exlibrisgroup.com"
+    },
+    {
+      "url": "https://api-cn.hosted.exlibrisgroup.com.cn"
+    },
+    {
+      "url": "https://api-ca.hosted.exlibrisgroup.com"
+    }
+  ],
+  "tags": [],
+  "paths": {
+    "/primo/v1/search": {
+      "get": {
+        "tags": [
+          ""
+        ],
+        "description": "\n\nThis service implements Primo's main search service and returns a list of results based on the specified search query and also information about the total results number, the list of the facets for all exists results etc.).\n\n\n\nNote: Hosted customers can use this API by specifying the API-key, but on-premises customers must specify an institution code and add a valid guest JWT to the header of the request. \n\nTo get a valid guest JWT, please use the Guest JWT Creator Rest API (see [JWT Rest API](https://developers.exlibrisgroup.com/primo/apis/jwt)).\n\n\n\n\n\nBasic URL example for hosted customers:\n\n<api-gateway-url>/primo/v1/search?vid=Auto1&tab=default_tab&scope=default_scope&q=any,contains,water&apikey=<apikey>\n\n\n\n\n\nBasic URL example for on-premises customers:\n\n<base-local-url>/primo_library/libweb/webservices/rest/primo-explore/v1/pnxs?vid=<view id>&tab=<tab>&scope=<scope>&q=any,contains,water&inst=<the instisution code>\n\n\n\n\n\nThe API key (which is required for hosted customers only) is used to access this API. For information on getting the API key, see [Getting Started with Primo REST APIs](https://developers.exlibrisgroup.com/primo/apis)\n\n\n\nNote: The Primo search API has a hardcoded offset limitation parameter of 5000.",
+        "summary": "Primo Search",
+        "operationId": "get/primo/v1/search",
+        "parameters": [
+          {
+            "name": "vid",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The view ID. \n\nExample: vid=Auto1."
+          },
+          {
+            "name": "tab",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The name of the tab.\n\nExample: tab=default_tab."
+          },
+          {
+            "name": "scope",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The scope name.\n\nExample: scope=default_scope."
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The query string that you want to use to perform a search. \n\nThe query string uses the following format:\n\n    q=<field_1>,<precision_1>,<value_1>[,<operator_1>;<field_n>,<precision_n>,<value_n>...]\n\n*    field - The data field that you want to search within. The following fields are valid: any (for any field), title, creator (for author), sub (for subject), and usertag (for tag).\n\n*    precision - The precision operation that you want to apply to the field. The following precision operators are valid: exact (value must match the data in the field exactly), begins_with (the value must be found at the beginning of the field), and contains (the value must be found anywhere in the field).\n\n*    value - The search terms, which can be a word, phrase, or exact phrase (group of words enclosed by quotes), and can include the following logical operators: AND, OR, and NOT. For more information regarding search terms, see [Performing Basic Searches](https://knowledge.exlibrisgroup.com/Primo/Product_Documentation/New_Primo_User_Interface/End_User_Help/010Performing_Basic_Searches)\n\n*    field - The data field that you want to search within. The following fields are valid: any (for any field), title, creator (for author), sub (for subject), and usertag (for tag).\n\n*    precision - The precision operation that you want to apply to the field. The following precision operators are valid: exact (value must match the data in the field exactly), begins_with (the value must be found at the beginning of the field), and contains (the value must be found anywhere in the field).\n\n*    value - The search terms, which can be a word, phrase, or exact phrase (group of words enclosed by quotes), and can include the following logical operators: AND, OR, and NOT. For more information regarding search terms, see [Performing Basic Searches](https://knowledge.exlibrisgroup.com/Primo/Product_Documentation/New_Primo_User_Interface/End_User_Help/010Performing_Basic_Searches).\n\n*    operator - When specifying multiple search fields for advanced searches, this parameter applies the following logical operations between fields: AND (specified values must be found in both fields), OR (specified values must be found in at least one of the fields), NOT (the specified value of the next field must not be found). If no operator is specified, the system defaults to AND.\n\n\n\nNote: Multiple fields are delimited by a semicolon.\n\nLimitation: The value must not include a semicolon character.\n\n\n\nIn the following example, the system searches for all records in which the word home is found anywhere within the record's title:\n\n    q=title,contains,home\n\n\n\nIn the following example, the system searches for all records in which the title field contains the words pop and music and the subject field contains the word korean:\n\n    q=title,contains,pop music,AND;sub,contains,korean"
+          },
+          {
+            "name": "qInclude",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "default": "",
+              "type": "string"
+            },
+            "description": "Filters the results by the facets that you want to include. The logical AND operation is applied between the facets.\n\nThis filter uses the following format:\n\n    qInclude=<facet_category_1>,exact,<facet_name_1>[|,|<facet_category_n>,exact,<facet_name_n>...]\n\n\n\nNote: Multiple categories are delimited by the following string of characters: |,|\n\n\n\n*    facet_category - The facet category that you want to include. The following categories are valid: facet_rtype (Resources Type), facet_topic (Subject), facet_creator (Author), facet_tlevel (Availability), facet_domain (Collection), facet_library (library name), facet_lang (language), facet_lcc (LCC classification).\n\n*    facet_name - The name of the facet to include (such as Journals if facet_rtype was selected).\n\n* For retrieving cited/citing references, you may use: qInclude=[facet_citing/facet_citedby],exact,cdi_[citation key]. where the [citation key] is in the format: FETCH-.... and is taken from the 'citedby'/'cites'/'citing' fields, in a response for search API query that includes results with citations.\n\n"
+          },
+          {
+            "name": "qExclude",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "default": "",
+              "type": "string"
+            },
+            "description": "Filters the results by the facets that you want to exclude. The logical AND operation is applied between the facets.\n\nThis parameter uses the following format:\n\n    qExclude=<facet_category_1>,exact,<facet_name_1>[|,|<facet_category_n>,exact,<facet_name_n>...]\n\n\n\nNote: Multiple categories are delimited by the following string of characters: |,|\n\n\n\n*    facet_category - The facet category that you want to exclude. The following categories are valid: facet_rtype (Resources Type), facet_topic (Subject), facet_creator (Author), facet_tlevel (Availability), facet_domain (Collection), facet_library (library name), facet_lang (language), facet_lcc (LCC classification)\n\n*    facet_name - The name of the facet to exclude (such as Journals if facet_rtype was selected)."
+          },
+          {
+            "name": "multiFacets",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "default": "",
+              "type": "string"
+            },
+            "description": "Filter the results by including and excluding facets. The main difference between this parameter and the qInclude and qExclude parameters is that this parameter uses OR logic between facet values and AND logic between facet categories. This parameter uses the following format:multiFacets=<facet_category_1>,<facet_operator_1>,<facet_name_1>[|,|<facet_category_n>,<facet_operator_n>,<facet_name_n>...]\n\n\n\n*    facet_category - The facet category that you want to include or exclude. The following categories are valid: facet_rtype (Resources Type), facet_topic (Subject), facet_creator (Author), facet_tlevel (Availability), facet_domain (Collection), facet_library (library name), facet_lang (language), facet_lcc (LCC classification)\n\n*    facet_operator - The operator to apply to the facet. The valid values are include or exclude.\n\n*    facet_name - The name of the facet to exclude (such as Journals if facet_rtype was selected).\n\n\n\nNote: Multiple categories are delimited by the following string of characters: |,|\n\n\n\nExample: multiFacets=facet_rtype,include,books|,|facet_lang,exclude,spa"
+          },
+          {
+            "name": "journals",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "default": "",
+              "type": "string"
+            },
+            "description": "The query string used to search specifically for journals. (Relevant for Alma customers only). This parameter uses the following format:\n\njournals=<operator>,<value>\n\n\n\n*    type - The type of search to perform. The valid values are any (search using free text or ISSN) or letter (search using the first letter of the journal).\n\n*    value - Depending on the search type, the search string can be free text, ISSN, or a letter.\n\n\n\nThe following example returns all journals that have the word nature in any of its data fields: journals=any,natureThe following example returns all journals that begin with the letter N: journals=letter,N"
+          },
+          {
+            "name": "databases",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "default": "",
+              "type": "string"
+            },
+            "description": "The query string used to search specifically for databases. (Relevant for Alma customers only). This parameter uses the following format:\n\ndatabases=<operator>,<value>\n\n\n\n*    type - The type of search to perform. The valid values are any (search using free text or ISSN) or letter (search using the first letter of the journal - this is only supported in classic Primo and not in Primo VE).\n\n*    value - Depending on the search type, the search string can be free text, ISSN, or a letter.\n\nThe following example returns all databases that have the word law in any of its data fields: journals=any,law\n\nThe following example returns all databases that begin with the letter L: journals=letter,L"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "default": "eng",
+              "type": "string"
+            },
+            "description": "The Language. \n\nFor Primo - use the locale format language. \n\nFor example: lang=en_US. \n\nFor Primo VE - use the two letters format language. \n\nFor example: lang=en."
+          },
+          {
+            "name": "fromDate",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "default": "",
+              "type": "string"
+            },
+            "description": "This parameter gives results which updated in the library data base from certain date. . \n\nThe following date example represent 12.1.2018 15:21:28 Example: fromDate=20180128152128."
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "default": "0",
+              "type": "integer"
+            },
+            "description": "The offset of the results from which to start displaying the results.\n\n\n\nThe following example skips the first bulk and displays the remaining results up to the specified limit: offset=10.\n\n\n\nThe recomended maximim offset is 2000."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "default": "10",
+              "type": "integer"
+            },
+            "description": "The maximum number of results in the response\n\nExample: limit=5.\n\nThe recomended maximim limit is 50."
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "default": "rank",
+              "type": "string"
+            },
+            "description": "The type of sort to perform on the results, which can be based on relevance or a specific field: rank, title, author, or date.\n\nExample: sort=rank"
+          },
+          {
+            "name": "personalization",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "default": "",
+              "type": "string"
+            },
+            "description": "The disciplines to apply to your search query. (Relevant for Primo Central searches only).When applied, records marked with the specified disciplines are boosted in the results.\n\nThe valid disciplines are defined in the Personalize Your Results Disciplines mapping table in the Back Office. This parameter uses the following format: \n\n    personalization=<discipline_1>[;<discipline_2>...;<discipline_5]\n\n\n\nNote: Multiple disciplines are delimited by a semicolon. A maximum of five disciplines are supported. You cannot specify a discipline and its sub-discipline, but you can specify either the discipline or up to five of its sub-disciplines.\n\n\n\nExample: personalization=biology;chemistry;medicine"
+          },
+          {
+            "name": "pcAvailability",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "default": "true",
+              "type": "boolean"
+            },
+            "description": "Indicates whether PC records that do not have full text are displayed in the results. The valid values are true (display all records even if they do not have full text) or false (display full text records only). The default value for Primo VE is false.\n\nExample: pcAvailability=false."
+          },
+          {
+            "name": "getMore",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "default": "0",
+              "type": "string"
+            },
+            "description": "Relevant for searches in Metalib. \n\nIndicates whether to expand the number of results in Metalib searches. The valid values are 0 (false) or 1 (true).\n\nExample: getMore=0."
+          },
+          {
+            "name": "conVoc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "default": "true",
+              "type": "boolean"
+            },
+            "description": "Indicates whether the controlled vocabulary service is enabled to add synonyms to queries. The valid values are true or false.\n\nExample: conVoc=true."
+          },
+          {
+            "name": "inst",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Institution code, which is required for on-premises (non-hosted) Primo customers only.\n\n\n\nNote: On-premises customers must also add a valid guest JWT to the header of the request. To get a valid guest JWT, To get a valid guest JWT, please use the [Guest JWT Creator Rest API](https://developers.exlibrisgroup.com/primo/apis/jwt)..\n\n\n\nExample: inst=VOLCANO."
+          },
+          {
+            "name": "skipDelivery",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "default": "true",
+              "type": "boolean"
+            },
+            "description": "Indicates whether to skip the delivery call (relevant only for Primo VE). When set to 'true', no delivery will be sent in the response, and the results should be displayed quicker.\n\nExample: skipDelivery=true.\n\n\n\n"
+          },
+          {
+            "name": "disableSplitFacets",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "default": "true",
+              "type": "boolean"
+            },
+            "description": "Indicates whether to retrieve facets or not (relevant only for Primo VE). When set to 'false' the facets won't be retrieved and the results should be displayed quicker.\n\nExample: disableSplitFacets=true.\n\n\n\n"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request\n\n"
+          },
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-Exl-Api-Remaining": {
+                "$ref": "#/components/headers/remaining"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "description": "API key used to authorize requests. Learn about how to create API keys at [Alma REST APIs](https://developers.exlibrisgroup.com/alma/apis/#defining)",
+        "in": "query",
+        "name": "apikey"
+      }
+    },
+    "headers": {
+      "remaining": {
+        "description": "The number of remaining calls according to the [Governance Threshold](https://developers.exlibrisgroup.com/alma/apis/#threshold)",
+        "schema": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

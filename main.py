@@ -41,7 +41,6 @@ async def open_text_file(path):
 async def open_json_file(path):
     with open(path) as json_file:
         json_data = json.load(json_file)
-        print(json_data)
         return json_data
 
 async def process_row(row):
@@ -49,9 +48,9 @@ async def process_row(row):
     return row
 
 async def main():
-    libraries_csv = await open_csv_file('libraries.csv')
-    primo_api_docs = await open_text_file('primo_api_docs.txt')
-    primo_api_schema = await open_json_file('primo_api_schema.json')
+    libraries_csv = await open_csv_file('schemas/libraries.csv')
+    primo_api_docs = await open_text_file('schemas/primo_api_docs.txt')
+    primo_api_schema = await open_json_file('schemas/primo_api_schema.json')
     primo_api_docs = primo_api_docs.replace('primo_api_host', primo_api_host)
     primo_api_docs = primo_api_docs.replace('primo_api_key', primo_api_key)
     primo_api_docs = primo_api_docs.replace('libraries_csv', '{}'.format(libraries_csv))
