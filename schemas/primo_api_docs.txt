@@ -33,7 +33,8 @@ URL Query Parameters (required always set these parameters):\n\n
         * facet_operator - The operator to apply to the facet. The valid values are include or exclude.
         * facet_name - The name of the facet to exclude (such as Journals if facet_rtype was selected).
 
-        Note: Multiple categories are delimited by the following string of characters: |,|
+        Multiple categories are delimited by the following string of characters: |,|
+        Multiple values in the SAME facet category are delimited by a & character.
 
         Example: multiFacets=facet_rtype,include,books|,|facet_lang,exclude,spa
       multiFacets AI instructions for this app
