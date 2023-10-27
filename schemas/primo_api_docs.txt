@@ -1,8 +1,8 @@
 JSON schema: {primo_api_schema}\n\n
+HTML documentation: https://developers.exlibrisgroup.com/primo/apis/docs/primoSearch/R0VUIC9wcmltby92MS9zZWFyY2g=/#queryParameters\n\n
 BASE URL: {primo_api_host}\n\n
 Request: GET /primo/v1/search\n\n
 URL Query Parameters (required always set these parameters):\n\n
-    facet=rtype,include,books\n\n
     scope=default_scope\n\n
     tab=books\n\n
     vid=HVD2\n\n
@@ -10,24 +10,37 @@ URL Query Parameters (required always set these parameters):\n\n
     offset=0\n\n
     apikey={primo_api_key}\n\n
     q should be generated dynamically based on human input question\n\n
-    q=<field_1>,<precision_1>,<value_1>,<operator_1>;<field_n>,<precision_n>,<value_n>,<operator_n>\n\n
-      * field - The data field that you want to search within. The following fields are valid: any (for any field), title, creator (for author), sub (for subject), and usertag (for tag).
-      * precision - The precision operation that you want to apply to the field. The following precision operators are valid: exact (value must match the data in the field exactly), begins_with (the value must be found at the beginning of the field), and contains (the value must be found anywhere in the field).
-      * value - The search terms, which can be a word, phrase, or exact phrase (group of words enclosed by quotes), and can include the following logical operators: AND, OR, and NOT. For more information regarding search terms, see Performing Basic Searches.
-      * operator (Optional) When specifying multiple search fields for advanced searches, this parameter applies the following logical operations between fields: AND (specified values must be found in both fields), OR (specified values must be found in at least one of the fields), NOT (the specified value of the next field must not be found). If no operator is specified, the system defaults to AND.
+      q API documentation from the vendor
+      q=<field_1>,<precision_1>,<value_1>,<operator_1>;<field_n>,<precision_n>,<value_n>,<operator_n>\n\n
+        * field - The data field that you want to search within. The following fields are valid: any (for any field), title, creator (for author), sub (for subject), and usertag (for tag).
+        * precision - The precision operation that you want to apply to the field. The following precision operators are valid: exact (value must match the data in the field exactly), begins_with (the value must be found at the beginning of the field), and contains (the value must be found anywhere in the field).
+        * value - The search terms, which can be a word, phrase, or exact phrase (group of words enclosed by quotes), and can include the following logical operators: AND, OR, and NOT. For more information regarding search terms, see Performing Basic Searches.
+        * operator (Optional) When specifying multiple search fields for advanced searches, this parameter applies the following logical operations between fields: AND (specified values must be found in both fields), OR (specified values must be found in at least one of the fields), NOT (the specified value of the next field must not be found). If no operator is specified, the system defaults to AND.
 
-      Note: Multiple fields are delimited by a semicolon.
-      Limitation: The value must not include a semicolon character.
+        Note: Multiple fields are delimited by a semicolon.
+        Limitation: The value must not include a semicolon character.
 
-      In the following example, the system searches for all records in which the word home is found anywhere within the record's title:
-      q=title,contains,home
+        In the following example, the system searches for all records in which the word home is found anywhere within the record's title:
+        q=title,contains,home
 
-      In the following example, the system searches for all records in which the title field contains the words pop and music and the subject field contains the word korean:
-      q=title,contains,pop music,AND;sub,contains,korean
-    facet 'language' ISO 639-2 language codes should be generated automatically based on human input question. always set english. add other languages if the user specifically asks for results in certain languages. also, add any additional languages that are detected in the human input question. e.g. if a user asks in spanish for books about italy, return english, spanish, and italian 'facet=lang,include,eng&facet=lang,include,spa&facet=lang,include,ita'\n\n
-    lang=<language>\n\n
-    facet 'tlevel' should be generated based on human input question. the default 'tlevel' value should be 'facet=tlevel,include,available' to return books that are available onsite OR in storage. if they want books that are available on-site only, use this facet query 'facet=tlevel,include,available_onsite'\n\n
-    facet=tlevel,include,<available or available_onsite>\n\n
-    facet 'library' should be generated using Library Codes from the csv file in the "Libraries CSV file" section of this documentation. please create a new facet for each library code, e.g. 'facet=library,include,<Library Code 1>&facet=library,include,<Library Code 2>&&facet=library,include,<Library Code n>'. if the user does not mention any specific libraries, please include all library codes in the "libraries_csv" csv file. if the user mentions that they want results from certain libraries, please create an individual facet for EACH library that is mentioned in the question. please use both the "Display name in Primo API" and "How users may refer to it" in the "libraries_csv" csv file to determine what library codes to use based on the human input question. for example, if they ask "I want books in Lamont, Baker, or Kennedy" there should be three facets, one for Lamont, one for Baker, and one for Kennedy e.g. 'facet=library,include,LAM&facet=library,include,KSG&facet=library,include,BAK'\n\n
-    facet=library,include,<a library code in "Libraries CSV file">
+        In the following example, the system searches for all records in which the title field contains the words pop and music and the subject field contains the word korean:
+        q=title,contains,pop music,AND;sub,contains,korean
+    multiFacets should be generated dynamically based on human input question\n\n
+      multiFacets API documentation from the vendor
+      multiFacets	xs:string	Optional.	Filter the results by including and excluding facets. The multiFacets parameter uses OR logic between facet values and AND logic between facet categories. This parameter uses the following format: 'multiFacets=<facet_category_1>,<facet_operator_1>,<facet_name_1>|,|<facet_category_n>,<facet_operator_n>,<facet_name_n>'\n\n
+
+        * facet_category - The facet category that you want to include or exclude. The following categories are valid: facet_rtype (Resources Type), facet_topic (Subject), facet_creator (Author), facet_tlevel (Availability), facet_domain (Collection), facet_library (library name), facet_lang (language), facet_lcc (LCC classification)
+        * facet_operator - The operator to apply to the facet. The valid values are include or exclude.
+        * facet_name - The name of the facet to exclude (such as Journals if facet_rtype was selected).
+
+        Note: Multiple categories are delimited by the following string of characters: |,|
+
+        Example: multiFacets=facet_rtype,include,books|,|facet_lang,exclude,spa
+      multiFacets AI instructions for this app
+        facet_rtype should be set to include books only\n\n
+        facet_rtype,include,books\n\n
+        facet_library should be generated using Library Codes from the csv file in the "Libraries CSV file" section of this documentation. please create a facet for each library code in the list. if the user does not mention any specific libraries, please include all library codes in the "libraries_csv" csv file. if the user mentions that they want results from certain libraries, please create a facet for each library mentioned in the question. please use both the "Display name in Primo API" and "How users may refer to it" in the "libraries_csv" csv file to determine what library codes to use based on the human input question. for example, if they ask "I want books in Lamont, Baker, or Kennedy" there should be three facets, one for Lamont, one for Baker, and one for Kennedy'\n\n
+        facet_library,include,<a library code in "Libraries CSV file">
+        facet_tlevel should be generated based on human input question. the default name should be 'facet_rtype,include,available' to return books that are available onsite OR in storage. if they want books that are available on-site at the libraries only, use this facet query 'facet_rtype,include,available_onsite'\n\n
+        facet_tlevel,include,<available or available_onsite>\n\n
 Libraries CSV file: {libraries_csv}\n\n

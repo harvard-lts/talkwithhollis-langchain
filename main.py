@@ -11,13 +11,11 @@ from langchain.schema import BaseOutputParser
 from langchain.prompts.chat import ChatPromptTemplate
 from langchain.prompts import HumanMessagePromptTemplate
 from langchain.chains.api.prompt import API_RESPONSE_PROMPT, API_URL_PROMPT
-
 from langchain.agents import create_json_agent, AgentExecutor
 from langchain.agents.agent_toolkits import JsonToolkit
 from langchain.chains import LLMChain
 from langchain.requests import TextRequestsWrapper
 from langchain.tools.json.tool import JsonSpec
-
 llm = OpenAI(temperature=0)
 chat_model = ChatOpenAI()
 openai_api_key = os.environ.get("OPENAI_API_KEY")
@@ -64,6 +62,8 @@ async def main(human_input_text):
     get_request_human_input_prefix = "Generate a GET request to search the Primo API to find books to answer the human's input question: "
     get_request_human_input_question = "{} {}".format(get_request_human_input_prefix, human_input_text)
     primo_api_request = get_request_chain.run(question=get_request_human_input_question, api_docs=primo_api_docs)
+    primo_api_request = primo_api_request.replace("|", "%7C")
+    # Replace api key for printing
     print(primo_api_request.replace(primo_api_key, "PRIMO_API_KEY"))
 
     """ Step 2: Write logic to filter, reduce, and prioritize data from HOLLIS using python methods and LLMs"""
