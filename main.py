@@ -54,7 +54,6 @@ async def main():
     primo_api_docs = primo_api_docs.replace('primo_api_host', primo_api_host)
     primo_api_docs = primo_api_docs.replace('primo_api_key', primo_api_key)
     primo_api_docs = primo_api_docs.replace('libraries_csv', '{}'.format(libraries_csv))
-    print(primo_api_docs)
 
     # https://developers.exlibrisgroup.com/primo/apis/search/
     # https://developers.exlibrisgroup.com/wp-content/uploads/primo/openapi/primoSearch.json
@@ -64,7 +63,7 @@ async def main():
     get_request_chain = LLMChain(llm=llm, prompt=API_URL_PROMPT)
 
     human_input_prefix = "Generate a GET request to search the Primo API to find books to answer the human's input question: "
-    human_input_text = "I'm looking for books to help with my research on bio engineering. I want books that are available onsite."
+    human_input_text = "I'm looking for books to help with my research on bio engineering. I want books that are available onsite at Baker, Fung, and Kennedy."
     human_input_text_it = "Sto cercando libri che mi aiutino nelle mie ricerche sulla bioingegneria. Voglio libri disponibili in sede nella biblioteca."
     human_input_question = "{} {}".format(human_input_prefix, human_input_text)
 
