@@ -47,7 +47,7 @@ async def process_row(row):
     # Perform some processing on each row asynchronously
     return row
 
-async def main():
+async def main(human_input_text):
     libraries_csv = await open_csv_file('schemas/libraries.csv')
     primo_api_docs = await open_text_file('schemas/primo_api_docs.txt')
     primo_api_schema = await open_json_file('schemas/primo_api_schema.json')
@@ -61,19 +61,14 @@ async def main():
     headers = {"Content-Type": "application/json"}
     # https://github.com/langchain-ai/langchain/blob/3d74d5e24dd62bb3878fe34de5f9eefa6d1d26c7/libs/langchain/langchain/chains/api/prompt.py#L4
     get_request_chain = LLMChain(llm=llm, prompt=API_URL_PROMPT)
-
-    human_input_prefix = "Generate a GET request to search the Primo API to find books to answer the human's input question: "
-    human_input_text = "I'm looking for books to help with my research on bio engineering. I want books that are available onsite at Baker, Fung, and Kennedy."
-    human_input_text_it = "Sto cercando libri che mi aiutino nelle mie ricerche sulla bioingegneria. Voglio libri disponibili in sede nella biblioteca."
-    human_input_question = "{} {}".format(human_input_prefix, human_input_text)
-
-    #api_result = chain.run("Generate a GET request to search the Primo API to find books about dogs.")
-    #api_result = chain.invoke("Generate a GET request to search the Primo API to find books to answer the human's input question. {human_input_question}".format(human_input_question=human_input_question))
-    primo_api_request = get_request_chain.run(question=human_input_question, api_docs=primo_api_docs)
+    get_request_human_input_prefix = "Generate a GET request to search the Primo API to find books to answer the human's input question: "
+    get_request_human_input_question = "{} {}".format(get_request_human_input_prefix, human_input_text)
+    primo_api_request = get_request_chain.run(question=get_request_human_input_question, api_docs=primo_api_docs)
     print(primo_api_request.replace(primo_api_key, "PRIMO_API_KEY"))
 
-    """ Step 2: Write logic to filter, reduce, and prioritize data from HOLLIS """
-
+    """ Step 2: Write logic to filter, reduce, and prioritize data from HOLLIS using python methods and LLMs"""
+    # Step 2A: Reduce the data from the API response to only the data that is relevant to the human's question
+    
     """ Step 3: Context injection into the chat prompt """
 
     system_content = """You are a friendly assistant who helps to find information about the locations and availability of books in a network of libraries.
@@ -98,4 +93,5 @@ async def main():
 
     #print(chat_result)
 
-asyncio.run(main())
+human_input_text = "I'm looking for books to help with my research on bio engineering. I want books that are available onsite at Baker, Fung, and Kennedy."
+asyncio.run(main(human_input_text))

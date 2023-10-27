@@ -6,7 +6,7 @@ URL Query Parameters (required always set these parameters):\n\n
     scope=default_scope\n\n
     tab=books\n\n
     vid=HVD2\n\n
-    limit=1\n\n
+    limit=100\n\n
     offset=0\n\n
     apikey={primo_api_key}\n\n
     q should be generated dynamically based on human input question\n\n
