@@ -45,6 +45,16 @@ async def process_row(row):
     # Perform some processing on each row asynchronously
     return row
 
+def shrink_results_for_llm(results):
+    reduced_results = []
+    for result in results:
+        new_object = {
+            'title': result['pnx']['addata']['btitle'],
+            'location': result['delivery']['holding']
+        }
+        reduced_results.append(new_object)
+    return reduced_results
+
 async def main(human_input_text):
     libraries_csv = await open_csv_file('schemas/libraries.csv')
     primo_api_docs = await open_text_file('schemas/primo_api_docs.txt')
@@ -63,16 +73,19 @@ async def main(human_input_text):
     get_request_human_input_question = "{} {}".format(get_request_human_input_prefix, human_input_text)
     primo_api_request = get_request_chain.run(question=get_request_human_input_question, api_docs=primo_api_docs)
     primo_api_request = primo_api_request.replace("|", "%7C")
-    # Replace api key for printing
     print(primo_api_request.replace(primo_api_key, "PRIMO_API_KEY"))
+    
+    response = requests.get(primo_api_request)
 
     """ Step 2: Write logic to filter, reduce, and prioritize data from HOLLIS using python methods and LLMs"""
+    reduced_results = shrink_results_for_llm(response.json()['docs'])
+
     # Step 2A: Reduce the data from the API response to only the data that is relevant to the human's question
     
     """ Step 3: Context injection into the chat prompt """
 
     system_content = """You are a friendly assistant who helps to find information about the locations and availability of books in a network of libraries.
-    ONLY return information about books related to their question, the locations where the books can be reserved, their availability, and nothing more."""
+    Return information about the requested books, the locations where the books can be reserved, their availability, and nothing more."""
     human_template = "{human_input_text}"
 
     chat_template = ChatPromptTemplate.from_messages(
@@ -84,14 +97,10 @@ async def main(human_input_text):
         ]
     )
 
-    class JSONOutputParser(BaseOutputParser):
-        def parse(self, text: str):
-          return json.loads(text)
+    chain = chat_template | chat_model
+    chat_result = chain.invoke({"human_input_text": "Context:\n[CONTEXT]\n" + json.dumps(reduced_results[0:5]) + "\n[/CONTEXT]\n\n"})
 
-    #chain = chat_template | chat_model | JSONOutputParser()
-    #chat_result = chain.invoke({"human_input_text": "I am looking for books about dogs"})
-
-    #print(chat_result)
+    print(chat_result)
 
 human_input_text = "I'm looking for books to help with my research on bio engineering. I want books that are available onsite at Baker, Fung, and Kennedy."
 asyncio.run(main(human_input_text))
