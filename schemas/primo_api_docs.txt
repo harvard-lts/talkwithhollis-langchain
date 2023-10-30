@@ -42,6 +42,6 @@ URL Query Parameters (required always set these parameters):\n\n
         facet_rtype,include,books\n\n
         facet_library should be generated using Library Codes from the csv file in the "Libraries CSV file" section of this documentation. please create a facet for each library code in the list. if the user does not mention any specific libraries, please include all library codes in the "libraries_csv" csv file. if the user mentions that they want results from certain libraries, please create a facet for each library mentioned in the question. please use both the "Display name in Primo API" and "How users may refer to it" in the "libraries_csv" csv file to determine what library codes to use based on the human input question. for example, if they ask "I want books in Lamont, Baker, or Kennedy" there should be three facets, one for Lamont, one for Baker, and one for Kennedy'\n\n
         facet_library,include,<a library code in "Libraries CSV file">
-        facet_tlevel should be generated based on human input question. the default name should be 'facet_rtype,include,available' to return books that are available onsite OR in storage. if they want books that are available on-site at the libraries only, use this facet query 'facet_rtype,include,available_onsite'\n\n
-        facet_tlevel,include,<available or available_onsite>\n\n
+        facet_tlevel should be set to available\n\n
+        facet_tlevel,include,available\n\n
 Libraries CSV file: {libraries_csv}\n\n
