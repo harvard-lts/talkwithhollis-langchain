@@ -45,15 +45,27 @@ async def process_row(row):
     # Perform some processing on each row asynchronously
     return row
 
-def shrink_results_for_llm(results):
+def shrink_results_for_llm(results, libraries):
     reduced_results = []
+    included_libraries = set()
     for result in results:
         new_object = {
             'title': result['pnx']['addata']['btitle'],
+            'author': result['pnx']['sort']['author'],
             'location': result['delivery']['holding']
         }
+        for location in new_object['location']:
+            if location['mainLocation'] in libraries:
+                included_libraries.add(location['mainLocation'])
         reduced_results.append(new_object)
-    return reduced_results
+    return reduced_results, included_libraries
+
+def get_library_code_from_request_string(request_string):
+    result = request_string.split('facet_library,include,', 1)
+    second_split = result[1].split('&', 1)
+    if len(second_split) == 1:
+        return second_split[0].split('%7C', 1)
+    return second_split
 
 async def main(human_input_text):
     libraries_csv = await open_csv_file('schemas/libraries.csv')
@@ -73,19 +85,31 @@ async def main(human_input_text):
     get_request_human_input_question = "{} {}".format(get_request_human_input_prefix, human_input_text)
     primo_api_request = get_request_chain.run(question=get_request_human_input_question, api_docs=primo_api_docs)
     primo_api_request = primo_api_request.replace("|", "%7C")
-    print(primo_api_request.replace(primo_api_key, "PRIMO_API_KEY"))
+    # print(primo_api_request.replace(primo_api_key, "PRIMO_API_KEY"))
     
     response = requests.get(primo_api_request)
+    
+    requested_libraries = []
+
+    reduced_string = primo_api_request
+    while 'facet_library,include,' in reduced_string:
+        reduce_result = get_library_code_from_request_string(reduced_string)
+        print(reduce_result)
+        requested_libraries.append(reduce_result[0])
+        reduced_string = reduce_result[1]
 
     """ Step 2: Write logic to filter, reduce, and prioritize data from HOLLIS using python methods and LLMs"""
-    reduced_results = shrink_results_for_llm(response.json()['docs'])
+    reduced_results, included_libraries_set = shrink_results_for_llm(response.json()['docs'][0:5], requested_libraries)
+
+    print(included_libraries_set)
 
     # Step 2A: Reduce the data from the API response to only the data that is relevant to the human's question
     
     """ Step 3: Context injection into the chat prompt """
 
     system_content = """You are a friendly assistant who helps to find information about the locations and availability of books in a network of libraries.
-    Return information about the requested books, the locations where the books can be reserved, their availability, and nothing more."""
+    Return a list books with their titles, authors, and call numbers.
+    The list should be divided into categories by location, and each location should have the header of the location name + 9am - 5pm"""
     human_template = "{human_input_text}"
 
     chat_template = ChatPromptTemplate.from_messages(
@@ -98,9 +122,12 @@ async def main(human_input_text):
     )
 
     chain = chat_template | chat_model
-    chat_result = chain.invoke({"human_input_text": "Context:\n[CONTEXT]\n" + json.dumps(reduced_results[0:5]) + "\n[/CONTEXT]\n\n"})
-
+    human_query_string = "Context:\n[CONTEXT]\n" + json.dumps(reduced_results) + "\n[/CONTEXT]\n\n"
+    if len(included_libraries_set) > 0:
+        human_query_string += " Only included books located at these libraries: " + str(included_libraries_set)
+    chat_result = chain.invoke({"human_input_text": human_query_string})
     print(chat_result)
 
-human_input_text = "I'm looking for books to help with my research on bio engineering. I want books that are available onsite at Baker, Fung, and Kennedy."
+# human_input_text = "I'm looking for books to help with my research on bio engineering. I want books that are available onsite at Baker, Fung, and Kennedy."
+human_input_text = "I'm looking for books about birds. I want books that are available onsite at Fung and Widener."
 asyncio.run(main(human_input_text))
