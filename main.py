@@ -23,7 +23,7 @@ primo_api_key = os.environ.get("PRIMO_API_KEY")
 primo_api_host = os.environ.get("PRIMO_API_HOST")
 primo_api_limit = os.environ.get("PRIMO_API_LIMIT", 100)
 # Due to token limits when using context injection, we must limit the amount of primo results we send to the llm. This limit should be different for different llm models depending on their token capacity.
-max_results_to_llm = int(os.environ.get("MAX_RESULTS_TO_LLM"), 5)
+max_results_to_llm = int(os.environ.get("MAX_RESULTS_TO_LLM", 5))
 
 async def open_csv_file(path):
     rows = []
@@ -130,8 +130,7 @@ async def main(human_input_text):
     print(chat_result.content)
 
 # human_input_text = "I'm looking for books to help with my research on bio engineering. I want books that are available onsite at Baker, Fung, and Widener."
-human_input_text = "I'm looking for books to help with my research on bird. I want books that are available onsite at Fung and Widener."
-# human_input_text = "I'm looking for books about birds. I want books that are available onsite at Fung and Widener."
+human_input_text = "I'm looking for books about birds. I want books that are available onsite at Fung and Widener."
 # human_input_text = "I'm looking for books on dogs."
 # human_input_text = "I'm looking for books on dogs, especially greyhounds. They can be at any library"
 asyncio.run(main(human_input_text))
