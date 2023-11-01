@@ -21,6 +21,9 @@ chat_model = ChatOpenAI()
 openai_api_key = os.environ.get("OPENAI_API_KEY")
 primo_api_key = os.environ.get("PRIMO_API_KEY")
 primo_api_host = os.environ.get("PRIMO_API_HOST")
+primo_api_limit = os.environ.get("PRIMO_API_LIMIT", 100)
+# Due to token limits when using context injection, we must limit the amount of primo results we send to the llm. This limit should be different for different llm models depending on their token capacity.
+max_results_to_llm = int(os.environ.get("MAX_RESULTS_TO_LLM"), 5)
 
 async def open_csv_file(path):
     rows = []
@@ -45,6 +48,13 @@ async def process_row(row):
     # Perform some processing on each row asynchronously
     return row
 
+def generate_primo_api_request(llm_response):
+    primo_api_request = primo_api_host + f"?scope=default_scope&tab=books&vid=HVD2&limit={primo_api_limit}&offset=0&apikey={primo_api_key}&q=any,contains,{'%20'.join(llm_response['keywords'])}&multiFacets=facet_rtype,include,books"
+    if len(llm_response['libraries']) > 0:
+        primo_api_request += "%7C,%7Cfacet_library,include," + '&facet_library,include,'.join(llm_response['libraries'])
+    primo_api_request += "&facet_tlevel,include,available_onsite"
+    return primo_api_request
+
 def shrink_results_for_llm(results, libraries):
     reduced_results = []
     included_libraries = set()
@@ -60,56 +70,47 @@ def shrink_results_for_llm(results, libraries):
         reduced_results.append(new_object)
     return reduced_results, included_libraries
 
-def get_library_code_from_request_string(request_string):
-    result = request_string.split('facet_library,include,', 1)
-    second_split = result[1].split('&', 1)
-    if len(second_split) == 1:
-        return second_split[0].split('%7C', 1)
-    return second_split
-
 async def main(human_input_text):
     libraries_csv = await open_csv_file('schemas/libraries.csv')
-    primo_api_docs = await open_text_file('schemas/primo_api_docs.txt')
-    primo_api_schema = await open_json_file('schemas/primo_api_schema.json')
-    primo_api_docs = primo_api_docs.replace('primo_api_host', primo_api_host)
-    primo_api_docs = primo_api_docs.replace('primo_api_key', primo_api_key)
-    primo_api_docs = primo_api_docs.replace('libraries_csv', '{}'.format(libraries_csv))
 
     # https://developers.exlibrisgroup.com/primo/apis/search/
     # https://developers.exlibrisgroup.com/wp-content/uploads/primo/openapi/primoSearch.json
     """ Step 1: Generate API request to HOLLIS based on human input question """
     headers = {"Content-Type": "application/json"}
-    # https://github.com/langchain-ai/langchain/blob/3d74d5e24dd62bb3878fe34de5f9eefa6d1d26c7/libs/langchain/langchain/chains/api/prompt.py#L4
-    get_request_chain = LLMChain(llm=llm, prompt=API_URL_PROMPT)
-    get_request_human_input_prefix = "Generate a GET request to search the Primo API to find books to answer the human's input question: "
-    get_request_human_input_question = "{} {}".format(get_request_human_input_prefix, human_input_text)
-    primo_api_request = get_request_chain.run(question=get_request_human_input_question, api_docs=primo_api_docs)
-    primo_api_request = primo_api_request.replace("|", "%7C")
-    # print(primo_api_request.replace(primo_api_key, "PRIMO_API_KEY"))
-    
-    response = requests.get(primo_api_request)
-    
-    requested_libraries = []
 
-    reduced_string = primo_api_request
-    while 'facet_library,include,' in reduced_string:
-        reduce_result = get_library_code_from_request_string(reduced_string)
-        print(reduce_result)
-        requested_libraries.append(reduce_result[0])
-        reduced_string = reduce_result[1]
+    user_input_system_content = """You will receive a user prompt in which a user will be searching for books with certain qualities.
+    From that prompt, extract the keywords that describe the books, do not create keywords related to how the user intender to use the books.
+    Create a list of the three-letter Library Codes of the libraries the user requested.\n
+    Return a json object containing lists of keywords and the Library Codes of requested libraries.\n"""
+    user_input_human_query_string = human_input_text
+    parse_user_input_chat_template = ChatPromptTemplate.from_messages(
+        [
+            SystemMessage(
+                content=(user_input_system_content)
+            ),
+            HumanMessagePromptTemplate.from_template(user_input_human_query_string),
+        ]
+    )
+    user_input_chain = parse_user_input_chat_template | chat_model
+    prompt_chat_result = user_input_chain.invoke({"human_input_text": "Context:\n[CONTEXT]\n" + str(libraries_csv) + "\n[/CONTEXT]\n\n " + user_input_human_query_string})
+    prompt_result = json.loads(prompt_chat_result.content)
+    print(prompt_result)
+
+    primo_api_request = generate_primo_api_request(prompt_result)
+    print(primo_api_request)
+
+    response = requests.get(primo_api_request)
 
     """ Step 2: Write logic to filter, reduce, and prioritize data from HOLLIS using python methods and LLMs"""
-    reduced_results, included_libraries_set = shrink_results_for_llm(response.json()['docs'][0:5], requested_libraries)
+    reduced_results, included_libraries_set = shrink_results_for_llm(response.json()['docs'][0:max_results_to_llm], prompt_result['libraries'])
 
     print(included_libraries_set)
-
-    # Step 2A: Reduce the data from the API response to only the data that is relevant to the human's question
     
     """ Step 3: Context injection into the chat prompt """
 
     system_content = """You are a friendly assistant who helps to find information about the locations and availability of books in a network of libraries.
-    Return a list books with their titles, authors, and call numbers.
-    The list should be divided into categories by location, and each location should have the header of the location name + 9am - 5pm"""
+    # Return a list books with their titles, authors, and call numbers.
+    # The list should be divided into categories by location, and each location should have the header of the location name + 9am - 5pm"""
     human_template = "{human_input_text}"
 
     chat_template = ChatPromptTemplate.from_messages(
@@ -126,8 +127,12 @@ async def main(human_input_text):
     if len(included_libraries_set) > 0:
         human_query_string += " Only included books located at these libraries: " + str(included_libraries_set)
     chat_result = chain.invoke({"human_input_text": human_query_string})
-    print(chat_result)
+    print(chat_result.content)
 
-# human_input_text = "I'm looking for books to help with my research on bio engineering. I want books that are available onsite at Baker, Fung, and Kennedy."
-human_input_text = "I'm looking for books about birds. I want books that are available onsite at Fung and Widener."
+# human_input_text = "I'm looking for books to help with my research on bio engineering. I want books that are available onsite at Baker, Fung, and Widener."
+human_input_text = "I'm looking for books to help with my research on bird. I want books that are available onsite at Fung and Widener."
+# human_input_text = "I'm looking for books about birds. I want books that are available onsite at Fung and Widener."
+# human_input_text = "I'm looking for books on dogs."
+# human_input_text = "I'm looking for books on dogs, especially greyhounds. They can be at any library"
 asyncio.run(main(human_input_text))
+
