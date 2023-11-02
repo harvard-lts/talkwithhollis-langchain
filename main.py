@@ -16,6 +16,7 @@ from langchain.agents.agent_toolkits import JsonToolkit
 from langchain.chains import LLMChain
 from langchain.requests import TextRequestsWrapper
 from langchain.tools.json.tool import JsonSpec
+from langchain.prompts import PromptTemplate
 llm = OpenAI(temperature=0)
 chat_model = ChatOpenAI()
 openai_api_key = os.environ.get("OPENAI_API_KEY")
@@ -50,8 +51,8 @@ async def process_row(row):
 
 def generate_primo_api_request(llm_response):
     primo_api_request = primo_api_host + f"?scope=default_scope&tab=books&vid=HVD2&limit={primo_api_limit}&offset=0&apikey={primo_api_key}&q=any,contains,{'%20'.join(llm_response['keywords'])}&multiFacets=facet_rtype,include,books"
-    if len(llm_response['libraries']) > 0:
-        primo_api_request += "%7C,%7Cfacet_library,include," + '&facet_library,include,'.join(llm_response['libraries'])
+    if len(llm_response['libraryCodes']) > 0:
+        primo_api_request += "%7C,%7Cfacet_library,include," + '&facet_library,include,'.join(llm_response['libraryCodes'])
     primo_api_request += "&facet_tlevel,include,available_onsite"
     return primo_api_request
 
@@ -78,23 +79,20 @@ async def main(human_input_text):
     """ Step 1: Generate API request to HOLLIS based on human input question """
     headers = {"Content-Type": "application/json"}
 
-    user_input_system_content = """You will receive a user prompt in which a user will be searching for books with certain qualities.
-    From that prompt, extract the keywords that describe the books, do not create keywords related to how the user intender to use the books.
-    Create a list of the three-letter Library Codes of the libraries the user requested.\n
-    Return a json object containing lists of keywords and the Library Codes of requested libraries.\n"""
-    user_input_human_query_string = human_input_text
-    parse_user_input_chat_template = ChatPromptTemplate.from_messages(
-        [
-            SystemMessage(
-                content=(user_input_system_content)
-            ),
-            HumanMessagePromptTemplate.from_template(user_input_human_query_string),
-        ]
+    prompt = PromptTemplate.from_template(
+        f"""Provide your answer in JSON form. Reply with only the answer in JSON form and include no other commentary:\n\n
+        You will receive a user prompt in which a user will be searching for books with certain qualities.\n\n
+        From that prompt, extract the keywords that describe the books, do not create keywords related to how the user intender to use the books.\n\n
+        Create a list of the three-letter Library Codes of the libraries the user requested. This list should be empty if the user did not request specific libraries, or if the user did not mention libraries.\n\n
+        Return ONLY a json object, containing lists of keywords and the Library Codes of requested libraries, and nothing else.\n\n
+        Libraries CSV: {str(libraries_csv)}\n\n
+        User prompt: {human_input_text}"""
     )
-    user_input_chain = parse_user_input_chat_template | chat_model
-    prompt_chat_result = user_input_chain.invoke({"human_input_text": "Context:\n[CONTEXT]\n" + str(libraries_csv) + "\n[/CONTEXT]\n\n " + user_input_human_query_string})
-    prompt_result = json.loads(prompt_chat_result.content)
-    print(prompt_result)
+    user_input_chain = prompt | llm
+    print(human_input_text)
+    prompt_chat_result = user_input_chain.invoke({"human_input_text": human_input_text})
+    prompt_result = json.loads(prompt_chat_result)
+    print(json.loads(prompt_chat_result))
 
     primo_api_request = generate_primo_api_request(prompt_result)
     print(primo_api_request)
@@ -102,7 +100,7 @@ async def main(human_input_text):
     response = requests.get(primo_api_request)
 
     """ Step 2: Write logic to filter, reduce, and prioritize data from HOLLIS using python methods and LLMs"""
-    reduced_results, included_libraries_set = shrink_results_for_llm(response.json()['docs'][0:max_results_to_llm], prompt_result['libraries'])
+    reduced_results, included_libraries_set = shrink_results_for_llm(response.json()['docs'][0:max_results_to_llm], prompt_result['libraryCodes'])
 
     print(included_libraries_set)
     
@@ -130,7 +128,7 @@ async def main(human_input_text):
     print(chat_result.content)
 
 # human_input_text = "I'm looking for books to help with my research on bio engineering. I want books that are available onsite at Baker, Fung, and Widener."
-human_input_text = "I'm looking for books about birds. I want books that are available onsite at Fung and Widener."
+human_input_text = "I'm looking for books about birds. I want books that are available onsite at Fung and Widener"
 # human_input_text = "I'm looking for books on dogs."
 # human_input_text = "I'm looking for books on dogs, especially greyhounds. They can be at any library"
 asyncio.run(main(human_input_text))
