@@ -52,7 +52,7 @@ async def process_row(row):
 def generate_primo_api_request(llm_response):
     primo_api_request = primo_api_host + f"?scope=default_scope&tab=books&vid=HVD2&limit={primo_api_limit}&offset=0&apikey={primo_api_key}&q=any,contains,{'%20'.join(llm_response['keywords'])}&multiFacets=facet_rtype,include,books"
     if len(llm_response['libraries']) > 0:
-        primo_api_request += "%7C,%7Cfacet_library,include," + '&facet_library,include,'.join(llm_response['libraries'])
+        primo_api_request += "%7C,%7Cfacet_library,include," + '%7C,%7Cfacet_library,include,'.join(llm_response['libraries'])
     primo_api_request += "%7C,%7Cfacet_tlevel,include,available_onsite"
     return primo_api_request
 
@@ -145,8 +145,8 @@ async def main(human_input_text):
     print(chat_result.content)
 
 # human_input_text = "I'm looking for books to help with my research on bio engineering. I want books that are available onsite at Baker, Fung, and Widener."
-human_input_text = "I'm looking for books about birds. I want books that are available onsite at Fung and Widener."
-# human_input_text = "I'm looking for books on dogs."
+# human_input_text = "I'm looking for books about birds. I want books that are available onsite at Fung and Widener."
+human_input_text = "I'm looking for books on dogs."
 # human_input_text = "I'm looking for books on dogs, especially greyhounds. They can be at any library"
 asyncio.run(main(human_input_text))
 
