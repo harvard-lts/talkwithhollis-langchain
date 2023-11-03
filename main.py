@@ -85,27 +85,21 @@ def generate_primo_api_request(llm_response):
     return primo_api_request
 
 def shrink_results_for_llm(results, libraries):
-    reduced_results = []
-    included_libraries = set()
+    reduced_results = {}
     for result in results:
-        new_object = {
-            'title': result['pnx']['addata']['btitle'],
-            # TODO: Corinna wants us to use ['pnx']['addata']['aulast'] but that author is not always present and we will need to come up with a prioritization order to determine which author to use.
-            'author': result['pnx']['sort']['author'],
-            'locations': []
-        }
-
         for holding in result['delivery']['holding']:
-            new_location = {
-                "libraryCode": holding['libraryCode'],
-                "callNumber": holding['callNumber']
+            new_object = {
+                'title': result['pnx']['addata']['btitle'],
+                # TODO: Corinna wants us to use ['pnx']['addata']['aulast'] but that author is not always present and we will need to come up with a prioritization order to determine which author to use.
+                'author': result['pnx']['sort']['author'],
+                'callNumber': holding['callNumber']
             }
             if holding['libraryCode'] in libraries:
-                included_libraries.add(holding['libraryCode'])
-                new_object['locations'].append(new_location)
+                if not holding['libraryCode'] in reduced_results:
+                    reduced_results[holding['libraryCode']] = []
+                reduced_results[holding['libraryCode']].append(new_object)
 
-        reduced_results.append(new_object)
-    return reduced_results, included_libraries
+    return reduced_results
 
 async def main(human_input_text):
     libraries_csv = await open_csv_file('schemas/libraries.csv')
@@ -158,21 +152,19 @@ async def main(human_input_text):
     primo_api_response = requests.get(primo_api_request)
 
     # Step 2: Write logic to filter, reduce, and prioritize data from HOLLIS using python methods and LLMs
-    reduced_results, included_libraries_set = shrink_results_for_llm(primo_api_response.json()['docs'][0:max_results_to_llm], qs_prompt_result['libraries'])
+    reduced_results = shrink_results_for_llm(primo_api_response.json()['docs'][0:max_results_to_llm], qs_prompt_result['libraries'])
     print(reduced_results)
-    print(included_libraries_set)
+    print(reduced_results.keys())
     
-    # State that books can be at more than one location
     # Step 3: Context injection into the chat prompt
     system_content = f"""You are a friendly assistant who helps to find information about the locations and availability of books in a network of libraries.\n
-    You will receive a list of 3-letter library codes that correspond to libraries in the Libraries_JSON. You will also receive a JSON list of books, containing titles, authors, and locations. Each location will contain a library code and call number.\n
-    Each book should be listed under every library that matches a libraryCode those in the provided Libraries_JSON.  property listed in its location field.\n
-    Match the libraryCode properties of the books with the 'Library Code' properties in the provided Libraries_JSON, and take the matching entry's 'Display name in Primo API' property. Using the extracted 'Display name in Primo API' properties, create a list of libraries and their hours. Do not list libraries that are not on the user-supplied library list.\n
-    Each book should be listed under libraries that match the library codes in its locations. If a book has more than one location entry, list it at all libraries in the included libraries list.\n
-    The first line of a book list item must contain the book's full title and the book's author's last name separated by \. The second line of a book list item must be the book's call number. If the call number is wrapped in parenthesis, remove the parenthesis.\n
+    Library Codes are three-letter codes that can be used to reference library names in the Libraries_JSON.\n
+    You will receive a list of Library Codes. You will also receive a JSON list of books, containing titles, authors, and locations. Each location will contain a library code and call number.\n
+    You will need to display the library hours for each, and then display the books in the list, grouped by library code.\n
+    If a book's call number is inside parenthesis, do not include the parenthesis in the display.\n
     Below is the list format:\n\n
 
-    Library Display name in Primo API
+    Library Display name in Primo API (Library Code)
     Library Hours
     1.  Full book title / Author's Last Name
         Call number
@@ -185,14 +177,14 @@ async def main(human_input_text):
     {json.dumps(sample_json)}
     
     output:
-    Fung Library
+    Fung Library (FUN)
     9:00am - 5:00pm
     1.  The Art of Computer Programming / Knuth
         QA76.6 .K64 1997
     2.  A Book About Dogs / Smith
         PZ76.6 .K64 1996
 
-    Lamont Library
+    Lamont Library (LAM)
     9:00am-5:00
     1.  The Art of Computer Programming / Knuth
         QA76.6 .K64 1997
@@ -215,8 +207,8 @@ async def main(human_input_text):
 
     chain = chat_template | chat_model
     human_query_string = "Context:\n[CONTEXT]\n" + json.dumps(reduced_results) + "\n[/CONTEXT]\n\n The hours for all libraries are 9:00am - 5:00pm."
-    if len(included_libraries_set) > 0:
-        human_query_string += " Only include books located at these libraries: " + str(included_libraries_set)
+    if len(reduced_results.keys()) > 0:
+        human_query_string += " Only include books located at these libraries: " + str(reduced_results.keys())
     chat_result = chain.invoke({"human_input_text": human_query_string})
     print(chat_result.content)
 
