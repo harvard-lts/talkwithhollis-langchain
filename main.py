@@ -27,32 +27,27 @@ primo_api_limit = os.environ.get("PRIMO_API_LIMIT", 100)
 # Due to token limits when using context injection, we must limit the amount of primo results we send to the llm. This limit should be different for different llm models depending on their token capacity.
 max_results_to_llm = int(os.environ.get("MAX_RESULTS_TO_LLM", 5))
 
-sample_json = [
-	{
-		'title': ['The Art of Computer Programming'],
-		'author': ['Knuth, Peter'],
-		'locations': [
-			{
-				"libraryCode": "LAM",
-				"callNumber": "(QA76.6 .K64 1997)"
-			},
-			{
-				"libraryCode": "FUN",
-				"callNumber": "(QA76.6 .K64 1997)"
-			}
-		]
-	},
-	{
-		'title': ["A Book About Dogs"],
-		'author': ["Smith, John"],
-		'locations': [
-			{
-				"libraryCode": "FUN",
-				"callNumber": "(PZ76.6 .K64 1996)"
-			}
-		]
-	}
-]
+sample_json = {
+    "LAM": [
+        {
+            'title': ['The Art of Computer Programming'],
+		    'author': ['Knuth, Peter'],
+            "callNumber": "(QA76.6 .K64 1997)"
+        }
+    ],
+    "FUN": [
+        {
+            'title': ['The Art of Computer Programming'],
+		    'author': ['Knuth, Peter'],
+            "callNumber": "(QA76.6 .K64 1997)"
+        },
+        {
+            'title': ["A Book About Dogs"],
+            'author': ["Smith, John"],
+            "callNumber": "(PZ76.6 .K64 1996)"
+        }
+    ]
+}
 
 async def open_csv_file(path):
     rows = []
