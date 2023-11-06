@@ -84,7 +84,8 @@ def shrink_results_for_llm(results, libraries):
     for result in results:
         for holding in result['delivery']['holding']:
             new_object = {
-                'title': result['pnx']['addata']['btitle'],
+                # TODO: We previously were using ['pnx']['addata']['btitle'] but that is not always present. We will need to come up with a prioritization order to determine which title to use.
+                'title': result['pnx']['sort']['title'],
                 # TODO: Corinna wants us to use ['pnx']['addata']['aulast'] but that author is not always present and we will need to come up with a prioritization order to determine which author to use.
                 'author': result['pnx']['sort']['author'],
                 'callNumber': holding['callNumber']
@@ -100,7 +101,6 @@ async def main(human_input_text):
     libraries_csv = await open_csv_file('schemas/libraries.csv')
     df = pd.read_csv('schemas/libraries.csv')
     libraries_json = df.to_json(orient='records')
-    print(libraries_json)
 
     # https://developers.exlibrisgroup.com/primo/apis/search/
     # https://developers.exlibrisgroup.com/wp-content/uploads/primo/openapi/primoSearch.json
@@ -128,7 +128,6 @@ async def main(human_input_text):
     qs_prompt_formatted_str: str = qs_prompt_template.format(
       user_question=human_input_text, libraries_csv=libraries_csv
     )
-    # print(qs_prompt_formatted_str)
 
     # make a prediction
     qs_prediction = llm.predict(qs_prompt_formatted_str)
@@ -137,7 +136,6 @@ async def main(human_input_text):
     print("qs_prediction")
     print(qs_prediction)
     qs_prompt_result = json.loads(qs_prediction)
-    # qs_prompt_result = {"keywords": ["birds"], "libraries": ["AJP", "BAK", "CAB", "MED", "MCZ", "FAL", "DES", "FUN", "GUT", "DIV", "KSG", "LAW", "HYL", "WOL", "LAM", "MUS", "SEC", "TOZ", "WID"]}
     print("qs_prompt_result")
     print(qs_prompt_result)
 
@@ -159,7 +157,7 @@ async def main(human_input_text):
     If a book's call number is inside parenthesis, do not include the parenthesis in the display.\n
     Below is the list format:\n\n
 
-    Library Display name in Primo API (Library Code)
+    Library Display name in Primo API
     Library Hours
     1.  Full book title / Author's Last Name
         Call number
@@ -172,22 +170,20 @@ async def main(human_input_text):
     {json.dumps(sample_json)}
     
     output:
-    Fung Library (FUN)
+    Fung Library
     9:00am - 5:00pm
     1.  The Art of Computer Programming / Knuth
         QA76.6 .K64 1997
     2.  A Book About Dogs / Smith
         PZ76.6 .K64 1996
 
-    Lamont Library (LAM)
+    Lamont Library
     9:00am-5:00
     1.  The Art of Computer Programming / Knuth
         QA76.6 .K64 1997
     
     Libraries_JSON: {json.dumps(libraries_json)}\n\n
     """
-
-    # print(system_content)
 
     human_template = "{human_input_text}"
 
