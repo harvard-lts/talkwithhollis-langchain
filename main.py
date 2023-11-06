@@ -2,6 +2,7 @@
 # pipenv shell
 # pipenv run python3 main.py
 import asyncio, os, requests, json, csv
+import pandas as pd
 from langchain.llms import OpenAI
 from langchain.chat_models import ChatOpenAI
 from langchain.chains import APIChain
@@ -25,6 +26,28 @@ primo_api_host = os.environ.get("PRIMO_API_HOST")
 primo_api_limit = os.environ.get("PRIMO_API_LIMIT", 100)
 # Due to token limits when using context injection, we must limit the amount of primo results we send to the llm. This limit should be different for different llm models depending on their token capacity.
 max_results_to_llm = int(os.environ.get("MAX_RESULTS_TO_LLM", 5))
+
+sample_json = {
+    "LAM": [
+        {
+            'title': ['The Art of Computer Programming'],
+		    'author': ['Knuth, Peter'],
+            "callNumber": "(QA76.6 .K64 1997)"
+        }
+    ],
+    "FUN": [
+        {
+            'title': ['The Art of Computer Programming'],
+		    'author': ['Knuth, Peter'],
+            "callNumber": "(QA76.6 .K64 1997)"
+        },
+        {
+            'title': ["A Book About Dogs"],
+            'author': ["Smith, John"],
+            "callNumber": "(PZ76.6 .K64 1996)"
+        }
+    ]
+}
 
 async def open_csv_file(path):
     rows = []
@@ -57,22 +80,27 @@ def generate_primo_api_request(llm_response):
     return primo_api_request
 
 def shrink_results_for_llm(results, libraries):
-    reduced_results = []
-    included_libraries = set()
+    reduced_results = {}
     for result in results:
-        new_object = {
-            'title': result['pnx']['addata']['btitle'],
-            'author': result['pnx']['sort']['author'],
-            'location': result['delivery']['holding']
-        }
-        for location in new_object['location']:
-            if location['mainLocation'] in libraries:
-                included_libraries.add(location['mainLocation'])
-        reduced_results.append(new_object)
-    return reduced_results, included_libraries
+        for holding in result['delivery']['holding']:
+            new_object = {
+                # TODO: We previously were using ['pnx']['addata']['btitle'] but that is not always present. We will need to come up with a prioritization order to determine which title to use.
+                'title': result['pnx']['sort']['title'],
+                # TODO: Corinna wants us to use ['pnx']['addata']['aulast'] but that author is not always present and we will need to come up with a prioritization order to determine which author to use.
+                'author': result['pnx']['sort']['author'],
+                'callNumber': holding['callNumber']
+            }
+            if holding['libraryCode'] in libraries:
+                if not holding['libraryCode'] in reduced_results:
+                    reduced_results[holding['libraryCode']] = []
+                reduced_results[holding['libraryCode']].append(new_object)
+
+    return reduced_results
 
 async def main(human_input_text):
     libraries_csv = await open_csv_file('schemas/libraries.csv')
+    df = pd.read_csv('schemas/libraries.csv')
+    libraries_json = df.to_json(orient='records')
 
     # https://developers.exlibrisgroup.com/primo/apis/search/
     # https://developers.exlibrisgroup.com/wp-content/uploads/primo/openapi/primoSearch.json
@@ -100,7 +128,6 @@ async def main(human_input_text):
     qs_prompt_formatted_str: str = qs_prompt_template.format(
       user_question=human_input_text, libraries_csv=libraries_csv
     )
-    print(qs_prompt_formatted_str)
 
     # make a prediction
     qs_prediction = llm.predict(qs_prompt_formatted_str)
@@ -118,14 +145,46 @@ async def main(human_input_text):
     primo_api_response = requests.get(primo_api_request)
 
     # Step 2: Write logic to filter, reduce, and prioritize data from HOLLIS using python methods and LLMs
-    reduced_results, included_libraries_set = shrink_results_for_llm(primo_api_response.json()['docs'][0:max_results_to_llm], qs_prompt_result['libraries'])
-
-    print(included_libraries_set)
+    reduced_results = shrink_results_for_llm(primo_api_response.json()['docs'][0:max_results_to_llm], qs_prompt_result['libraries'])
+    print(reduced_results)
+    print(reduced_results.keys())
     
     # Step 3: Context injection into the chat prompt
-    system_content = """You are a friendly assistant who helps to find information about the locations and availability of books in a network of libraries.
-    # Return a list books with their titles, authors, and call numbers.
-    # The list should be divided into categories by location, and each location should have the header of the location name + 9am - 5pm"""
+    system_content = f"""You are a friendly assistant who helps to find information about the locations and availability of books in a network of libraries.\n
+    Library Codes are three-letter codes that can be used to reference library names in the Libraries_JSON.\n
+    You will receive a list of Library Codes. You will also receive a JSON list of books, containing titles, authors, and locations. Each location will contain a library code and call number.\n
+    You will need to display the library hours for each, and then display the books in the list, grouped by library code.\n
+    If a book's call number is inside parenthesis, do not include the parenthesis in the display.\n
+    Below is the list format:\n\n
+
+    Library Display name in Primo API
+    Library Hours
+    1.  Full book title / Author's Last Name
+        Call number
+    2.  Full book title  / Author's Last Name
+        Call number
+    
+    \n\n
+    Below is an example input and output with example data:\n
+    input json:\n
+    {json.dumps(sample_json)}
+    
+    output:
+    Fung Library
+    9:00am - 5:00pm
+    1.  The Art of Computer Programming / Knuth
+        QA76.6 .K64 1997
+    2.  A Book About Dogs / Smith
+        PZ76.6 .K64 1996
+
+    Lamont Library
+    9:00am-5:00
+    1.  The Art of Computer Programming / Knuth
+        QA76.6 .K64 1997
+    
+    Libraries_JSON: {json.dumps(libraries_json)}\n\n
+    """
+
     human_template = "{human_input_text}"
 
     chat_template = ChatPromptTemplate.from_messages(
@@ -138,15 +197,16 @@ async def main(human_input_text):
     )
 
     chain = chat_template | chat_model
-    human_query_string = "Context:\n[CONTEXT]\n" + json.dumps(reduced_results) + "\n[/CONTEXT]\n\n"
-    if len(included_libraries_set) > 0:
-        human_query_string += " Only included books located at these libraries: " + str(included_libraries_set)
+    human_query_string = "Context:\n[CONTEXT]\n" + json.dumps(reduced_results) + "\n[/CONTEXT]\n\n The hours for all libraries are 9:00am - 5:00pm."
+    if len(reduced_results.keys()) > 0:
+        human_query_string += " Only include books located at these libraries: " + str(reduced_results.keys())
     chat_result = chain.invoke({"human_input_text": human_query_string})
     print(chat_result.content)
 
 # human_input_text = "I'm looking for books to help with my research on bio engineering. I want books that are available onsite at Baker, Fung, and Widener."
 # human_input_text = "I'm looking for books about birds. I want books that are available onsite at Fung and Widener."
-human_input_text = "I'm looking for books on dogs."
+# human_input_text = "I'm looking for books on dogs."
+human_input_text = "I'm looking for books on birds."
 # human_input_text = "I'm looking for books on dogs, especially greyhounds. They can be at any library"
 asyncio.run(main(human_input_text))
 
