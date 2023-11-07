@@ -1,0 +1,14 @@
+version: '3.7'
+services:
+
+  twhapi:
+    container_name: twhapi
+    build:
+      context: .
+      dockerfile: Dockerfile
+    #command: 'tail -f /dev/null'
+    env_file: .env
+    volumes:
+      - './:/home/twhadm'
+    ports:
+      - "80:80"
