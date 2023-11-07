@@ -23,7 +23,6 @@ from langchain.prompts.prompt import PromptTemplate
 
 llm = OpenAI(temperature=0)
 chat_model = ChatOpenAI(temperature=0)
-convo_memory = ConversationSummaryBufferMemory(llm=llm, max_token_limit=10, return_messages=True)
 
 openai_api_key = os.environ.get("OPENAI_API_KEY")
 primo_api_key = os.environ.get("PRIMO_API_KEY")
@@ -106,6 +105,10 @@ async def main(human_input_text):
     libraries_csv = await open_csv_file('schemas/libraries.csv')
     df = pd.read_csv('schemas/libraries.csv')
     libraries_json = df.to_json(orient='records')
+
+    # Currently, this prevents the llm from remembering conversations. If convo_memoory was defined outside of the context of this method, it WOULD enable remembering conversations.
+    # It should be here for now because we want to simulate how an api route will not actually remember the conversation.
+    convo_memory = ConversationSummaryBufferMemory(llm=llm, max_token_limit=10, return_messages=True)
 
     # https://developers.exlibrisgroup.com/primo/apis/search/
     # https://developers.exlibrisgroup.com/wp-content/uploads/primo/openapi/primoSearch.json
