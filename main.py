@@ -146,9 +146,9 @@ async def main(human_input_text):
     print(qs_prompt_result)
 
     if len(qs_prompt_result['keywords']) == 0:
-        no_keywords_template = """You are a friendly assistant who helps to find information about the locations and availability of books in a network of libraries.\n
-        You have received a message from a user that does not appear to contain any keywords regarding books they are looking for.\n
-        Answer them normally.\n
+        no_keywords_template = """You are a friendly assistant who will answer messages from users.\n
+        You MUST answer the message from the user in your normal fashion.\n
+    
         Append onto that answer your purpose, which is helping them to find books at libraries.\n
         Suggest to the user some ways they could ask their question in a way that would help you to understand what they are looking for.\n\n
         Examples Suggestions:\n
