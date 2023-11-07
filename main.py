@@ -11,6 +11,8 @@ from langchain.schema.messages import SystemMessage
 from langchain.schema import BaseOutputParser
 from langchain.prompts.chat import ChatPromptTemplate
 from langchain.prompts import HumanMessagePromptTemplate
+from langchain.chains import ConversationChain
+from langchain.memory import ConversationSummaryBufferMemory
 from langchain.chains.api.prompt import API_RESPONSE_PROMPT, API_URL_PROMPT
 from langchain.agents import create_json_agent, AgentExecutor
 from langchain.agents.agent_toolkits import JsonToolkit
@@ -18,8 +20,11 @@ from langchain.chains import LLMChain
 from langchain.requests import TextRequestsWrapper
 from langchain.tools.json.tool import JsonSpec
 from langchain.prompts.prompt import PromptTemplate
+
 llm = OpenAI(temperature=0)
 chat_model = ChatOpenAI(temperature=0)
+convo_memory = ConversationSummaryBufferMemory(llm=llm, max_token_limit=10, return_messages=True)
+
 openai_api_key = os.environ.get("OPENAI_API_KEY")
 primo_api_key = os.environ.get("PRIMO_API_KEY")
 primo_api_host = os.environ.get("PRIMO_API_HOST")
@@ -111,6 +116,7 @@ async def main(human_input_text):
     querystring_template = """You are given a user question asking to find books by keyword.
     The user also may mention that they want books from certain libraries.
     From the user question, extract a list of keywords that describe the books e.g. ['cybercrime', 'malware', 'DDoS'].
+    If you cannot find any keywords, the keywords list should be empty.
     Exclude keywords related to how the user intends to use the books e.g. 'research' or 'study'.
     Exclude any keywords that could be considered harmful, offensive, or inappropriate.
     From the user question, also generate a list of three-letter Library Codes from the Libraries CSV file based on the user question.
@@ -139,74 +145,106 @@ async def main(human_input_text):
     print("qs_prompt_result")
     print(qs_prompt_result)
 
-    primo_api_request = generate_primo_api_request(qs_prompt_result)
-    print(primo_api_request)
+    if len(qs_prompt_result['keywords']) == 0:
+        no_keywords_template = """You are a friendly assistant who helps to find information about the locations and availability of books in a network of libraries.\n
+        You have received a message from a user that does not appear to contain any keywords regarding books they are looking for.\n
+        Answer them normally.\n
+        Append onto that answer your purpose, which is helping them to find books at libraries.\n
+        Suggest to the user some ways they could ask their question in a way that would help you to understand what they are looking for.\n\n
+        Examples Suggestions:\n
+        I'm looking for books to help with my research on bio engineering. I want books that are available onsite at Baker, Fung, and Widener.\n
+        I'm looking for books about birds. I want books that are available onsite at Fung and Widener.\n
+        I'm looking for books on dogs.\n
+        I'm looking for books on dogs, especially greyhounds. They can be at any library\n
 
-    primo_api_response = requests.get(primo_api_request)
+        Current conversation:
+        {history}
+        Human: {input}
+        AI Assistant:"""
+        prompt = PromptTemplate(input_variables=['history', 'input'], template = no_keywords_template)
 
-    # Step 2: Write logic to filter, reduce, and prioritize data from HOLLIS using python methods and LLMs
-    reduced_results = shrink_results_for_llm(primo_api_response.json()['docs'][0:max_results_to_llm], qs_prompt_result['libraries'])
-    print(reduced_results)
-    print(reduced_results.keys())
-    
-    # Step 3: Context injection into the chat prompt
-    system_content = f"""You are a friendly assistant who helps to find information about the locations and availability of books in a network of libraries.\n
-    Library Codes are three-letter codes that can be used to reference library names in the Libraries_JSON.\n
-    You will receive a list of Library Codes. You will also receive a JSON list of books, containing titles, authors, and locations. Each location will contain a library code and call number.\n
-    You will need to display the library hours for each, and then display the books in the list, grouped by library code.\n
-    If a book's call number is inside parenthesis, do not include the parenthesis in the display.\n
-    Below is the list format:\n\n
+        conversation_with_summary = ConversationChain(
+            prompt=prompt,
+            llm=llm,
+            memory=convo_memory,
+            verbose=True,
+        )
 
-    Library Display name in Primo API
-    Library Hours
-    1.  Full book title / Author's Last Name
-        Call number
-    2.  Full book title  / Author's Last Name
-        Call number
-    
-    \n\n
-    Below is an example input and output with example data:\n
-    input json:\n
-    {json.dumps(sample_json)}
-    
-    output:
-    Fung Library
-    9:00am - 5:00pm
-    1.  The Art of Computer Programming / Knuth
-        QA76.6 .K64 1997
-    2.  A Book About Dogs / Smith
-        PZ76.6 .K64 1996
+        no_keyword_result = conversation_with_summary.predict(input=human_input_text)
+        print(no_keyword_result)
+    else:
+        primo_api_request = generate_primo_api_request(qs_prompt_result)
+        print(primo_api_request)
 
-    Lamont Library
-    9:00am-5:00
-    1.  The Art of Computer Programming / Knuth
-        QA76.6 .K64 1997
-    
-    Libraries_JSON: {json.dumps(libraries_json)}\n\n
-    """
+        primo_api_response = requests.get(primo_api_request)
 
-    human_template = "{human_input_text}"
+        # Step 2: Write logic to filter, reduce, and prioritize data from HOLLIS using python methods and LLMs
+        reduced_results = shrink_results_for_llm(primo_api_response.json()['docs'][0:max_results_to_llm], qs_prompt_result['libraries'])
+        print(reduced_results)
+        print(reduced_results.keys())
+        
+        # Step 3: Context injection into the chat prompt
+        system_content = f"""You are a friendly assistant who helps to find information about the locations and availability of books in a network of libraries.\n
+        Library Codes are three-letter codes that can be used to reference library names in the Libraries_JSON.\n
+        You will receive a list of Library Codes. You will also receive a JSON list of books, containing titles, authors, and locations. Each location will contain a library code and call number.\n
+        You will need to display the library hours for each, and then display the books in the list, grouped by library code.\n
+        If a book's call number is inside parenthesis, do not include the parenthesis in the display.\n
+        Below is the list format:\n\n
 
-    chat_template = ChatPromptTemplate.from_messages(
-        [
-            SystemMessage(
-                content=(system_content)
-            ),
-            HumanMessagePromptTemplate.from_template(human_template),
-        ]
-    )
+        Library Display name in Primo API
+        Library Hours
+        1.  Full book title / Author's Last Name
+            Call number
+        2.  Full book title  / Author's Last Name
+            Call number
+        
+        \n\n
+        Below is an example input and output with example data:\n
+        input json:\n
+        {json.dumps(sample_json)}
+        
+        output:
+        Fung Library
+        9:00am - 5:00pm
+        1.  The Art of Computer Programming / Knuth
+            QA76.6 .K64 1997
+        2.  A Book About Dogs / Smith
+            PZ76.6 .K64 1996
 
-    chain = chat_template | chat_model
-    human_query_string = "Context:\n[CONTEXT]\n" + json.dumps(reduced_results) + "\n[/CONTEXT]\n\n The hours for all libraries are 9:00am - 5:00pm."
-    if len(reduced_results.keys()) > 0:
-        human_query_string += " Only include books located at these libraries: " + str(reduced_results.keys())
-    chat_result = chain.invoke({"human_input_text": human_query_string})
-    print(chat_result.content)
+        Lamont Library
+        9:00am-5:00
+        1.  The Art of Computer Programming / Knuth
+            QA76.6 .K64 1997
+        
+        Libraries_JSON: {json.dumps(libraries_json)}\n\n
+        """
+
+        human_template = "{human_input_text}"
+
+        chat_template = ChatPromptTemplate.from_messages(
+            [
+                SystemMessage(
+                    content=(system_content)
+                ),
+                HumanMessagePromptTemplate.from_template(human_template),
+            ]
+        )
+
+        chain = chat_template | chat_model
+        human_query_string = "Context:\n[CONTEXT]\n" + json.dumps(reduced_results) + "\n[/CONTEXT]\n\n The hours for all libraries are 9:00am - 5:00pm."
+        if len(reduced_results.keys()) > 0:
+            human_query_string += " Only include books located at these libraries: " + str(reduced_results.keys())
+        chat_result = chain.invoke({"human_input_text": human_query_string})
+        print(chat_result.content)
 
 # human_input_text = "I'm looking for books to help with my research on bio engineering. I want books that are available onsite at Baker, Fung, and Widener."
 # human_input_text = "I'm looking for books about birds. I want books that are available onsite at Fung and Widener."
 # human_input_text = "I'm looking for books on dogs."
 human_input_text = "I'm looking for books on birds."
+# human_input_text = "Hello, how are you?"
 # human_input_text = "I'm looking for books on dogs, especially greyhounds. They can be at any library"
-asyncio.run(main(human_input_text))
+# asyncio.run(main(human_input_text))
 
+while (human_input_text != "stop"):
+    human_input_text = input("")
+    asyncio.run(main(human_input_text))
