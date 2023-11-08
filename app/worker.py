@@ -94,7 +94,7 @@ class LLMWorker():
 
         return reduced_results
 
-    async def main(self, human_input_text):
+    async def predict(self, human_input_text):
         libraries_csv = await self.open_csv_file('schemas/libraries.csv')
         df = pd.read_csv('schemas/libraries.csv')
         libraries_json = df.to_json(orient='records')
@@ -232,3 +232,4 @@ class LLMWorker():
                 human_query_string += " Only include books located at these libraries: " + str(reduced_results.keys())
             chat_result = chain.invoke({"human_input_text": human_query_string})
             print(chat_result.content)
+            return chat_result.content
