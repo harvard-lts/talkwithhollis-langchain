@@ -46,16 +46,10 @@ async def get_chat():
 
 @router.post("/")
 async def chat(chat_params: ChatParams) -> ChatResult:
-    print("chat_params")
-    print(chat_params)
     chat_question = chat_params.userQuestion
-    #print("chat_question")
-    #print(chat_question)
     conversation_history = chat_params.conversationHistory
-    print("conversation_history")
-    print(conversation_history)
     worker = LLMWorker()
-    result = await worker.predict(chat_question)
+    result = await worker.predict(chat_question, conversation_history)
     chat_result: ChatResult = {
       "message": {
         "role": "assistant",
