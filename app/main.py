@@ -1,11 +1,22 @@
 from fastapi import Depends, FastAPI
-
-#from .dependencies import get_query_token, get_token_header
-#from .internal import admin
+from fastapi.middleware.cors import CORSMiddleware
 from .routers import chat
+from fastapi import Request, Response
 
 app = FastAPI()
-#app = FastAPI(dependencies=[Depends(get_query_token)])
+
+origins = [
+    "http://localhost:3000",
+]
+
+# https://fastapi.tiangolo.com/tutorial/cors/
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(chat.router)
 

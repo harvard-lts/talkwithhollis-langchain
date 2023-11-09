@@ -10,5 +10,11 @@ services:
     env_file: .env
     volumes:
       - './:/home/twhadm'
+      - '/home/twhadm/node_modules'
     ports:
       - "80:80"
+    networks:
+      - "twhnet"
+networks:
+  twhnet:
+    name: "twhnet"

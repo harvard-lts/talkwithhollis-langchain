@@ -94,7 +94,7 @@ class LLMWorker():
 
         return reduced_results
 
-    async def predict(self, human_input_text):
+    async def predict(self, human_input_text, conversation_history = []):
         libraries_csv = await self.open_csv_file('schemas/libraries.csv')
         df = pd.read_csv('schemas/libraries.csv')
         libraries_json = df.to_json(orient='records')
@@ -168,6 +168,7 @@ class LLMWorker():
 
             no_keyword_result = conversation_with_summary.predict(input=human_input_text)
             print(no_keyword_result)
+            return no_keyword_result
         else:
             primo_api_request = self.generate_primo_api_request(qs_prompt_result)
             print(primo_api_request)
@@ -231,5 +232,6 @@ class LLMWorker():
             if len(reduced_results.keys()) > 0:
                 human_query_string += " Only include books located at these libraries: " + str(reduced_results.keys())
             chat_result = chain.invoke({"human_input_text": human_query_string})
+            print('chat_result.content')
             print(chat_result.content)
             return chat_result.content
