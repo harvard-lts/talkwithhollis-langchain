@@ -30,7 +30,6 @@ class ConversationHistoryInstance(BaseModel):
     assistant: str
 
 class ChatParams(BaseModel):
-    conversationHistory: list[ConversationHistoryInstance]
     userQuestion: str
 
 app = FastAPI()
@@ -43,12 +42,12 @@ async def get_chat():
 async def chat(chat_params: ChatParams):
     print("chat_params")
     print(chat_params)
-    chat_question = chat_params.userQuestion
-    print("chat_question")
-    print(chat_question)
-    conversation_history = chat_params.conversationHistory
-    print("conversation_history")
-    print(conversation_history)
+    #chat_question = chat_params.userQuestion
+    #print("chat_question")
+    #print(chat_question)
+    #conversation_history = chat_params.conversationHistory
+    #print("conversation_history")
+    #print(conversation_history)
     worker = LLMWorker()
-    result = await worker.predict(chat_question, conversation_history)
+    result = await worker.predict(chat_params)
     return result
