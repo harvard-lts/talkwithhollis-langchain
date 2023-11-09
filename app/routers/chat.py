@@ -10,8 +10,28 @@ router = APIRouter(
     responses={200: {"message": "success"}, 404: {"description": "Not found"}},
 )
 
-class ChatQuestion(BaseModel):
-    user_input: str
+"""
+{
+    "conversationHistory": [
+        {
+            "user": "test1",
+            "assistant": "This is a response to the test1."
+        },
+        {
+            "user": "test2",
+            "assistant": "This is a response to the test2."
+        }
+    ],
+    "userQuestion": "test3"
+}
+"""
+class ConversationHistoryInstance(BaseModel):
+    user: str
+    assistant: str
+
+class ChatParams(BaseModel):
+    conversationHistory: list[ConversationHistoryInstance]
+    userQuestion: str
 
 app = FastAPI()
 
@@ -20,10 +40,15 @@ async def get_chat():
     return {"message": "Hello World!"}
 
 @router.post("/")
-async def chat(chat_question: ChatQuestion):
+async def chat(chat_params: ChatParams):
+    print("chat_params")
+    print(chat_params)
+    chat_question = chat_params.userQuestion
     print("chat_question")
     print(chat_question)
+    conversation_history = chat_params.conversationHistory
+    print("conversation_history")
+    print(conversation_history)
     worker = LLMWorker()
-    result = await worker.predict(chat_question)
+    result = await worker.predict(chat_question, conversation_history)
     return result
-

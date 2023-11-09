@@ -94,7 +94,7 @@ class LLMWorker():
 
         return reduced_results
 
-    async def predict(self, human_input_text):
+    async def predict(self, human_input_text, conversation_history = []):
         libraries_csv = await self.open_csv_file('schemas/libraries.csv')
         df = pd.read_csv('schemas/libraries.csv')
         libraries_json = df.to_json(orient='records')
