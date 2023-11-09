@@ -168,6 +168,7 @@ class LLMWorker():
 
             no_keyword_result = conversation_with_summary.predict(input=human_input_text)
             print(no_keyword_result)
+            return no_keyword_result
         else:
             primo_api_request = self.generate_primo_api_request(qs_prompt_result)
             print(primo_api_request)
