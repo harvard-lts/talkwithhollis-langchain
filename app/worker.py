@@ -231,5 +231,6 @@ class LLMWorker():
             if len(reduced_results.keys()) > 0:
                 human_query_string += " Only include books located at these libraries: " + str(reduced_results.keys())
             chat_result = chain.invoke({"human_input_text": human_query_string})
+            print('chat_result.content')
             print(chat_result.content)
             return chat_result.content

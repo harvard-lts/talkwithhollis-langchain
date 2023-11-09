@@ -32,8 +32,6 @@ class ConversationHistoryInstance(BaseModel):
 class ChatParams(BaseModel):
     userQuestion: str
 
-app = FastAPI()
-
 @router.get("/")
 async def get_chat():
     return {"message": "Hello World!"}
@@ -42,12 +40,14 @@ async def get_chat():
 async def chat(chat_params: ChatParams):
     print("chat_params")
     print(chat_params)
-    #chat_question = chat_params.userQuestion
+    chat_question = chat_params.userQuestion
     #print("chat_question")
     #print(chat_question)
     #conversation_history = chat_params.conversationHistory
     #print("conversation_history")
     #print(conversation_history)
     worker = LLMWorker()
-    result = await worker.predict(chat_params)
+    result = await worker.predict(chat_question)
+    print("chat result")
+    print(result)
     return result
