@@ -5,9 +5,10 @@ name = "pypi"
 
 [packages]
 langchain = "*"
-openai = "*"
+openai = "~=0.28.1"
 pipfile = "*"
 pandas = "*"
+tiktoken = "*"
 
 [dev-packages]
 
