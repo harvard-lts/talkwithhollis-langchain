@@ -6,8 +6,8 @@ from ..worker import LLMWorker
 
 router = APIRouter(
     prefix="/chat",
-    tags=["chat"],
-    responses={200: {"message": "success"}, 404: {"description": "Not found"}},
+    tags=["chat"]
+    #responses={200: {"message": "success"}, 404: {"description": "Not found"}},
 )
 
 """
@@ -31,23 +31,37 @@ class ConversationHistoryInstance(BaseModel):
 
 class ChatParams(BaseModel):
     userQuestion: str
+    conversationHistory: list[ConversationHistoryInstance]
+
+class Message(BaseModel):
+    role: str
+    content: str
+
+class ChatResult(BaseModel):
+    message: Message
 
 @router.get("/")
 async def get_chat():
     return {"message": "Hello World!"}
 
 @router.post("/")
-async def chat(chat_params: ChatParams):
+async def chat(chat_params: ChatParams) -> ChatResult:
     print("chat_params")
     print(chat_params)
     chat_question = chat_params.userQuestion
     #print("chat_question")
     #print(chat_question)
-    #conversation_history = chat_params.conversationHistory
-    #print("conversation_history")
-    #print(conversation_history)
+    conversation_history = chat_params.conversationHistory
+    print("conversation_history")
+    print(conversation_history)
     worker = LLMWorker()
     result = await worker.predict(chat_question)
+    chat_result: ChatResult = {
+      "message": {
+        "role": "assistant",
+        "content": result
+      }
+    }
     print("chat result")
-    print(result)
-    return result
+    print(chat_result)
+    return chat_result
