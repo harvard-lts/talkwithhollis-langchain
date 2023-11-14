@@ -19,13 +19,13 @@ httpx==0.25.1
 idna==3.4
 jsonpatch==1.33
 jsonpointer==2.4
-langchain==0.0.331
-langsmith==0.0.59
+langchain==0.0.335
+langsmith==0.0.64
 marshmallow==3.20.1
 multidict==6.0.4
 mypy-extensions==1.0.0
 numpy==1.26.1
-openai==0.28.1
+openai==1.2.4
 packaging==23.2
 pandas==2.1.2
 pydantic==1.10.13
