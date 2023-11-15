@@ -101,7 +101,13 @@ class LLMWorker():
 
         # Currently, this prevents the llm from remembering conversations. If convo_memoory was defined outside of the context of this method, it WOULD enable remembering conversations.
         # It should be here for now because we want to simulate how an api route will not actually remember the conversation.
-        convo_memory = ConversationSummaryBufferMemory(llm=self.llm, max_token_limit=10, return_messages=True)
+        convo_memory = ConversationSummaryBufferMemory(llm=self.llm, max_token_limit=650, return_messages=True)
+        convo_memory.load_memory_variables({})
+
+        print("conversation history:")
+        print(conversation_history)
+        for history_item in conversation_history:
+            convo_memory.save_context({"input": history_item.user}, {"output": history_item.assistant})
 
         # https://developers.exlibrisgroup.com/primo/apis/search/
         # https://developers.exlibrisgroup.com/wp-content/uploads/primo/openapi/primoSearch.json
@@ -142,11 +148,10 @@ class LLMWorker():
         print(qs_prompt_result)
 
         if len(qs_prompt_result['keywords']) == 0:
-            no_keywords_template = """You are a friendly assistant who will answer messages from users.\n
-            You MUST answer the message from the user in your normal fashion.\n
+            no_keywords_template = """You are a friendly assistant whose purpose is to carry on a conversation with a user, in order to help them find books at libraries.\n
+            You MUST answer the user's message to the best of your ability.\n
         
-            Append onto that answer your purpose, which is helping them to find books at libraries.\n
-            Suggest to the user some ways they could ask their question in a way that would help you to understand what they are looking for.\n\n
+            If the user did not ask about books, append onto your response a suggestion that would help you to understand what kinds of books they are looking for.\n\n
             Examples Suggestions:\n
             I'm looking for books to help with my research on bio engineering. I want books that are available onsite at Baker, Fung, and Widener.\n
             I'm looking for books about birds. I want books that are available onsite at Fung and Widener.\n
@@ -201,6 +206,8 @@ class LLMWorker():
             {json.dumps(sample_json)}
             
             output:
+            Here are some books I found for you:\n
+
             Fung Library
             9:00am - 5:00pm
             1.  The Art of Computer Programming / Knuth
