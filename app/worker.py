@@ -122,7 +122,7 @@ class LLMWorker():
         headers = {"Content-Type": "application/json"}
 
         # format the prompt to add variable values
-        qs_prompt_formatted_str: str = hollis_prompt_template.format(
+        hollis_prompt_formatted_str: str = hollis_prompt_template.format(
             human_input_text=human_input_text,
             libraries_csv=libraries_csv,
             example_query_result_json=json.dumps(example_query_result_json)
@@ -130,26 +130,26 @@ class LLMWorker():
 
         try:
             # make a prediction
-            qs_prediction = self.llm.predict(qs_prompt_formatted_str)
+            hollis_prediction = self.llm.predict(hollis_prompt_formatted_str)
         except Exception as e:
-            print('Error in qs_prediction')
+            print('Error in hollis_prediction')
             print(e)
             return e
 
         # print the prediction
-        print("qs_prediction")
-        print(qs_prediction)
+        print("hollis_prediction")
+        print(hollis_prediction)
         try:
             # print the prediction
-            qs_prompt_result = json.loads(qs_prediction)
+            hollis_prompt_result = json.loads(hollis_prediction)
         except ValueError as ve:  # includes simplejson.decoder.JSONDecodeError
-            print('Unable to decode json qs_prediction')
+            print('Unable to decode json hollis_prediction')
             print(ve)
             return ve
-        print("qs_prompt_result")
-        print(qs_prompt_result)
+        print("hollis_prompt_result")
+        print(hollis_prompt_result)
 
-        if len(qs_prompt_result['keywords']) == 0:
+        if len(hollis_prompt_result['keywords']) == 0:
             no_keywords_template = """You are a friendly assistant whose purpose is to carry on a conversation with a user, in order to help them find books at libraries.\n
             You MUST answer the user's message to the best of your ability.\n
         
@@ -176,13 +176,13 @@ class LLMWorker():
             print(no_keyword_result)
             return no_keyword_result
         else:
-            primo_api_request = self.generate_primo_api_request(qs_prompt_result)
+            primo_api_request = self.generate_primo_api_request(hollis_prompt_result)
             print(primo_api_request)
 
             primo_api_response = requests.get(primo_api_request)
 
             # Step 2: Write logic to filter, reduce, and prioritize data from HOLLIS using python methods and LLMs
-            reduced_results = self.shrink_results_for_llm(primo_api_response.json()['docs'][0:max_results_to_llm], qs_prompt_result['libraries'])
+            reduced_results = self.shrink_results_for_llm(primo_api_response.json()['docs'][0:max_results_to_llm], hollis_prompt_result['libraries'])
             print(reduced_results)
             print(reduced_results.keys())
             
