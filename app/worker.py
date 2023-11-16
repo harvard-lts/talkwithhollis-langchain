@@ -29,20 +29,20 @@ example_query_result_json = {
 example_chat_result_json = {
     "LAM": [
         {
-            'title': ['The Art of Computer Programming'],
-		    'author': ['Knuth, Peter'],
+            "title": ["The Art of Computer Programming"],
+		        "author": ["Knuth, Peter"],
             "callNumber": "(QA76.6 .K64 1997)"
         }
     ],
     "FUN": [
         {
-            'title': ['The Art of Computer Programming'],
-		    'author': ['Knuth, Peter'],
+            "title": ["The Art of Computer Programming"],
+		        "author": ["Knuth, Peter"],
             "callNumber": "(QA76.6 .K64 1997)"
         },
         {
-            'title': ["A Book About Dogs"],
-            'author': ["Smith, John"],
+            "title": ["A Book About Dogs"],
+            "author": ["Smith, John"],
             "callNumber": "(PZ76.6 .K64 1996)"
         }
     ]
@@ -169,13 +169,24 @@ class LLMWorker():
           example_query_result_json=json.dumps(example_query_result_json)
         )
 
-        # make a prediction
-        qs_prediction = self.llm.predict(qs_prompt_formatted_str)
+        try:
+            # make a prediction
+            qs_prediction = self.llm.predict(qs_prompt_formatted_str)
+        except Exception as e:
+            print('Error in qs_prediction')
+            print(e)
+            return e
 
         # print the prediction
         print("qs_prediction")
         print(qs_prediction)
-        qs_prompt_result = json.loads(qs_prediction)
+        try:
+            # print the prediction
+            qs_prompt_result = json.loads(qs_prediction)
+        except ValueError as ve:  # includes simplejson.decoder.JSONDecodeError
+            print('Unable to decode json qs_prediction')
+            print(ve)
+            return ve
         print("qs_prompt_result")
         print(qs_prompt_result)
 
@@ -184,16 +195,15 @@ class LLMWorker():
             You MUST answer the user's message to the best of your ability.\n
         
             If the user did not ask about books, append onto your response a suggestion that would help you to understand what kinds of books they are looking for.\n\n
-            Examples Suggestions:\n
+            Example suggestions:\n\n
             I'm looking for books to help with my research on bio engineering. I want books that are available onsite at Baker, Fung, and Widener.\n
             I'm looking for books about birds. I want books that are available onsite at Fung and Widener.\n
             I'm looking for books on dogs.\n
             I'm looking for books on dogs, especially greyhounds. They can be at any library\n
 
-            Current conversation:
-            {history}
-            Human: {input}
-            AI Assistant:"""
+            Current conversation: {history}\n\n
+            \n\nHuman: {input}\n\nAssistant:
+            """
             prompt = PromptTemplate(input_variables=['history', 'input'], template = no_keywords_template)
 
             conversation_with_summary = ConversationChain(

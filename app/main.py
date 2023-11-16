@@ -22,4 +22,4 @@ app.include_router(chat.router)
 
 @app.get("/")
 async def root():
-    return {"message": "Hello Bigger Applications!"}
+    return {"message": "Talk With HOLLIS"}
