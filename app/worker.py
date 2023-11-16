@@ -15,14 +15,9 @@ openai_api_key = os.environ.get("OPENAI_API_KEY")
 # Due to token limits when using context injection, we must limit the amount of primo results we send to the llm. This limit should be different for different llm models depending on their token capacity.
 max_results_to_llm = int(os.environ.get("MAX_RESULTS_TO_LLM", 5))
 
-from .prompts.hollis import hollis_prompt_template
+from .prompts.hollis import HollisPrompt
 from .utils.primo import PrimoUtils
 from .utils.files import FilesUtils
-
-example_query_result_json = {
-    "keywords": ["cybercrime", "malware", "DDoS"],
-    "libraries": ["BAK", "SEC", "WID"]
-}
 
 example_chat_result_json = {
     "LAM": [
@@ -50,6 +45,7 @@ class LLMWorker():
     def __init__(self):
         self.llm = OpenAI(temperature=0)
         self.chat_model = ChatOpenAI(temperature=0)
+        self.hollis_prompt = HollisPrompt()
         self.primo_utils = PrimoUtils()
         self.files_utils = FilesUtils()
 
@@ -73,15 +69,11 @@ class LLMWorker():
         headers = {"Content-Type": "application/json"}
 
         # format the prompt to add variable values
-        hollis_prompt_formatted_str: str = hollis_prompt_template.format(
-            human_input_text=human_input_text,
-            libraries_json=json.dumps(libraries_json),
-            example_query_result_json=json.dumps(example_query_result_json)
-        )
+        hollis_prompt_formatted = await self.hollis_prompt.get_hollis_prompt_formatted(human_input_text)
 
         try:
             # make a prediction
-            hollis_prediction = self.llm.predict(hollis_prompt_formatted_str)
+            hollis_prediction = self.llm.predict(hollis_prompt_formatted)
         except Exception as e:
             print('Error in hollis_prediction')
             print(e)
