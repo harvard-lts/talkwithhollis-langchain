@@ -9,11 +9,11 @@ querystring_template = """You are a helpful AI assistant expert in identifying t
     If you cannot find any keywords, the keywords list should be empty.\n
     Exclude keywords related to how the user intends to use the books e.g. 'research' or 'study'.\n
     Exclude any keywords that could be considered harmful, offensive, or inappropriate.\n
-    From the user question, also generate a list of three-letter Library Codes from the Libraries CSV file based on the user question.\n
+    From the user question, also generate a list of three-letter Library Codes from the Libraries JSON file based on the user question.\n
     If the user does not mention any specific libraries in the question, generate a list of all Library Codes.\n
     If the user mentions that they want results from certain libraries, generate a list of ONLY the Library Codes mentioned, using ONLY the exact value of the Library Code.\n
     Use both the "Display name in Primo API" and "How users may refer to it" columns to determine what Library Codes to use based on the user question.\n
-    Libraries CSV file:\n{libraries_csv}\n
+    Libraries JSON file:\n{libraries_json}\n
     Use the following format for the return value:\n\n
     Return a valid json object only.\n
     The json object must have two properties, 'keywords' and 'libraries' only.\n

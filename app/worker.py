@@ -2,7 +2,6 @@
 # pipenv shell
 # pipenv run python3 main.py
 import asyncio, os, requests, json, csv
-import pandas as pd
 from langchain.llms import OpenAI, AzureOpenAI
 from langchain.chat_models import ChatOpenAI, AzureChatOpenAI
 from langchain.schema.messages import SystemMessage
@@ -13,14 +12,12 @@ from langchain.memory import ConversationSummaryBufferMemory
 from langchain.prompts.prompt import PromptTemplate
 
 openai_api_key = os.environ.get("OPENAI_API_KEY")
-primo_api_key = os.environ.get("PRIMO_API_KEY")
-primo_api_host = os.environ.get("PRIMO_API_HOST")
-primo_api_limit = os.environ.get("PRIMO_API_LIMIT", 100)
 # Due to token limits when using context injection, we must limit the amount of primo results we send to the llm. This limit should be different for different llm models depending on their token capacity.
 max_results_to_llm = int(os.environ.get("MAX_RESULTS_TO_LLM", 5))
 
 from .prompts.hollis import hollis_prompt_template
 from .utils.primo import PrimoUtils
+from .utils.files import FilesUtils
 
 example_query_result_json = {
     "keywords": ["cybercrime", "malware", "DDoS"],
@@ -54,34 +51,11 @@ class LLMWorker():
         self.llm = OpenAI(temperature=0)
         self.chat_model = ChatOpenAI(temperature=0)
         self.primo_utils = PrimoUtils()
-
-    async def open_csv_file(self, path):
-        rows = []
-        with open(path, 'r') as file:
-            reader = csv.reader(file)
-            for row in reader:
-                # Process each row asynchronously
-                processed_row = await self.process_row(row)
-                rows.append(processed_row)
-        return rows
-
-    async def open_text_file(self, path):
-        with open(path, 'r') as f:
-            return f.read()
-
-    async def open_json_file(self, path):
-        with open(path) as json_file:
-            json_data = json.load(json_file)
-            return json_data
-
-    async def process_row(self, row):
-        # Perform some processing on each row asynchronously
-        return row
+        self.files_utils = FilesUtils()
 
     async def predict(self, human_input_text, conversation_history = []):
-        libraries_csv = await self.open_csv_file('schemas/libraries.csv')
-        df = pd.read_csv('schemas/libraries.csv')
-        libraries_json = df.to_json(orient='records')
+
+        libraries_json = await self.files_utils.get_libraries_json()
 
         # Currently, this prevents the llm from remembering conversations. If convo_memoory was defined outside of the context of this method, it WOULD enable remembering conversations.
         # It should be here for now because we want to simulate how an api route will not actually remember the conversation.
@@ -101,7 +75,7 @@ class LLMWorker():
         # format the prompt to add variable values
         hollis_prompt_formatted_str: str = hollis_prompt_template.format(
             human_input_text=human_input_text,
-            libraries_csv=libraries_csv,
+            libraries_json=json.dumps(libraries_json),
             example_query_result_json=json.dumps(example_query_result_json)
         )
 
