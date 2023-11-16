@@ -3,8 +3,8 @@
 # pipenv run python3 main.py
 import asyncio, os, requests, json, csv
 import pandas as pd
-from langchain.llms import OpenAI
-from langchain.chat_models import ChatOpenAI
+from langchain.llms import OpenAI, AzureOpenAI
+from langchain.chat_models import ChatOpenAI, AzureChatOpenAI
 from langchain.schema.messages import SystemMessage
 from langchain.prompts.chat import ChatPromptTemplate
 from langchain.prompts import HumanMessagePromptTemplate
@@ -18,6 +18,8 @@ primo_api_host = os.environ.get("PRIMO_API_HOST")
 primo_api_limit = os.environ.get("PRIMO_API_LIMIT", 100)
 # Due to token limits when using context injection, we must limit the amount of primo results we send to the llm. This limit should be different for different llm models depending on their token capacity.
 max_results_to_llm = int(os.environ.get("MAX_RESULTS_TO_LLM", 5))
+
+ai_platform = os.environ.get("AI_PLATFORM", "azure")
 
 sample_json = {
     "LAM": [
@@ -45,6 +47,23 @@ class LLMWorker():
     def __init__(self):
         self.llm = OpenAI(temperature=0)
         self.chat_model = ChatOpenAI(temperature=0)
+        if (ai_platform == "azure"):
+            os.environ["OPENAI_API_TYPE"] = os.environ.get("AZURE_OPENAI_API_TYPE", "azure")
+            os.environ["OPENAI_API_VERSION"] = os.environ.get("AZURE_OPENAI_API_VERSION", "2023-08-01-preview")
+            os.environ["OPENAI_API_BASE"] = os.environ.get("AZURE_OPENAI_API_BASE")
+            os.environ["OPENAI_API_KEY"] = os.environ.get("AZURE_OPENAI_API_KEY")
+
+            self.chat_model = AzureChatOpenAI(
+                temperature=0,
+                deployment_name=os.environ.get("AZURE_OPENAI_API_DEPLOYMENT", "gpt-35-turbo"),
+                model_version=os.environ.get("AZURE_OPENAI_API_MODEL_VERSION", "0301"),
+            )
+            """
+            self.llm = AzureOpenAI(
+                deployment_name=os.environ.get("AZURE_OPENAI_API_DEPLOYMENT", "gpt-35-turbo"),
+                model_name=os.environ.get("AZURE_OPENAI_API_MODEL_NAME", "gpt-35-turbo"),
+            )
+            """
 
     async def open_csv_file(self, path):
         rows = []
