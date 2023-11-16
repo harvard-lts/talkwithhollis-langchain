@@ -47,28 +47,30 @@ class LLMWorker():
         # format the prompt to add variable values
         hollis_prompt_formatted = await self.hollis_prompt.get_hollis_prompt_formatted(human_input_text)
 
+        hollis_prediction = None
         try:
             # make a prediction
             hollis_prediction = self.llm.predict(hollis_prompt_formatted)
         except Exception as e:
             print('Error in hollis_prediction')
             print(e)
-            return e
 
         # print the prediction
         print("hollis_prediction")
         print(hollis_prediction)
+
+        hollis_prompt_result = None
         try:
             # print the prediction
             hollis_prompt_result = json.loads(hollis_prediction)
         except ValueError as ve:  # includes simplejson.decoder.JSONDecodeError
             print('Unable to decode json hollis_prediction')
             print(ve)
-            return ve
+
         print("hollis_prompt_result")
         print(hollis_prompt_result)
 
-        if len(hollis_prompt_result['keywords']) == 0:
+        if hollis_prompt_result is None or len(hollis_prompt_result['keywords']) == 0:
             
             hollis_no_keywords_prompt = await self.hollis_prompt.get_hollis_no_keywords_prompt()
 
