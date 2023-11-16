@@ -13,13 +13,13 @@ querystring_template = """You are a helpful AI assistant expert in identifying t
     If the user does not mention any specific libraries in the question, generate a list of all Library Codes.\n
     If the user mentions that they want results from certain libraries, generate a list of ONLY the Library Codes mentioned, using ONLY the exact value of the Library Code.\n
     Use both the "Display name in Primo API" and "How users may refer to it" columns to determine what Library Codes to use based on the user question.\n
-    User Question:\n{human_input_text}\n
     Libraries CSV file:\n{libraries_csv}\n
     Use the following format for the return value:\n\n
     Return a valid json object only.\n
     The json object must have two properties, 'keywords' and 'libraries' only.\n
     The 'keywords' value must be a list of keywords and the 'libraries' value must be a list of the Library Codes for the requested libraries.
     Example JSON result:\n{example_query_result_json}\n
+    \n\nHuman:{human_input_text}\n\nAssistant:
     """
 
-qs_prompt_template = PromptTemplate.from_template(template=querystring_template)
+hollis_prompt_template = PromptTemplate.from_template(template=querystring_template)
