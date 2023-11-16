@@ -54,6 +54,7 @@ class LLMWorker():
         except Exception as e:
             print('Error in hollis_prediction')
             print(e)
+            return 'Server error'
 
         # print the prediction
         print("hollis_prediction")
@@ -66,6 +67,7 @@ class LLMWorker():
         except ValueError as ve:  # includes simplejson.decoder.JSONDecodeError
             print('Unable to decode json hollis_prediction')
             print(ve)
+            return 'Server error'
 
         print("hollis_prompt_result")
         print(hollis_prompt_result)

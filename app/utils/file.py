@@ -10,7 +10,6 @@ class FileUtils():
         with open(path, 'r') as file:
             reader = csv.reader(file)
             for row in reader:
-                # Process each row asynchronously
                 processed_row = await self.process_row(row)
                 rows.append(processed_row)
         return rows
@@ -32,3 +31,7 @@ class FileUtils():
         df = pd.read_csv('app/schemas/libraries.csv')
         libraries_json = df.to_json(orient='records')
         return libraries_json
+
+    async def get_libraries_csv(self):
+        libraries_csv = await self.open_csv_file('app/schemas/libraries.csv')
+        return libraries_csv
