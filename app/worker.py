@@ -4,55 +4,30 @@
 import asyncio, os, requests, json, csv
 from langchain.llms import OpenAI, AzureOpenAI
 from langchain.chat_models import ChatOpenAI, AzureChatOpenAI
-from langchain.schema.messages import SystemMessage
-from langchain.prompts.chat import ChatPromptTemplate
-from langchain.prompts import HumanMessagePromptTemplate
 from langchain.chains import ConversationChain
 from langchain.memory import ConversationSummaryBufferMemory
-from langchain.prompts.prompt import PromptTemplate
 
 openai_api_key = os.environ.get("OPENAI_API_KEY")
 # Due to token limits when using context injection, we must limit the amount of primo results we send to the llm. This limit should be different for different llm models depending on their token capacity.
 max_results_to_llm = int(os.environ.get("MAX_RESULTS_TO_LLM", 5))
 
 from .prompts.hollis import HollisPrompt
+from .prompts.chat import ChatPrompt
 from .utils.primo import PrimoUtils
 from .utils.file import FileUtils
-
-example_chat_result_json = {
-    "LAM": [
-        {
-            "title": ["The Art of Computer Programming"],
-		        "author": ["Knuth, Peter"],
-            "callNumber": "(QA76.6 .K64 1997)"
-        }
-    ],
-    "FUN": [
-        {
-            "title": ["The Art of Computer Programming"],
-		        "author": ["Knuth, Peter"],
-            "callNumber": "(QA76.6 .K64 1997)"
-        },
-        {
-            "title": ["A Book About Dogs"],
-            "author": ["Smith, John"],
-            "callNumber": "(PZ76.6 .K64 1996)"
-        }
-    ]
-}
 
 class LLMWorker():
     def __init__(self):
         self.llm = OpenAI(temperature=0)
         self.chat_model = ChatOpenAI(temperature=0)
         self.hollis_prompt = HollisPrompt()
+        self.chat_prompt = ChatPrompt()
         self.primo_utils = PrimoUtils()
         self.file_utils = FileUtils()
 
     async def predict(self, human_input_text, conversation_history = []):
 
-        libraries_json = await self.file_utils.get_libraries_json()
-
+        libraries_json = self.file_utils.get_libraries_json()
         # Currently, this prevents the llm from remembering conversations. If convo_memoory was defined outside of the context of this method, it WOULD enable remembering conversations.
         # It should be here for now because we want to simulate how an api route will not actually remember the conversation.
         convo_memory = ConversationSummaryBufferMemory(llm=self.llm, max_token_limit=650, return_messages=True)
@@ -60,6 +35,7 @@ class LLMWorker():
 
         print("conversation history:")
         print(conversation_history)
+
         for history_item in conversation_history:
             convo_memory.save_context({"input": history_item.user}, {"output": history_item.assistant})
 
@@ -119,54 +95,7 @@ class LLMWorker():
             print(reduced_results.keys())
             
             # Step 3: Context injection into the chat prompt
-            system_content = f"""You are a friendly assistant who helps to find information about the locations and availability of books in a network of libraries.\n
-            Library Codes are three-letter codes that can be used to reference library names in the Libraries_JSON.\n
-            You will receive a list of Library Codes. You will also receive a JSON list of books, containing titles, authors, and locations. Each location will contain a library code and call number.\n
-            You will need to display the library hours for each, and then display the books in the list, grouped by library code.\n
-            If a book's call number is inside parenthesis, do not include the parenthesis in the display.\n
-            Below is the list format:\n\n
-
-            Library Display name in Primo API
-            Library Hours
-            1.  Full book title / Author's Last Name
-                Call number
-            2.  Full book title  / Author's Last Name
-                Call number
-            
-            \n\n
-            Below is an example input and output with example data:\n
-            input json:\n
-            {json.dumps(example_chat_result_json)}
-            
-            output:
-            Here are some books I found for you:\n
-
-            Fung Library
-            9:00am - 5:00pm
-            1.  The Art of Computer Programming / Knuth
-                QA76.6 .K64 1997
-            2.  A Book About Dogs / Smith
-                PZ76.6 .K64 1996
-
-            Lamont Library
-            9:00am-5:00
-            1.  The Art of Computer Programming / Knuth
-                QA76.6 .K64 1997
-            
-            Libraries_JSON: {json.dumps(libraries_json)}\n\n
-            """
-
-            human_template = "{human_input_text}"
-
-            chat_template = ChatPromptTemplate.from_messages(
-                [
-                    SystemMessage(
-                        content=(system_content)
-                    ),
-                    HumanMessagePromptTemplate.from_template(human_template),
-                ]
-            )
-
+            chat_template = await self.chat_prompt.get_chat_prompt_template()
             chain = chat_template | self.chat_model
             human_query_string = "Context:\n[CONTEXT]\n" + json.dumps(reduced_results) + "\n[/CONTEXT]\n\n The hours for all libraries are 9:00am - 5:00pm."
             if len(reduced_results.keys()) > 0:
