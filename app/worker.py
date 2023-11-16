@@ -20,6 +20,7 @@ primo_api_limit = os.environ.get("PRIMO_API_LIMIT", 100)
 max_results_to_llm = int(os.environ.get("MAX_RESULTS_TO_LLM", 5))
 
 from .prompts.hollis import hollis_prompt_template
+from .utils.primo import PrimoUtils
 
 example_query_result_json = {
     "keywords": ["cybercrime", "malware", "DDoS"],
@@ -52,6 +53,7 @@ class LLMWorker():
     def __init__(self):
         self.llm = OpenAI(temperature=0)
         self.chat_model = ChatOpenAI(temperature=0)
+        self.primo_utils = PrimoUtils()
 
     async def open_csv_file(self, path):
         rows = []
@@ -75,31 +77,6 @@ class LLMWorker():
     async def process_row(self, row):
         # Perform some processing on each row asynchronously
         return row
-
-    def generate_primo_api_request(self, llm_response):
-        primo_api_request = primo_api_host + f"?scope=default_scope&tab=books&vid=HVD2&limit={primo_api_limit}&offset=0&apikey={primo_api_key}&q=any,contains,{'%20'.join(llm_response['keywords'])}&multiFacets=facet_rtype,include,books"
-        if len(llm_response['libraries']) > 0:
-            primo_api_request += "%7C,%7Cfacet_library,include," + '%7C,%7Cfacet_library,include,'.join(llm_response['libraries'])
-        primo_api_request += "%7C,%7Cfacet_tlevel,include,available_onsite"
-        return primo_api_request
-
-    def shrink_results_for_llm(self, results, libraries):
-        reduced_results = {}
-        for result in results:
-            for holding in result['delivery']['holding']:
-                new_object = {
-                    # TODO: We previously were using ['pnx']['addata']['btitle'] but that is not always present. We will need to come up with a prioritization order to determine which title to use.
-                    'title': result['pnx']['sort']['title'],
-                    # TODO: Corinna wants us to use ['pnx']['addata']['aulast'] but that author is not always present and we will need to come up with a prioritization order to determine which author to use.
-                    'author': result['pnx']['sort']['author'],
-                    'callNumber': holding['callNumber']
-                }
-                if holding['libraryCode'] in libraries:
-                    if not holding['libraryCode'] in reduced_results:
-                        reduced_results[holding['libraryCode']] = []
-                    reduced_results[holding['libraryCode']].append(new_object)
-
-        return reduced_results
 
     async def predict(self, human_input_text, conversation_history = []):
         libraries_csv = await self.open_csv_file('schemas/libraries.csv')
@@ -176,13 +153,14 @@ class LLMWorker():
             print(no_keyword_result)
             return no_keyword_result
         else:
-            primo_api_request = self.generate_primo_api_request(hollis_prompt_result)
+            
+            primo_api_request = self.primo_utils.generate_primo_api_request(hollis_prompt_result)
             print(primo_api_request)
 
             primo_api_response = requests.get(primo_api_request)
 
             # Step 2: Write logic to filter, reduce, and prioritize data from HOLLIS using python methods and LLMs
-            reduced_results = self.shrink_results_for_llm(primo_api_response.json()['docs'][0:max_results_to_llm], hollis_prompt_result['libraries'])
+            reduced_results = self.primo_utils.shrink_results_for_llm(primo_api_response.json()['docs'][0:max_results_to_llm], hollis_prompt_result['libraries'])
             print(reduced_results)
             print(reduced_results.keys())
             
