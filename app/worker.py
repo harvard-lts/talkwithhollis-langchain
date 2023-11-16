@@ -17,7 +17,7 @@ max_results_to_llm = int(os.environ.get("MAX_RESULTS_TO_LLM", 5))
 
 from .prompts.hollis import HollisPrompt
 from .utils.primo import PrimoUtils
-from .utils.files import FilesUtils
+from .utils.file import FileUtils
 
 example_chat_result_json = {
     "LAM": [
@@ -47,11 +47,11 @@ class LLMWorker():
         self.chat_model = ChatOpenAI(temperature=0)
         self.hollis_prompt = HollisPrompt()
         self.primo_utils = PrimoUtils()
-        self.files_utils = FilesUtils()
+        self.file_utils = FileUtils()
 
     async def predict(self, human_input_text, conversation_history = []):
 
-        libraries_json = await self.files_utils.get_libraries_json()
+        libraries_json = await self.file_utils.get_libraries_json()
 
         # Currently, this prevents the llm from remembering conversations. If convo_memoory was defined outside of the context of this method, it WOULD enable remembering conversations.
         # It should be here for now because we want to simulate how an api route will not actually remember the conversation.

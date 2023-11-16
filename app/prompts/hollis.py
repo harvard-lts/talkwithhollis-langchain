@@ -1,10 +1,10 @@
 import json
 from langchain.prompts.prompt import PromptTemplate
-from ..utils.files import FilesUtils
+from ..utils.file import FileUtils
 
 class HollisPrompt():
     def __init__(self):
-        self.files_utils = FilesUtils()
+        self.file_utils = FileUtils()
         # https://github.com/langchain-ai/langchain/blob/3d74d5e24dd62bb3878fe34de5f9eefa6d1d26c7/libs/langchain/langchain/chains/api/prompt.py#L4
         self.hollis_template = """You are a helpful AI assistant expert in identifying the relevant keywords and library codes based on the user's question about books currently available in libraries.\n
             Use following context to create the keywords and library codes. Context:\n\n
@@ -35,7 +35,7 @@ class HollisPrompt():
         self.hollis_prompt_template = PromptTemplate.from_template(template=self.hollis_template)
 
     async def get_hollis_prompt_formatted(self, human_input_text):
-        libraries_json = await self.files_utils.get_libraries_json()
+        libraries_json = await self.file_utils.get_libraries_json()
         # format the prompt to add variable values
         hollis_prompt_formatted: str = self.hollis_prompt_template.format(
             human_input_text=human_input_text,
