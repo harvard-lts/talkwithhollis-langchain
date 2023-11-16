@@ -27,12 +27,27 @@ class HollisPrompt():
             \n\nHuman:{human_input_text}\n\nAssistant:
             """
 
+        self.hollis_no_keywords_template = """You are a friendly assistant whose purpose is to carry on a conversation with a user, in order to help them find books at libraries.\n
+          You MUST answer the user's message to the best of your ability.\n
+      
+          If the user did not ask about books, append onto your response a suggestion that would help you to understand what kinds of books they are looking for.\n\n
+          Example suggestions:\n\n
+          I'm looking for books to help with my research on bio engineering. I want books that are available onsite at Baker, Fung, and Widener.\n
+          I'm looking for books about birds. I want books that are available onsite at Fung and Widener.\n
+          I'm looking for books on dogs.\n
+          I'm looking for books on dogs, especially greyhounds. They can be at any library\n
+
+          Current conversation:{history}\n\n
+          \n\nHuman:{input}\n\nAssistant:
+          """
+
         self.example_query_result_json = {
             "keywords": ["cybercrime", "malware", "DDoS"],
             "libraries": ["BAK", "SEC", "WID"]
         }
 
         self.hollis_prompt_template = PromptTemplate.from_template(template=self.hollis_template)
+        self.hollis_no_keywords_prompt_template = PromptTemplate(input_variables=['input', 'history'], template=self.hollis_no_keywords_template)
 
     async def get_hollis_prompt_formatted(self, human_input_text):
         libraries_json = await self.file_utils.get_libraries_json()
@@ -44,4 +59,5 @@ class HollisPrompt():
         )
         return hollis_prompt_formatted
 
-
+    async def get_hollis_no_keywords_prompt(self):
+      return self.hollis_no_keywords_prompt_template

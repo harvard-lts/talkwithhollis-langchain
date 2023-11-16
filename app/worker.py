@@ -93,23 +93,11 @@ class LLMWorker():
         print(hollis_prompt_result)
 
         if len(hollis_prompt_result['keywords']) == 0:
-            no_keywords_template = """You are a friendly assistant whose purpose is to carry on a conversation with a user, in order to help them find books at libraries.\n
-            You MUST answer the user's message to the best of your ability.\n
-        
-            If the user did not ask about books, append onto your response a suggestion that would help you to understand what kinds of books they are looking for.\n\n
-            Example suggestions:\n\n
-            I'm looking for books to help with my research on bio engineering. I want books that are available onsite at Baker, Fung, and Widener.\n
-            I'm looking for books about birds. I want books that are available onsite at Fung and Widener.\n
-            I'm looking for books on dogs.\n
-            I'm looking for books on dogs, especially greyhounds. They can be at any library\n
-
-            Current conversation: {history}\n\n
-            \n\nHuman: {input}\n\nAssistant:
-            """
-            prompt = PromptTemplate(input_variables=['history', 'input'], template = no_keywords_template)
+            
+            hollis_no_keywords_prompt = await self.hollis_prompt.get_hollis_no_keywords_prompt()
 
             conversation_with_summary = ConversationChain(
-                prompt=prompt,
+                prompt=hollis_no_keywords_prompt,
                 llm=self.llm,
                 memory=convo_memory,
                 verbose=True,
