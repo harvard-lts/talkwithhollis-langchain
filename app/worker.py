@@ -38,6 +38,7 @@ class LLMWorker():
             self.llm = AzureOpenAI(
                 deployment_name=os.environ.get("AZURE_OPENAI_API_DEPLOYMENT", "gpt-35-turbo"),
                 model_name=os.environ.get("AZURE_OPENAI_API_MODEL_NAME", "gpt-35-turbo"),
+                temperature=0
             )
             print("setting azure llm complete")
         """

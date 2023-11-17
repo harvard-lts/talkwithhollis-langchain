@@ -10,6 +10,8 @@ AZURE_OPENAI_API_VERSION=2023-08-01-preview
 AZURE_OPENAI_API_BASE=https://$yourresource.openai.azure.com
 AZURE_OPENAI_API_KEY=$yourkey
 AZURE_OPENAI_API_TYPE=azure
+# https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models#gpt-35-models
+# GPT3.5 Turbo (0613) only supports the Chat Completions API.
 AZURE_OPENAI_API_DEPLOYMENT=gpt-35-turbo
-AZURE_OPENAI_API_MODEL_VERSION=0613
+AZURE_OPENAI_API_MODEL_VERSION=0301
 AZURE_OPENAI_API_MODEL_NAME=gpt-35-turbo
