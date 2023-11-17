@@ -25,21 +25,29 @@ class LLMWorker():
         self.primo_utils = PrimoUtils()
         self.file_utils = FileUtils()
         self.ai_platform = os.environ.get("AI_PLATFORM", "azure")
+        print(self.ai_platform)
+
         if (self.ai_platform == "azure"):
+            print("setting azure config")
             os.environ["OPENAI_API_TYPE"] = os.environ.get("AZURE_OPENAI_API_TYPE", "azure")
             os.environ["OPENAI_API_VERSION"] = os.environ.get("AZURE_OPENAI_API_VERSION", "2023-08-01-preview")
             os.environ["OPENAI_API_BASE"] = os.environ.get("AZURE_OPENAI_API_BASE")
             os.environ["OPENAI_API_KEY"] = os.environ.get("AZURE_OPENAI_API_KEY")
 
+            print("setting azure llm start")
+            self.llm = AzureOpenAI(
+                deployment_name=os.environ.get("AZURE_OPENAI_API_DEPLOYMENT", "gpt-35-turbo"),
+                model_name=os.environ.get("AZURE_OPENAI_API_MODEL_NAME", "gpt-35-turbo"),
+            )
+            print("setting azure llm complete")
+        """
             self.chat_model = AzureChatOpenAI(
                 temperature=0,
                 deployment_name=os.environ.get("AZURE_OPENAI_API_DEPLOYMENT", "gpt-35-turbo"),
                 model_version=os.environ.get("AZURE_OPENAI_API_MODEL_VERSION", "0301"),
             )
-            self.llm = AzureOpenAI(
-                deployment_name=os.environ.get("AZURE_OPENAI_API_DEPLOYMENT", "gpt-35-turbo"),
-                model_name=os.environ.get("AZURE_OPENAI_API_MODEL_NAME", "gpt-35-turbo"),
-            )
+
+        """
 
     async def predict(self, human_input_text, conversation_history = []):
 
