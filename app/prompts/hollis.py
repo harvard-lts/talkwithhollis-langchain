@@ -6,11 +6,9 @@ class HollisPrompt():
     def __init__(self):
         self.file_utils = FileUtils()
         # https://github.com/langchain-ai/langchain/blob/3d74d5e24dd62bb3878fe34de5f9eefa6d1d26c7/libs/langchain/langchain/chains/api/prompt.py#L4
-        self.hollis_template = """You are given a user question asking to find books by keyword.\n
-            Please follow these instructions for generating the result:
-            You must return a valid json object and nothing more. The response must be parsable as a json object.\n
-            The object must contain two properties, 'keywords' with a list of keywords and 'libraries' with list of the Library Codes for the requested libraries.\n
-            The resulting JSON object should be in this format: {"keywords":["string"],"libraries":["string"]}.\n\n
+        self.hollis_template1 = """You are given a user question asking to find books by keyword.\n
+            User Question:{user_question}\n
+            You must return a single valid JSON object with two properties, 'keywords' and 'libraries'.\n
             Please follow these instructions for generating the keywords:\n
             Generate a list of keywords that describe the books.\n
             If you cannot find any keywords, the keywords list should be empty.\n
@@ -22,7 +20,21 @@ class HollisPrompt():
             If the user mentions that they want results from certain libraries, generate a list of ONLY the Library Codes mentioned, using ONLY the exact value of the Library Code.\n
             Use both the "Display name in Primo API" and "How users may refer to it" columns to determine what Library Codes to use based on the user question.\n
             Libraries CSV file:{libraries_csv}\n
-            \n\nHuman:{user_question}\n\nAssistant:
+            Please follow these instructions for generating the result:\n
+            You must return a single valid json object ONLY and nothing more. Do not return any additional text.\n
+            The resulting JSON object must contain two properties, 'keywords' with a list of keywords and 'libraries' with list of the Library Codes for the requested libraries.\n
+            Do not include any explanations, only provide a RFC8259 compliant JSON response following this format without deviation:{example_query_result_json}\n\n
+            """
+
+        self.hollis_template = """Create a JSON object with two properties 'keywords' and 'libraries' based on this User Question:{user_question}\n
+            Generate a list of keywords relevant to the User Question.\n
+            If you cannot find any keywords, the keywords list should be empty.\n
+            Generate a list of three-letter Library Codes from this Libraries CSV file:{libraries_csv}\n
+            If the user does not mention any specific libraries in the question, generate a list of all Library Codes.\n
+            If the user mentions that they want results from certain libraries, generate a list of ONLY the Library Codes mentioned, using ONLY the exact value of the Library Code.\n
+            Use both the "Display name in Primo API" and "How users may refer to it" columns to determine what Library Codes to use based on the user question.\n
+            Do not include any explanations, return a RFC8259 compliant JSON response following this format without deviation:{example_query_result_json}\n
+            JSON response:
             """
 
         self.hollis_no_keywords_template = """You are a friendly assistant whose purpose is to carry on a conversation with a user, in order to help them find books at libraries.\n
@@ -40,10 +52,7 @@ class HollisPrompt():
             Human: {input}
             AI Assistant:"""
 
-        self.example_query_result_json = {
-            "keywords": ["cybercrime", "malware", "DDoS"],
-            "libraries": ["BAK", "SEC", "WID"]
-        }
+        self.example_query_result_json = {"keywords":["string"],"libraries":["string"]}
 
         self.hollis_prompt_template = PromptTemplate.from_template(template=self.hollis_template)
         self.hollis_no_keywords_prompt_template = PromptTemplate(input_variables=['input', 'history'], template=self.hollis_no_keywords_template)
@@ -53,7 +62,8 @@ class HollisPrompt():
         # format the prompt to add variable values
         hollis_prompt_formatted: str = self.hollis_prompt_template.format(
             user_question=human_input_text,
-            libraries_csv=json.dumps(self.libraries_csv)
+            libraries_csv=json.dumps(self.libraries_csv),
+            example_query_result_json=json.dumps(self.example_query_result_json)
         )
         return hollis_prompt_formatted
 
