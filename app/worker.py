@@ -24,6 +24,22 @@ class LLMWorker():
         self.chat_prompt = ChatPrompt()
         self.primo_utils = PrimoUtils()
         self.file_utils = FileUtils()
+        self.ai_platform = os.environ.get("AI_PLATFORM", "azure")
+        if (self.ai_platform == "azure"):
+            os.environ["OPENAI_API_TYPE"] = os.environ.get("AZURE_OPENAI_API_TYPE", "azure")
+            os.environ["OPENAI_API_VERSION"] = os.environ.get("AZURE_OPENAI_API_VERSION", "2023-08-01-preview")
+            os.environ["OPENAI_API_BASE"] = os.environ.get("AZURE_OPENAI_API_BASE")
+            os.environ["OPENAI_API_KEY"] = os.environ.get("AZURE_OPENAI_API_KEY")
+
+            self.chat_model = AzureChatOpenAI(
+                temperature=0,
+                deployment_name=os.environ.get("AZURE_OPENAI_API_DEPLOYMENT", "gpt-35-turbo"),
+                model_version=os.environ.get("AZURE_OPENAI_API_MODEL_VERSION", "0301"),
+            )
+            self.llm = AzureOpenAI(
+                deployment_name=os.environ.get("AZURE_OPENAI_API_DEPLOYMENT", "gpt-35-turbo"),
+                model_name=os.environ.get("AZURE_OPENAI_API_MODEL_NAME", "gpt-35-turbo"),
+            )
 
     async def predict(self, human_input_text, conversation_history = []):
 
@@ -49,7 +65,7 @@ class LLMWorker():
 
         hollis_prediction = None
         try:
-            # make a prediction
+            # get predicted keywords and libraries from the llm
             hollis_prediction = self.llm.predict(hollis_prompt_formatted)
         except Exception as e:
             print('Error in hollis_prediction')
