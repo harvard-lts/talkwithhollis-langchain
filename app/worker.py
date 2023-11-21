@@ -30,6 +30,7 @@ class LLMWorker():
         self.ai_platform = os.environ.get("AI_PLATFORM", "openai")
         if self.ai_platform == "amazon" or self.ai_platform == "aws":
 
+            # https://github.com/aws-samples/amazon-bedrock-workshop/blob/main/01_Generation/02_contextual_generation.ipynb
             boto3_bedrock = get_bedrock_client(
                 #assumed_role=os.environ.get("BEDROCK_ASSUME_ROLE", None),
                 region=os.environ.get("AWS_DEFAULT_REGION", "us-east-1")
