@@ -43,7 +43,7 @@ docker run --rm -it -v ~/.aws:/root/.aws amazon/aws-cli configure --profile talk
 
 Enter the access key id, secret access key, and region. A new entry in the `~/.aws/credentials` file will be created. Path to AWS credentials file: `$HOME/.aws/credentials`. Note that the region is required.
 
-New entry in the credentials file:
+Entry in the credentials file:
 
 ```
 [talkwithhollis]
@@ -54,7 +54,7 @@ region = us-east-1
 
 Profile name
 
-The profile name in the credentials must match the profile name `AWS_BEDROCK_PROFILE_NAME` in the .env.
+The profile name in the credentials file must match the profile name `AWS_BEDROCK_PROFILE_NAME` in the .env.
 
 ```
 AWS_BEDROCK_PROFILE_NAME=talkwithhollis
