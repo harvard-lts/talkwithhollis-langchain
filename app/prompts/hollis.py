@@ -30,14 +30,10 @@ class HollisPrompt():
             \n\nAssistant:
             """
 
-        self.libraries = """
-            The 'libraries' property must contain a list of three-letter Library Codes from the Libraries JSON file based on the user question.\n
-            Start by adding ALL the library codes in the Libraries JSON file, using ONLY the exact value of the Library Code.\n
-            If the user mentions certain libraries, the list must have ONLY the Library Codes mentioned.\n
-            Use both the 'primoDisplayName' and 'howUsersMayRefer' properties in the Libraries JSON file to find the corresponding library codes based on the user question.\n
-            """
-
-        self.hollis_no_keywords_template = """You are a friendly assistant whose purpose is to carry on a conversation with a user, in order to help them find books at libraries.\n
+        self.hollis_no_keywords_template = """\n\nHuman:
+            You are given the following user question:\n
+            <user_question>\n{human_input_text}\n</user_question>\n
+            You are a friendly assistant whose purpose is to carry on a conversation with a user, in order to help them find books at libraries.\n
             You MUST answer the user's message to the best of your ability.\n
         
             If the user did not ask about books, append onto your response a suggestion that would help you to understand what kinds of books they are looking for.\n\n
@@ -48,17 +44,11 @@ class HollisPrompt():
             I'm looking for books on dogs, especially greyhounds. They can be at any library\n
 
             Current conversation:
-            {history}
-            \n\nHuman:{input}\n\nAssistant:
+            <current_conversation>\n{history}\n</current_conversation>\n
+            \n\nAssistant:
             """
 
-        #self.example_query_result_json = {
-            #"keywords": ["cybercrime", "malware", "DDoS"],
-            #"libraries": ["BAK", "SEC", "WID"]
-        #}
-
         self.example_query_result_json = {"keywords":["string"],"libraries":["string"]}
-
         self.hollis_prompt_template = PromptTemplate.from_template(template=self.hollis_template)
         self.hollis_no_keywords_prompt_template = PromptTemplate(input_variables=['input', 'history'], template=self.hollis_no_keywords_template)
 
