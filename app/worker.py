@@ -6,6 +6,7 @@ from langchain.llms import OpenAI, AzureOpenAI
 from langchain.chat_models import ChatOpenAI, AzureChatOpenAI
 from langchain.chains import ConversationChain
 from langchain.memory import ConversationSummaryBufferMemory
+from langchain.llms.bedrock import Bedrock
 
 openai_api_key = os.environ.get("OPENAI_API_KEY")
 # Due to token limits when using context injection, we must limit the amount of primo results we send to the llm. This limit should be different for different llm models depending on their token capacity.
@@ -25,19 +26,39 @@ class LLMWorker():
         self.primo_utils = PrimoUtils()
         self.file_utils = FileUtils()
 
+        self.ai_platform = os.environ.get("AI_PLATFORM", "openai")
+        if self.ai_platform == "amazon" or self.ai_platform == "aws":
+
+            boto3_bedrock = bedrock.get_bedrock_client(
+                assumed_role=os.environ.get("BEDROCK_ASSUME_ROLE", None),
+                region=os.environ.get("AWS_DEFAULT_REGION", "us-east-1")
+            )
+
+            inference_modifier = {'max_tokens_to_sample':4096, 
+                "temperature":1.0,
+                "top_k":250,
+                "top_p":1,
+                "stop_sequences": ["\n\nHuman"]
+            }
+
+            self.llm = Bedrock(
+                credentials_profile_name=os.environ.get("AWS_BEDROCK_PROFILE_NAME", "talkwithhollis"),
+                model_id=os.environ.get("AWS_BEDROCK_MODEL_ID", "anthropic.claude-instant-v1")
+            )
+
     async def predict(self, human_input_text, conversation_history = []):
 
         libraries_json = self.file_utils.get_libraries_json()
         # Currently, this prevents the llm from remembering conversations. If convo_memoory was defined outside of the context of this method, it WOULD enable remembering conversations.
         # It should be here for now because we want to simulate how an api route will not actually remember the conversation.
-        convo_memory = ConversationSummaryBufferMemory(llm=self.llm, max_token_limit=650, return_messages=True)
-        convo_memory.load_memory_variables({})
+        #convo_memory = ConversationSummaryBufferMemory(llm=self.llm, max_token_limit=650, return_messages=True)
+        #convo_memory.load_memory_variables({})
 
-        print("conversation history:")
-        print(conversation_history)
+        #print("conversation history:")
+        #print(conversation_history)
 
-        for history_item in conversation_history:
-            convo_memory.save_context({"input": history_item.user}, {"output": history_item.assistant})
+        #for history_item in conversation_history:
+            #convo_memory.save_context({"input": history_item.user}, {"output": history_item.assistant})
 
         # https://developers.exlibrisgroup.com/primo/apis/search/
         # https://developers.exlibrisgroup.com/wp-content/uploads/primo/openapi/primoSearch.json
@@ -59,7 +80,9 @@ class LLMWorker():
         # print the prediction
         print("hollis_prediction")
         print(hollis_prediction)
+        return hollis_prediction
 
+        """
         hollis_prompt_result = None
         try:
             # print the prediction
@@ -108,3 +131,4 @@ class LLMWorker():
             print('chat_result.content')
             print(chat_result.content)
             return chat_result.content
+        """

@@ -1,3 +1,6 @@
 OPENAI_API_KEY=key
 PRIMO_API_HOST=host
 PRIMO_API_KEY=key
+
+AWS_BEDROCK_PROFILE_NAME=credentials_profile_name
+AWS_BEDROCK_MODEL_ID=anthropic.claude-instant-v1
