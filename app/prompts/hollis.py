@@ -6,19 +6,35 @@ class HollisPrompt():
     def __init__(self):
         self.file_utils = FileUtils()
         # https://github.com/langchain-ai/langchain/blob/3d74d5e24dd62bb3878fe34de5f9eefa6d1d26c7/libs/langchain/langchain/chains/api/prompt.py#L4
-        self.hollis_template = """You are given a user question asking to find books by keyword.
-            The user also may mention that they want books from certain libraries.
-            From the user question, extract a list of keywords that describe the books e.g. ['cybercrime', 'malware', 'DDoS'].
-            If you cannot find any keywords, the keywords list should be empty.
-            Exclude keywords related to how the user intends to use the books e.g. 'research' or 'study'.
-            Exclude any keywords that could be considered harmful, offensive, or inappropriate.
-            From the user question, also generate a list of three-letter Library Codes from the Libraries CSV file based on the user question.
-            If the user does not mention any specific libraries in the question, generate a list of all Library Codes.
-            If the user mentions that they want results from certain libraries, generate a list of ONLY the Library Codes mentioned, using ONLY the exact value of the Library Code.
-            Use both the "Display name in Primo API" and "How users may refer to it" columns to determine what Library Codes to use based on the user question.
-            Libraries CSV file:{libraries_csv}
-            Return a single json object only. The object must contain two properties, 'keywords' with a list of keywords and 'libraries' with list of the Library Codes for the requested libraries.
-            \n\nHuman:{human_input_text}\n\nAssistant:
+        self.hollis_template = """\n\nHuman:
+            You are given the following user question:\n
+            <user_question>\n{human_input_text}\n</user_question>\n
+            Create a JSON object with properties, 'keywords' with a list of keywords and 'libraries' with list of the Library Codes for the requested libraries.\n
+            Please follow these instructions to create the keywords list:\n
+            <keywords_instructions>\nThe keywords property must contain a list of keywords relevant to the question.\n
+            If you cannot find any keywords in the user question, do not make them up, the keywords list should be empty.\n
+            </keywords_instructions>\n
+            Please follow these instructions to create the libraries list:\n
+            <libraries_instructions>\n
+            The 'libraries' property must contain a list of ALL the three-letter Library Codes from the 'libraryCode' property in the Libraries JSON file.\n\n
+            If and ONLY IF the user mentions certain libraries in the question, the list must have ONLY the Library Codes mentioned.\n
+            Use both the 'primoDisplayName' and 'howUsersMayRefer' properties in the Libraries JSON file to find the corresponding library codes based on the user question.\n
+            If the user does not mention any libraries, you MUST include ALL the Library Codes.\n
+            Libraries JSON file:\n<libraries_json>\n{libraries_json}\n</libraries_json>\n
+            </libraries_instructions>\n
+            Please follow these instructions to create the JSON object result:\n
+            <result_instructions>\n
+            You must return a single valid json object ONLY and nothing more. Do not return any additional text.\n
+            Do not include any explanations, only provide a RFC8259 compliant JSON response following this format without deviation:\n<result_format>\n{example_query_result_json}\n</result_format>
+            </result_instructions>\n
+            \n\nAssistant:
+            """
+
+        self.libraries = """
+            The 'libraries' property must contain a list of three-letter Library Codes from the Libraries JSON file based on the user question.\n
+            Start by adding ALL the library codes in the Libraries JSON file, using ONLY the exact value of the Library Code.\n
+            If the user mentions certain libraries, the list must have ONLY the Library Codes mentioned.\n
+            Use both the 'primoDisplayName' and 'howUsersMayRefer' properties in the Libraries JSON file to find the corresponding library codes based on the user question.\n
             """
 
         self.hollis_no_keywords_template = """You are a friendly assistant whose purpose is to carry on a conversation with a user, in order to help them find books at libraries.\n
@@ -33,23 +49,26 @@ class HollisPrompt():
 
             Current conversation:
             {history}
-            Human: {input}
-            AI Assistant:"""
+            \n\nHuman:{input}\n\nAssistant:
+            """
 
-        self.example_query_result_json = {
-            "keywords": ["cybercrime", "malware", "DDoS"],
-            "libraries": ["BAK", "SEC", "WID"]
-        }
+        #self.example_query_result_json = {
+            #"keywords": ["cybercrime", "malware", "DDoS"],
+            #"libraries": ["BAK", "SEC", "WID"]
+        #}
+
+        self.example_query_result_json = {"keywords":["string"],"libraries":["string"]}
 
         self.hollis_prompt_template = PromptTemplate.from_template(template=self.hollis_template)
         self.hollis_no_keywords_prompt_template = PromptTemplate(input_variables=['input', 'history'], template=self.hollis_no_keywords_template)
 
     async def get_hollis_prompt_formatted(self, human_input_text):
-        self.libraries_csv = await self.file_utils.get_libraries_csv()
+        self.libraries_json = await self.file_utils.get_libraries_csv()
         # format the prompt to add variable values
         hollis_prompt_formatted: str = self.hollis_prompt_template.format(
             human_input_text=human_input_text,
-            libraries_csv=json.dumps(self.libraries_csv)
+            libraries_json=json.dumps(self.libraries_json),
+            example_query_result_json=json.dumps(self.example_query_result_json),
         )
         return hollis_prompt_formatted
 

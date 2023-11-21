@@ -8,7 +8,7 @@ from ..utils.file import FileUtils
 class ChatPrompt():
     def __init__(self):
         self.file_utils = FileUtils()
-        self.libraries_json = self.file_utils.get_libraries_json()
+        self.libraries_json = self.file_utils.convert_libraries_csv_to_json()
         self.example_chat_result_json = {
             "LAM": [
                 {

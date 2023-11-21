@@ -50,7 +50,7 @@ class LLMWorker():
 
     async def predict(self, human_input_text, conversation_history = []):
 
-        libraries_json = self.file_utils.get_libraries_json()
+        libraries_json = self.file_utils.convert_libraries_csv_to_json()
         # Currently, this prevents the llm from remembering conversations. If convo_memoory was defined outside of the context of this method, it WOULD enable remembering conversations.
         # It should be here for now because we want to simulate how an api route will not actually remember the conversation.
         #convo_memory = ConversationSummaryBufferMemory(llm=self.llm, max_token_limit=650, return_messages=True)

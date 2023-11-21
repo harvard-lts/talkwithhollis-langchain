@@ -27,7 +27,7 @@ class FileUtils():
         # Perform some processing on each row asynchronously
         return row
 
-    def get_libraries_json(self):
+    def convert_libraries_csv_to_json(self):
         df = pd.read_csv('app/schemas/libraries.csv')
         libraries_json = df.to_json(orient='records')
         return libraries_json
@@ -35,3 +35,7 @@ class FileUtils():
     async def get_libraries_csv(self):
         libraries_csv = await self.open_csv_file('app/schemas/libraries.csv')
         return libraries_csv
+
+    async def get_libraries_json(self):
+        libraries_json = await self.open_json_file('app/schemas/libraries.json')
+        return libraries_json
