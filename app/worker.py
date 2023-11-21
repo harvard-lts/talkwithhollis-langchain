@@ -16,6 +16,7 @@ from .prompts.hollis import HollisPrompt
 from .prompts.chat import ChatPrompt
 from .utils.primo import PrimoUtils
 from .utils.file import FileUtils
+from .utils.bedrock import get_bedrock_client
 
 class LLMWorker():
     def __init__(self):
@@ -29,8 +30,8 @@ class LLMWorker():
         self.ai_platform = os.environ.get("AI_PLATFORM", "openai")
         if self.ai_platform == "amazon" or self.ai_platform == "aws":
 
-            boto3_bedrock = bedrock.get_bedrock_client(
-                assumed_role=os.environ.get("BEDROCK_ASSUME_ROLE", None),
+            boto3_bedrock = get_bedrock_client(
+                #assumed_role=os.environ.get("BEDROCK_ASSUME_ROLE", None),
                 region=os.environ.get("AWS_DEFAULT_REGION", "us-east-1")
             )
 

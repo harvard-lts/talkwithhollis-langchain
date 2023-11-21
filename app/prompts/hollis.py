@@ -16,9 +16,9 @@ class HollisPrompt():
             If the user does not mention any specific libraries in the question, generate a list of all Library Codes.
             If the user mentions that they want results from certain libraries, generate a list of ONLY the Library Codes mentioned, using ONLY the exact value of the Library Code.
             Use both the "Display name in Primo API" and "How users may refer to it" columns to determine what Library Codes to use based on the user question.
-            User Question:{user_question}
             Libraries CSV file:{libraries_csv}
             Return a single json object only. The object must contain two properties, 'keywords' with a list of keywords and 'libraries' with list of the Library Codes for the requested libraries.
+            \n\nHuman:{human_input_text}\n\nAssistant:
             """
 
         self.hollis_no_keywords_template = """You are a friendly assistant whose purpose is to carry on a conversation with a user, in order to help them find books at libraries.\n
@@ -48,7 +48,7 @@ class HollisPrompt():
         self.libraries_csv = await self.file_utils.get_libraries_csv()
         # format the prompt to add variable values
         hollis_prompt_formatted: str = self.hollis_prompt_template.format(
-            user_question=human_input_text,
+            human_input_text=human_input_text,
             libraries_csv=json.dumps(self.libraries_csv)
         )
         return hollis_prompt_formatted

@@ -41,7 +41,7 @@ To run the AWS CLI commands in a (separate from the app) docker container, run t
 docker run --rm -it -v ~/.aws:/root/.aws amazon/aws-cli configure --profile talkwithhollis
 ```
 
-Enter the access key id and secret access key, and a new entry in the `~/.aws/credentials` file will be created. Path to AWS credentials file: `$HOME/.aws/credentials`
+Enter the access key id, secret access key, and region. A new entry in the `~/.aws/credentials` file will be created. Path to AWS credentials file: `$HOME/.aws/credentials`. Note that the region is required.
 
 New entry in the credentials file:
 
@@ -49,6 +49,7 @@ New entry in the credentials file:
 [talkwithhollis]
 aws_access_key_id = <access key id>
 aws_secret_access_key = <secret key>
+region = us-east-1
 ```
 
 Profile name
@@ -59,10 +60,4 @@ The profile name in the credentials must match the profile name `AWS_BEDROCK_PRO
 AWS_BEDROCK_PROFILE_NAME=talkwithhollis
 ```
 
-The local ~/.aws/credentials file is mounted into the docker container as a volume.
-
-docker-compose-local.yml
-
-```
-$HOME/.aws/credentials:/home/twhadm/.aws/credentials:ro
-```
+The `~/.aws/credentials` file is mounted into the app container as a volume in `docker-compose-local.yml`.
