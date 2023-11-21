@@ -53,14 +53,14 @@ class LLMWorker():
         libraries_json = self.file_utils.convert_libraries_csv_to_json()
         # Currently, this prevents the llm from remembering conversations. If convo_memoory was defined outside of the context of this method, it WOULD enable remembering conversations.
         # It should be here for now because we want to simulate how an api route will not actually remember the conversation.
-        #convo_memory = ConversationSummaryBufferMemory(llm=self.llm, max_token_limit=650, return_messages=True)
-        #convo_memory.load_memory_variables({})
+        convo_memory = ConversationSummaryBufferMemory(llm=self.llm, max_token_limit=650, return_messages=True)
+        convo_memory.load_memory_variables({})
 
-        #print("conversation history:")
-        #print(conversation_history)
+        print("conversation history:")
+        print(conversation_history)
 
-        #for history_item in conversation_history:
-            #convo_memory.save_context({"input": history_item.user}, {"output": history_item.assistant})
+        for history_item in conversation_history:
+            convo_memory.save_context({"input": history_item.user}, {"output": history_item.assistant})
 
         # https://developers.exlibrisgroup.com/primo/apis/search/
         # https://developers.exlibrisgroup.com/wp-content/uploads/primo/openapi/primoSearch.json
@@ -82,9 +82,7 @@ class LLMWorker():
         # print the prediction
         print("hollis_prediction")
         print(hollis_prediction)
-        return hollis_prediction
 
-        """
         hollis_prompt_result = None
         try:
             # print the prediction
@@ -105,12 +103,15 @@ class LLMWorker():
                 prompt=hollis_no_keywords_prompt,
                 llm=self.llm,
                 memory=convo_memory,
-                verbose=True,
+                verbose=True
             )
 
             no_keyword_result = conversation_with_summary.predict(input=human_input_text)
             print(no_keyword_result)
             return no_keyword_result
+        else:
+            return hollis_prompt_result
+        """
         else:
             
             primo_api_request = self.primo_utils.generate_primo_api_request(hollis_prompt_result)
@@ -125,7 +126,7 @@ class LLMWorker():
             
             # Step 3: Context injection into the chat prompt
             chat_template = await self.chat_prompt.get_chat_prompt_template()
-            chain = chat_template | self.chat_model
+            chain = chat_template | self.llm
             human_query_string = "Context:\n[CONTEXT]\n" + json.dumps(reduced_results) + "\n[/CONTEXT]\n\n The hours for all libraries are 9:00am - 5:00pm."
             if len(reduced_results.keys()) > 0:
                 human_query_string += " Only include books located at these libraries: " + str(reduced_results.keys())

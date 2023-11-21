@@ -32,7 +32,7 @@ class HollisPrompt():
 
         self.hollis_no_keywords_template = """\n\nHuman:
             You are given the following user question:\n
-            <user_question>\n{human_input_text}\n</user_question>\n
+            <user_question>\n{input}\n</user_question>\n
             You are a friendly assistant whose purpose is to carry on a conversation with a user, in order to help them find books at libraries.\n
             You MUST answer the user's message to the best of your ability.\n
         
