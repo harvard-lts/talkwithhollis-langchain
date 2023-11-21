@@ -19,9 +19,9 @@ class PrimoUtils():
             for holding in result['delivery']['holding']:
                 new_object = {
                     # TODO: We previously were using ['pnx']['addata']['btitle'] but that is not always present. We will need to come up with a prioritization order to determine which title to use.
-                    'title': result['pnx']['sort']['title'],
+                    'title': result.get('pnx').get('sort').get('title'),
                     # TODO: Corinna wants us to use ['pnx']['addata']['aulast'] but that author is not always present and we will need to come up with a prioritization order to determine which author to use.
-                    'author': result['pnx']['sort']['author'],
+                    'author': result.get('pnx').get('sort').get('author'),
                     'callNumber': holding['callNumber']
                 }
                 if holding['libraryCode'] in libraries:

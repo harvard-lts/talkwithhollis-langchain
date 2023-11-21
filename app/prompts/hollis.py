@@ -6,28 +6,22 @@ class HollisPrompt():
     def __init__(self):
         self.file_utils = FileUtils()
         # https://github.com/langchain-ai/langchain/blob/3d74d5e24dd62bb3878fe34de5f9eefa6d1d26c7/libs/langchain/langchain/chains/api/prompt.py#L4
-        self.hollis_template = """\n\nHuman:
-            You are given the following user question:\n
-            <user_question>\n{human_input_text}\n</user_question>\n
-            Create a JSON object with properties, 'keywords' with a list of keywords and 'libraries' with list of the Library Codes for the requested libraries.\n
+        self.hollis_template = """
+            You are given a user question\n
+            Based on the question, create a JSON object with properties, 'keywords' with a list of keywords and 'libraries' with list of the Library Codes for the requested libraries.\n
             Please follow these instructions to create the keywords list:\n
-            <keywords_instructions>\nThe keywords property must contain a list of keywords relevant to the question.\n
+            The keywords property must contain a list of keywords relevant to the question.\n
             If you cannot find any keywords in the user question, do not make them up, the keywords list should be empty.\n
-            </keywords_instructions>\n
             Please follow these instructions to create the libraries list:\n
-            <libraries_instructions>\n
             The 'libraries' property must contain a list of ALL the three-letter Library Codes from the 'libraryCode' property in the Libraries JSON file.\n\n
             If and ONLY IF the user mentions certain libraries in the question, the list must have ONLY the Library Codes mentioned.\n
             Use both the 'primoDisplayName' and 'howUsersMayRefer' properties in the Libraries JSON file to find the corresponding library codes based on the user question.\n
             If the user does not mention any libraries, you MUST include ALL the Library Codes.\n
-            Libraries JSON file:\n<libraries_json>\n{libraries_json}\n</libraries_json>\n
-            </libraries_instructions>\n
+            Libraries JSON file:{libraries_json}\n
             Please follow these instructions to create the JSON object result:\n
-            <result_instructions>\n
             You must return a single valid json object ONLY and nothing more. Do not return any additional text.\n
-            Do not include any explanations, only provide a RFC8259 compliant JSON response following this format without deviation:\n<result_format>\n{example_query_result_json}\n</result_format>
-            </result_instructions>\n
-            \n\nAssistant:
+            Do not include any explanations, only provide a RFC8259 compliant JSON response following this format without deviation:{example_query_result_json}\n
+            \n\nHuman:{human_input_text}\n\nAssistant:
             """
 
         self.hollis_no_keywords_template = """\n\nHuman:

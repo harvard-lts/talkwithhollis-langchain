@@ -29,20 +29,17 @@ class LLMWorker():
 
         self.ai_platform = os.environ.get("AI_PLATFORM", "openai")
         if self.ai_platform == "amazon" or self.ai_platform == "aws":
-
             # https://github.com/aws-samples/amazon-bedrock-workshop/blob/main/01_Generation/02_contextual_generation.ipynb
             boto3_bedrock = get_bedrock_client(
                 #assumed_role=os.environ.get("BEDROCK_ASSUME_ROLE", None),
                 region=os.environ.get("AWS_DEFAULT_REGION", "us-east-1")
             )
-
             inference_modifier = {'max_tokens_to_sample':4096, 
                 "temperature":1.0,
                 "top_k":250,
                 "top_p":1,
                 "stop_sequences": ["\n\nHuman"]
             }
-
             self.llm = Bedrock(
                 credentials_profile_name=os.environ.get("AWS_BEDROCK_PROFILE_NAME", "talkwithhollis"),
                 model_id=os.environ.get("AWS_BEDROCK_MODEL_ID", "anthropic.claude-instant-v1")
@@ -53,7 +50,14 @@ class LLMWorker():
         libraries_json = self.file_utils.convert_libraries_csv_to_json()
         # Currently, this prevents the llm from remembering conversations. If convo_memoory was defined outside of the context of this method, it WOULD enable remembering conversations.
         # It should be here for now because we want to simulate how an api route will not actually remember the conversation.
-        convo_memory = ConversationSummaryBufferMemory(llm=self.llm, max_token_limit=650, return_messages=True)
+        convo_memory = ConversationSummaryBufferMemory(
+            llm=self.llm,
+            max_token_limit=650,
+            return_messages=True,
+            human_prefix="User",
+            ai_prefix="AI"
+        )
+
         convo_memory.load_memory_variables({})
 
         print("conversation history:")
@@ -110,10 +114,6 @@ class LLMWorker():
             print(no_keyword_result)
             return no_keyword_result
         else:
-            return hollis_prompt_result
-        """
-        else:
-            
             primo_api_request = self.primo_utils.generate_primo_api_request(hollis_prompt_result)
             print(primo_api_request)
 
@@ -129,9 +129,9 @@ class LLMWorker():
             chain = chat_template | self.llm
             human_query_string = "Context:\n[CONTEXT]\n" + json.dumps(reduced_results) + "\n[/CONTEXT]\n\n The hours for all libraries are 9:00am - 5:00pm."
             if len(reduced_results.keys()) > 0:
-                human_query_string += " Only include books located at these libraries: " + str(reduced_results.keys())
+                human_query_string += " Only include books located at these libraries: " + str(reduced_results.keys()) + " "
+                human_query_string += "\n\nAssistant:"
             chat_result = chain.invoke({"human_input_text": human_query_string})
-            print('chat_result.content')
-            print(chat_result.content)
-            return chat_result.content
-        """
+            print('chat_result')
+            print(chat_result)
+            return chat_result
