@@ -1,0 +1,154 @@
+[
+  {
+    "primoDisplayName": "Arnold Arboretum Horticultural Library",
+    "howUsersMayRefer": [
+      "The Arboretum"
+    ],
+    "libraryCode": "AJP"
+  },
+  {
+    "primoDisplayName": "Baker Business",
+    "howUsersMayRefer": [
+      "HBS", "Baker"
+    ],
+    "libraryCode": "BAK"
+  },
+  {
+    "primoDisplayName": "Cabot Science",
+    "howUsersMayRefer": [
+      "Cabot"
+    ],
+    "libraryCode": "CAB"
+  },
+  {
+    "primoDisplayName": "Countway Medicine",
+    "howUsersMayRefer": [
+      "Countway",
+      "the med school",
+      "the medical school",
+      "the medical library",
+      "the med library",
+      "the med school library",
+      "the medical school library"
+    ],
+    "libraryCode": "MED"
+  },
+  {
+    "primoDisplayName": "Ernst Mayr Library",
+    "howUsersMayRefer": [
+      "MCZ"
+    ],
+    "libraryCode": "MCZ"
+  },
+  {
+    "primoDisplayName": "Fine Arts Library",
+    "howUsersMayRefer": [
+      "Fine Arts"
+    ],
+    "libraryCode": "FAL"
+  },
+  {
+    "primoDisplayName": "Frances Loeb Library",
+    "howUsersMayRefer": [
+      "Design",
+      "The design library",
+      "Loeb"
+    ],
+    "libraryCode": "DES"
+  },
+  {
+    "primoDisplayName": "Fung Library",
+    "howUsersMayRefer": [
+      "Fung"
+    ],
+    "libraryCode": "FUN"
+  },
+  {
+    "primoDisplayName": "Gutman Education",
+    "howUsersMayRefer": [
+      "Gutman",
+      "Ed school"
+    ],
+    "libraryCode": "GUT"
+  },
+  {
+    "primoDisplayName": "Harvard Divinity School Library",
+    "howUsersMayRefer": [
+      "Divinity",
+      "HDS"
+    ],
+    "libraryCode": "DIV"
+  },
+  {
+    "primoDisplayName": "Harvard Kennedy School",
+    "howUsersMayRefer": [
+      "HKS",
+      "Kennedy"
+    ],
+    "libraryCode": "KSG"
+  },
+  {
+    "primoDisplayName": "Harvard Law School Library",
+    "howUsersMayRefer": [
+      "LAW",
+      "HLS",
+      "The law school"
+    ],
+    "libraryCode": "LAW"
+  },
+  {
+    "primoDisplayName": "Harvard Yenching Library",
+    "howUsersMayRefer": [
+      "Yenching"
+    ],
+    "libraryCode": "HYL"
+  },
+  {
+    "primoDisplayName": "John G. Wolbach Library",
+    "howUsersMayRefer": [
+      "Wolbach",
+      "SAO"
+    ],
+    "libraryCode": "WOL"
+  },
+  {
+    "primoDisplayName": "Lamont Library",
+    "howUsersMayRefer": [
+      "Lamont"
+    ],
+    "libraryCode": "LAM"
+  },
+  {
+    "primoDisplayName": "Loeb Music Library",
+    "howUsersMayRefer": [
+      "Music",
+      "The music library"
+    ],
+    "libraryCode": "MUS"
+  },
+  {
+    "primoDisplayName": "Science and Engineering Complex Library",
+    "howUsersMayRefer": [
+      "Science and Engineering Complex",
+      "The science center",
+      "The science library",
+      "SEC"
+    ],
+    "libraryCode": "SEC"
+  },
+  {
+    "primoDisplayName": "Tozzer",
+    "howUsersMayRefer": [
+      "Tozzer",
+      "The Tozzer library"
+    ],
+    "libraryCode": "TOZ"
+  },
+  {
+    "primoDisplayName": "Widener Library",
+    "howUsersMayRefer": [
+      "Widener"
+    ],
+    "libraryCode": "WID"
+  }
+]

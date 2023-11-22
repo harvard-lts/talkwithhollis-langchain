@@ -6,6 +6,7 @@ from langchain.llms import OpenAI, AzureOpenAI
 from langchain.chat_models import ChatOpenAI, AzureChatOpenAI
 from langchain.chains import ConversationChain
 from langchain.memory import ConversationSummaryBufferMemory
+from langchain.llms.bedrock import Bedrock
 
 openai_api_key = os.environ.get("OPENAI_API_KEY")
 # Due to token limits when using context injection, we must limit the amount of primo results we send to the llm. This limit should be different for different llm models depending on their token capacity.
@@ -15,6 +16,7 @@ from .prompts.hollis import HollisPrompt
 from .prompts.chat import ChatPrompt
 from .utils.primo import PrimoUtils
 from .utils.file import FileUtils
+from .utils.bedrock import get_bedrock_client
 
 class LLMWorker():
     def __init__(self):
@@ -25,12 +27,38 @@ class LLMWorker():
         self.primo_utils = PrimoUtils()
         self.file_utils = FileUtils()
 
+        self.ai_platform = os.environ.get("AI_PLATFORM", "openai")
+        if self.ai_platform == "amazon" or self.ai_platform == "aws":
+            # https://github.com/aws-samples/amazon-bedrock-workshop/blob/main/01_Generation/02_contextual_generation.ipynb
+            boto3_bedrock = get_bedrock_client(
+                #assumed_role=os.environ.get("BEDROCK_ASSUME_ROLE", None),
+                region=os.environ.get("AWS_DEFAULT_REGION", "us-east-1")
+            )
+            inference_modifier = {
+                "temperature":1.0,
+                #'max_tokens_to_sample':4096, 
+                #"top_k":250,
+                #"top_p":1,
+                "stop_sequences": ["\n\nAssistant:"]
+            }
+            self.llm = Bedrock(
+                credentials_profile_name=os.environ.get("AWS_BEDROCK_PROFILE_NAME", "talkwithhollis"),
+                model_id=os.environ.get("AWS_BEDROCK_MODEL_ID", "anthropic.claude-instant-v1")
+            )
+
     async def predict(self, human_input_text, conversation_history = []):
 
-        libraries_json = self.file_utils.get_libraries_json()
+        libraries_json = self.file_utils.convert_libraries_csv_to_json()
         # Currently, this prevents the llm from remembering conversations. If convo_memoory was defined outside of the context of this method, it WOULD enable remembering conversations.
         # It should be here for now because we want to simulate how an api route will not actually remember the conversation.
-        convo_memory = ConversationSummaryBufferMemory(llm=self.llm, max_token_limit=650, return_messages=True)
+        convo_memory = ConversationSummaryBufferMemory(
+            llm=self.llm,
+            max_token_limit=650,
+            return_messages=True,
+            human_prefix="User",
+            ai_prefix="AI"
+        )
+
         convo_memory.load_memory_variables({})
 
         print("conversation history:")
@@ -62,8 +90,8 @@ class LLMWorker():
 
         hollis_prompt_result = None
         try:
-            # print the prediction
-            hollis_prompt_result = json.loads(hollis_prediction)
+            # Convert the result to json
+            hollis_prompt_result = await self.file_utils.get_json_from_paragraph(hollis_prediction)
         except ValueError as ve:  # includes simplejson.decoder.JSONDecodeError
             print('Unable to decode json hollis_prediction')
             print(ve)
@@ -80,14 +108,13 @@ class LLMWorker():
                 prompt=hollis_no_keywords_prompt,
                 llm=self.llm,
                 memory=convo_memory,
-                verbose=True,
+                verbose=True
             )
 
             no_keyword_result = conversation_with_summary.predict(input=human_input_text)
             print(no_keyword_result)
             return no_keyword_result
         else:
-            
             primo_api_request = self.primo_utils.generate_primo_api_request(hollis_prompt_result)
             print(primo_api_request)
 
@@ -100,11 +127,12 @@ class LLMWorker():
             
             # Step 3: Context injection into the chat prompt
             chat_template = await self.chat_prompt.get_chat_prompt_template()
-            chain = chat_template | self.chat_model
+            chain = chat_template | self.llm
             human_query_string = "Context:\n[CONTEXT]\n" + json.dumps(reduced_results) + "\n[/CONTEXT]\n\n The hours for all libraries are 9:00am - 5:00pm."
             if len(reduced_results.keys()) > 0:
-                human_query_string += " Only include books located at these libraries: " + str(reduced_results.keys())
+                human_query_string += " Only include books located at these libraries: " + str(reduced_results.keys()) + " "
+                human_query_string += "\n\nAssistant:"
             chat_result = chain.invoke({"human_input_text": human_query_string})
-            print('chat_result.content')
-            print(chat_result.content)
-            return chat_result.content
+            print('chat_result')
+            print(chat_result)
+            return chat_result
