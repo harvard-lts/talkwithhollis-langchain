@@ -34,11 +34,12 @@ class LLMWorker():
                 #assumed_role=os.environ.get("BEDROCK_ASSUME_ROLE", None),
                 region=os.environ.get("AWS_DEFAULT_REGION", "us-east-1")
             )
-            inference_modifier = {'max_tokens_to_sample':4096, 
+            inference_modifier = {
                 "temperature":1.0,
-                "top_k":250,
-                "top_p":1,
-                "stop_sequences": ["\n\nHuman"]
+                #'max_tokens_to_sample':4096, 
+                #"top_k":250,
+                #"top_p":1,
+                "stop_sequences": ["\n\nAssistant:"]
             }
             self.llm = Bedrock(
                 credentials_profile_name=os.environ.get("AWS_BEDROCK_PROFILE_NAME", "talkwithhollis"),
