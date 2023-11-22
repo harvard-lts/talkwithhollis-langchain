@@ -90,8 +90,8 @@ class LLMWorker():
 
         hollis_prompt_result = None
         try:
-            # print the prediction
-            hollis_prompt_result = json.loads(hollis_prediction)
+            # Convert the result to json
+            hollis_prompt_result = await self.file_utils.get_json_from_paragraph(hollis_prediction)
         except ValueError as ve:  # includes simplejson.decoder.JSONDecodeError
             print('Unable to decode json hollis_prediction')
             print(ve)

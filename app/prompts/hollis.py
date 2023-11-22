@@ -53,7 +53,8 @@ class HollisPrompt():
             Please use the current conversation inside the <current_conversation> XML tags as your reference for the current conversation:\n
             <current_conversation>{history}</current_conversation>\n
             You must generate your response based on the following the user question inside the <user_question> XML tags:\n
-            <user_question>{input}</user_question>\n 
+            <user_question>{input}</user_question>\n
+            Please do not include XML tags in your response.\n
             \n\nAssistant:
             """
 
