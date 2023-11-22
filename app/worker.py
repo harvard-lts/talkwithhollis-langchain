@@ -12,6 +12,7 @@ from .prompts.chat import ChatPrompt
 from .utils.primo import PrimoUtils
 from .utils.file import FileUtils
 from .utils.bedrock import get_bedrock_client
+from .utils.libcalutils import LibCalUtils
 
 from app.config import settings
 
@@ -127,6 +128,7 @@ class LLMWorker():
         # Config decides whether we go to the llm or just format the response through python code
         # Original functionality was using the llm, but since it's just organizing json we can accomplish the same result faster with python code
         # Functionality has been left in, but configured off, in case we find a more novel way to analyze the results using the llm in the future
+        library_hours = await self.get_library_hours()
         if settings.llm_do_response_formatting == 'false':
             # Generate Python response string
             response = " Here are some books I found for you:\n\n\n"
@@ -136,8 +138,8 @@ class LLMWorker():
                     if library["Library Code"] == library_code:
                         response += library["Display name in Primo API"] + "\n"
                         break
-                
-                response += self.get_library_hours(library_code)
+
+                response += library_hours[library_code] + "\n"
 
                 counter = 1
                 for book in reduced_results[library_code]:
@@ -172,6 +174,6 @@ class LLMWorker():
             print(chat_result)
             return chat_result
 
-    def get_library_hours(self, library_code):
-        # TODO: LibCal integration here
-        return "9:00am - 5:00pm\n"
+    async def get_library_hours(self):
+        libcal_utils = LibCalUtils()
+        return await LibCalUtils.get_library_hours(libcal_utils)
