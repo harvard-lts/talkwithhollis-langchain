@@ -9,9 +9,7 @@ class HollisPrompt():
         self.hollis_template = """\n\nHuman:
             You are given a user question asking for help to find books on certain subject available at select libraries at Harvard.\n
             Based on the question, create a JSON object with properties, 'keywords' with a list of keywords and 'libraries' with list of the Library Codes for the requested libraries.\n
-            Here is the user question inside the <user_question> XML tags:\n
-            <user_question>{human_input_text}</user_question>\n
-            Please follow these instructions to create the JSON object.\n
+            Please follow these instructions inside the <instructions> XML tags to create the JSON object.\n
             <instructions>\n
             To create the keywords list:\n
             The keywords property must contain a list of keywords relevant to the question.\n
@@ -32,9 +30,11 @@ class HollisPrompt():
             Do not include any explanations, ONLY provide a RFC8259 compliant JSON response:{example_query_result_json}\n
             </instructions>\n
             Here are some example responses inside the <example> XML tags:\n
-            <example>User: I'm looking for books. AI:{example_1_json}</example>\n
-            <example>User: I'm looking for books about economics at Baker, Lamont, or Widener. AI:{example_2_json}</example>\n
-            <example>User: I'm looking for books about copyrights at the law school. AI:{example_3_json}</example>\n
+            <example>{example_1_json}</example>\n
+            <example>{example_2_json}</example>\n
+            <example>{example_3_json}</example>\n
+            You must generate your response based on the following the user question inside the <user_question> XML tags:\n
+            <user_question>{human_input_text}</user_question>\n
             \n\nAssistant:
             """
 
@@ -44,15 +44,16 @@ class HollisPrompt():
 
         self.hollis_no_keywords_template = """\n\nHuman:
             You are a friendly assistant whose purpose is to carry on a conversation with a user, in order to help them find books at libraries.\n
-            Here is the user question inside the <user_question> XML tags:\n
-            <user_question>{input}</user_question>\n   
             Please follow these instructions inside the <instructions> XML tags to create the JSON object.\n
             <instructions>\n         
             You MUST answer the user question to the best of your ability.\n
             If the user did provide enough information about the books they want, suggest this specific example template question.\n
-            Example template question inside the <example_question> XML tags: <example_question>I'm looking for books about <subjects> available at <one or more of the Harvard libraries>.</example_question>\n
-            Current conversation:{history}\n
-            </instructions>\n         
+            Example template question inside the <example_question> XML tags: <example_question>I'm looking for books about "subjects" available at "one or more of the Harvard libraries".</example_question>\n
+            </instructions>\n
+            Please use the current conversation inside the <current_conversation> XML tags as your reference for the current conversation:\n
+            <current_conversation>{history}</current_conversation>\n
+            You must generate your response based on the following the user question inside the <user_question> XML tags:\n
+            <user_question>{input}</user_question>\n 
             \n\nAssistant:
             """
 
@@ -68,7 +69,8 @@ class HollisPrompt():
             libraries_json=json.dumps(self.libraries_json),
             example_query_result_json=json.dumps(self.example_query_result_json),
             example_1_json=json.dumps(self.example_1_json),
-            example_2_json=json.dumps(self.example_2_json)
+            example_2_json=json.dumps(self.example_2_json),
+            example_3_json=json.dumps(self.example_3_json)
         )
         return hollis_prompt_formatted
 
