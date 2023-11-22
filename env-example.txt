@@ -2,6 +2,9 @@ OPENAI_API_KEY=key
 PRIMO_API_HOST=host
 PRIMO_API_KEY=key
 
+# openai or azure or amazon
+AI_PLATFORM=amazon
+
 # Profile name for AWS credentials
 AWS_BEDROCK_PROFILE_NAME=talkwithhollis
 AWS_BEDROCK_MODEL_ID=anthropic.claude-instant-v1
