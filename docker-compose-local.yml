@@ -11,7 +11,8 @@ services:
     volumes:
       - './:/home/twhadm'
       - '/home/twhadm/node_modules'
-      - $HOME/.aws/credentials:/home/twhadm/.aws/credentials:ro
+      # Uncomment to use a profile defined in ~/.aws/credentials
+      #- $HOME/.aws/credentials:/home/twhadm/.aws/credentials:ro
     ports:
       - "80:80"
     networks:

@@ -42,6 +42,7 @@ class FileUtils():
 
     # https://stackoverflow.com/questions/10574520/extract-json-from-text
     async def get_json_from_paragraph(self, paragraph):
+        result = paragraph
         right_indices = [i for i, c in enumerate(paragraph) if c == '}']
         i = 0
         while i < len(paragraph) - 1:
