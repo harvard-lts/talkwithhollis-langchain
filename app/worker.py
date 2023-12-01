@@ -8,7 +8,6 @@ from langchain.chains import ConversationChain
 from langchain.memory import ConversationSummaryBufferMemory
 from langchain.llms.bedrock import Bedrock
 
-openai_api_key = os.environ.get("OPENAI_API_KEY")
 # Due to token limits when using context injection, we must limit the amount of primo results we send to the llm. This limit should be different for different llm models depending on their token capacity.
 max_results_to_llm = int(os.environ.get("MAX_RESULTS_TO_LLM", 5))
 
@@ -42,7 +41,8 @@ class LLMWorker():
                 "stop_sequences": ["\n\nAssistant:"]
             }
             self.llm = Bedrock(
-                credentials_profile_name=os.environ.get("AWS_BEDROCK_PROFILE_NAME", "talkwithhollis"),
+                # Uncomment credentials_profile_name to use a profile defined in ~/.aws/credentials
+                #credentials_profile_name=os.environ.get("AWS_BEDROCK_PROFILE_NAME", "talkwithhollis"),
                 model_id=os.environ.get("AWS_BEDROCK_MODEL_ID", "anthropic.claude-instant-v1")
             )
 
