@@ -11,6 +11,7 @@ class Settings(BaseSettings):
     aws_secret_access_key: str
     aws_default_region: str
     aws_bedrock_model_id: str
+    llm_do_response_formatting: str
 
     model_config = SettingsConfigDict(env_file = '.env')
 

@@ -18,13 +18,27 @@ class PrimoUtils():
         reduced_results = {}
         for result in results:
             for holding in result['delivery']['holding']:
+                # btitle is preferred, but jtitle should always exist
+                try:
+                    title = result['pnx']['addata']['btitle']
+                except:
+                    title = result['pnx']['addata']['jtitle']
+
+                try:
+                    author = result['pnx']['addata']['aulast']
+                except:
+                    author = None
+
                 new_object = {
                     # TODO: We previously were using ['pnx']['addata']['btitle'] but that is not always present. We will need to come up with a prioritization order to determine which title to use.
-                    'title': result.get('pnx').get('sort').get('title'),
+                    'title': title,
                     # TODO: Corinna wants us to use ['pnx']['addata']['aulast'] but that author is not always present and we will need to come up with a prioritization order to determine which author to use.
-                    'author': result.get('pnx').get('sort').get('author'),
                     'callNumber': holding['callNumber']
                 }
+
+                if author:
+                    new_object['author'] = author
+
                 if holding['libraryCode'] in libraries:
                     if not holding['libraryCode'] in reduced_results:
                         reduced_results[holding['libraryCode']] = []
