@@ -1,10 +1,11 @@
 import os
+from app.config import settings
 
 class PrimoUtils():
     def __init__(self):
-        self.primo_api_key = os.environ.get("PRIMO_API_KEY")
-        self.primo_api_host = os.environ.get("PRIMO_API_HOST")
-        self.primo_api_limit = os.environ.get("PRIMO_API_LIMIT", 100)
+        self.primo_api_key = settings.primo_api_key
+        self.primo_api_host = settings.primo_api_host
+        self.primo_api_limit = settings.primo_api_limit
 
     def generate_primo_api_request(self, llm_response):
         primo_api_request = self.primo_api_host + f"?scope=default_scope&tab=books&vid=HVD2&limit={self.primo_api_limit}&offset=0&apikey={self.primo_api_key}&q=any,contains,{'%20'.join(llm_response['keywords'])}&multiFacets=facet_rtype,include,books"

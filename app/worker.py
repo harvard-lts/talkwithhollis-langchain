@@ -2,14 +2,10 @@
 # pipenv shell
 # pipenv run python3 main.py
 import asyncio, os, requests, json, csv
-from langchain.llms import OpenAI, AzureOpenAI
-from langchain.chat_models import ChatOpenAI, AzureChatOpenAI
+from langchain.llms import OpenAI
 from langchain.chains import ConversationChain
 from langchain.memory import ConversationSummaryBufferMemory
 from langchain.llms.bedrock import Bedrock
-
-# Due to token limits when using context injection, we must limit the amount of primo results we send to the llm. This limit should be different for different llm models depending on their token capacity.
-max_results_to_llm = int(os.environ.get("MAX_RESULTS_TO_LLM", 5))
 
 from .prompts.hollis import HollisPrompt
 from .prompts.chat import ChatPrompt
@@ -17,34 +13,30 @@ from .utils.primo import PrimoUtils
 from .utils.file import FileUtils
 from .utils.bedrock import get_bedrock_client
 
+from app.config import settings
+
+# Due to token limits when using context injection, we must limit the amount of primo results we send to the llm. This limit should be different for different llm models depending on their token capacity.
+max_results_to_llm = settings.max_results_to_llm
+
 class LLMWorker():
     def __init__(self):
-        self.llm = OpenAI(temperature=0)
-        self.chat_model = ChatOpenAI(temperature=0)
         self.hollis_prompt = HollisPrompt()
         self.chat_prompt = ChatPrompt()
         self.primo_utils = PrimoUtils()
         self.file_utils = FileUtils()
 
-        self.ai_platform = os.environ.get("AI_PLATFORM", "openai")
-        if self.ai_platform == "amazon" or self.ai_platform == "aws":
+        if settings.ai_platform == "amazon" or settings.ai_platform == "aws":
             # https://github.com/aws-samples/amazon-bedrock-workshop/blob/main/01_Generation/02_contextual_generation.ipynb
-            boto3_bedrock = get_bedrock_client(
-                #assumed_role=os.environ.get("BEDROCK_ASSUME_ROLE", None),
-                region=os.environ.get("AWS_DEFAULT_REGION", "us-east-1")
-            )
-            inference_modifier = {
-                "temperature":1.0,
-                #'max_tokens_to_sample':4096, 
-                #"top_k":250,
-                #"top_p":1,
-                "stop_sequences": ["\n\nAssistant:"]
-            }
+            os.environ['AWS_ACCESS_KEY_ID'] = settings.aws_access_key_id
+            os.environ['AWS_SECRET_ACCESS_KEY'] = settings.aws_secret_access_key
             self.llm = Bedrock(
                 # Uncomment credentials_profile_name to use a profile defined in ~/.aws/credentials
                 #credentials_profile_name=os.environ.get("AWS_BEDROCK_PROFILE_NAME", "talkwithhollis"),
-                model_id=os.environ.get("AWS_BEDROCK_MODEL_ID", "anthropic.claude-instant-v1")
+                region_name=settings.aws_default_region,
+                model_id=settings.aws_bedrock_model_id
             )
+        else:
+            self.llm = OpenAI(temperature=0, openai_api_key=settings.openai_api_key)
 
     async def predict(self, human_input_text, conversation_history = []):
 
