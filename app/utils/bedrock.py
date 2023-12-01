@@ -9,6 +9,9 @@ from typing import Optional
 import boto3
 from botocore.config import Config
 
+from app.config import Settings
+settings = Settings()
+
 
 def get_bedrock_client(
     assumed_role: Optional[str] = None,
@@ -29,12 +32,12 @@ def get_bedrock_client(
         Optional choice of getting different client to perform operations with the Amazon Bedrock service.
     """
     if region is None:
-        target_region = os.environ.get("AWS_REGION", os.environ.get("AWS_DEFAULT_REGION"))
+        target_region = settings.aws_default_region
     else:
         target_region = region
 
     print(f"Create new client\n  Using region: {target_region}")
-    session_kwargs = {"region_name": target_region}
+    session_kwargs = {"aws_access_key_id": settings.aws_access_key_id, "aws_secret_access_key": settings.aws_secret_access_key, "region_name": target_region}
     client_kwargs = {**session_kwargs}
 
     profile_name = os.environ.get("AWS_PROFILE")

@@ -7,7 +7,6 @@ services:
       context: .
       dockerfile: Dockerfile
     #command: 'tail -f /dev/null'
-    env_file: .env
     volumes:
       - './:/home/twhadm'
       - '/home/twhadm/node_modules'
