@@ -1,6 +1,11 @@
 PRIMO_API_HOST=host
 PRIMO_API_KEY=key
 
+# Configures whether book lists are compiled by the llm or via python code
+# Via the llm was the initial method, but since it's just manipulating json, this is more efficient with python code currently
+# This functionality is preserved for now and configured off in case we want the llm to do something more with the data in the future
+LLM_DO_RESPONSE_FORMATTING=false
+
 # openai or azure or amazon
 AI_PLATFORM=amazon
 

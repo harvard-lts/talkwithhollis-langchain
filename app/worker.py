@@ -125,14 +125,18 @@ class LLMWorker():
             print(reduced_results)
             print(reduced_results.keys())
             
-            # Step 3: Context injection into the chat prompt
-            chat_template = await self.chat_prompt.get_chat_prompt_template()
-            chain = chat_template | self.llm
-            human_query_string = "Context:\n[CONTEXT]\n" + json.dumps(reduced_results) + "\n[/CONTEXT]\n\n The hours for all libraries are 9:00am - 5:00pm."
-            if len(reduced_results.keys()) > 0:
-                human_query_string += " Only include books located at these libraries: " + str(reduced_results.keys()) + " "
-                human_query_string += "\n\nAssistant:"
-            chat_result = chain.invoke({"human_input_text": human_query_string})
-            print('chat_result')
-            print(chat_result)
-            return chat_result
+            # Step 3: Form response, either via context injection into the chat prompt or formatting through python code, depending on config.
+            # The llm responses are slow with limited token size, so we prefer the python formatting unless we find more interesting ways for the llm to look at the data 
+            if os.environ.get('LLM_DO_RESPONSE_FORMATTING', 'false') == 'false':
+                return "abc123"
+            else:
+                chat_template = await self.chat_prompt.get_chat_prompt_template()
+                chain = chat_template | self.llm
+                human_query_string = "Context:\n[CONTEXT]\n" + json.dumps(reduced_results) + "\n[/CONTEXT]\n\n The hours for all libraries are 9:00am - 5:00pm."
+                if len(reduced_results.keys()) > 0:
+                    human_query_string += " Only include books located at these libraries: " + str(reduced_results.keys()) + " "
+                    human_query_string += "\n\nAssistant:"
+                chat_result = chain.invoke({"human_input_text": human_query_string})
+                print('chat_result')
+                print(chat_result)
+                return chat_result
