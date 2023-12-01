@@ -1,7 +1,5 @@
 import os
-from app.config import Settings
-
-settings = Settings()
+from app.config import settings
 
 class PrimoUtils():
     def __init__(self):

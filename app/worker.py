@@ -13,8 +13,7 @@ from .utils.primo import PrimoUtils
 from .utils.file import FileUtils
 from .utils.bedrock import get_bedrock_client
 
-from app.config import Settings
-settings = Settings()
+from app.config import settings
 
 # Due to token limits when using context injection, we must limit the amount of primo results we send to the llm. This limit should be different for different llm models depending on their token capacity.
 max_results_to_llm = settings.max_results_to_llm

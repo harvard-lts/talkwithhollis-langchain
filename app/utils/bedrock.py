@@ -9,8 +9,7 @@ from typing import Optional
 import boto3
 from botocore.config import Config
 
-from app.config import Settings
-settings = Settings()
+from app.config import settings
 
 
 def get_bedrock_client(
