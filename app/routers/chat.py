@@ -49,15 +49,15 @@ async def get_chat():
 async def chat(chat_params: ChatParams) -> ChatResult:
     chat_question = chat_params.userQuestion
     conversation_history = chat_params.conversationHistory
-    # worker = LLMWorker()
-    worker = LibCalUtils()
-    # result = await worker.predict(chat_question, conversation_history)
-    # chat_result: ChatResult = {
-    #   "message": {
-    #     "role": "assistant",
-    #     "content": result
-    #   }
-    # }
-    # print("chat result")
-    # print(chat_result)
-    return 'abc123'
+    worker = LLMWorker()
+    result = await worker.predict(chat_question, conversation_history)
+    chat_result: ChatResult = {
+      "message": {
+        "role": "assistant",
+        "content": result
+      }
+    }
+    print("chat result")
+    print(chat_result)
+    return chat_result
+

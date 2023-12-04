@@ -138,7 +138,6 @@ class LLMWorker():
                     if library["Library Code"] == library_code:
                         response += library["Display name in Primo API"] + "\n"
                         break
-
                 response += library_hours[library_code] + "\n"
 
                 counter = 1
