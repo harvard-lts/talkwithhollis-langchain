@@ -3,7 +3,6 @@ from fastapi import FastAPI, APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from langchain.llms import OpenAI
 from ..worker import LLMWorker
-from ..utils.libcalutils import LibCalUtils
 
 router = APIRouter(
     prefix="/api/chat",
@@ -60,4 +59,3 @@ async def chat(chat_params: ChatParams) -> ChatResult:
     print("chat result")
     print(chat_result)
     return chat_result
-
