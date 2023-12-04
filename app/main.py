@@ -20,6 +20,6 @@ app.add_middleware(
 
 app.include_router(chat.router)
 
-@app.get("/")
+@app.get("/api/")
 async def root():
     return {"message": "Talk With HOLLIS"}

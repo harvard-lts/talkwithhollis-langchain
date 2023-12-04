@@ -5,7 +5,7 @@ from langchain.llms import OpenAI
 from ..worker import LLMWorker
 
 router = APIRouter(
-    prefix="/chat",
+    prefix="/api/chat",
     tags=["chat"]
     #responses={200: {"message": "success"}, 404: {"description": "Not found"}},
 )

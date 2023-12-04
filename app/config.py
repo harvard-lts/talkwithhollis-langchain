@@ -1,7 +1,7 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
-    openai_api_key: str
+    openai_api_key: str = "placeholder"
     primo_api_key: str
     primo_api_host: str
     primo_api_limit: str
