@@ -1,5 +1,6 @@
 PRIMO_API_HOST=host
 PRIMO_API_KEY=key
+PRIMO_API_LIMIT=100
 
 # openai or azure or amazon
 AI_PLATFORM=amazon
@@ -8,6 +9,7 @@ AI_PLATFORM=amazon
 # Via the llm was the initial method, but since it's just manipulating json, this is more efficient with python code currently
 # This functionality is preserved for now and configured off in case we want the llm to do something more with the data in the future
 LLM_DO_RESPONSE_FORMATTING=false
+MAX_RESULTS_TO_LLM=5
 
 # AWS credentials
 # https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html
