@@ -113,6 +113,9 @@ class LLMWorker():
             primo_api_response = requests.get(primo_api_request)
 
             # Step 2: Write logic to filter, reduce, and prioritize data from HOLLIS using python methods and LLMs
+
+            # TODO: Only send books that are available to shrink_results_for_llm. Books can have more than one holding, assuming that holdings are where
+            # availability is stored, this will mean 'books with at least one holding that is available'.
             reduced_results = self.primo_utils.shrink_results_for_llm(primo_api_response.json()['docs'][0:max_results_to_llm], hollis_prompt_result['libraries'])
             print(reduced_results)
             print(reduced_results.keys())
@@ -136,8 +139,8 @@ class LLMWorker():
                 
                 response += self.get_library_hours(library_code)
 
+                counter = 1
                 for book in reduced_results[library_code]:
-                    counter = 1
                     response += str(counter) + ". " + ', '.join(book['title'])
                     if 'author' in book:
                         response += " / " + ', '.join(book['author'])

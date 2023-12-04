@@ -17,6 +17,10 @@ class PrimoUtils():
     def shrink_results_for_llm(self, results, libraries):
         reduced_results = {}
         for result in results:
+            # This is to prevent duplicate results from the same library from being added to the list, libraries can have more than one holding of a book, and displaying
+            # several records of identical books at the same library is confusing for the user
+            already_added_libraries = []
+
             for holding in result['delivery']['holding']:
                 # btitle is preferred, but jtitle should always exist
                 try:
@@ -39,7 +43,10 @@ class PrimoUtils():
                 if author:
                     new_object['author'] = author
 
-                if holding['libraryCode'] in libraries:
+                # Add to the list only if that book has not been added for that library AND that library is in the list of libraries we want to include
+                if holding['libraryCode'] not in already_added_libraries and holding['libraryCode'] in libraries:
+                    already_added_libraries.append(holding['libraryCode'])
+
                     if not holding['libraryCode'] in reduced_results:
                         reduced_results[holding['libraryCode']] = []
                     reduced_results[holding['libraryCode']].append(new_object)
