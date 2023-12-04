@@ -17,15 +17,36 @@ class PrimoUtils():
     def shrink_results_for_llm(self, results, libraries):
         reduced_results = {}
         for result in results:
+            # This is to prevent duplicate results from the same library from being added to the list, libraries can have more than one holding of a book, and displaying
+            # several records of identical books at the same library is confusing for the user
+            already_added_libraries = []
+
             for holding in result['delivery']['holding']:
+                # btitle is preferred, but jtitle should always exist
+                try:
+                    title = result['pnx']['addata']['btitle']
+                except:
+                    title = result['pnx']['addata']['jtitle']
+
+                try:
+                    author = result['pnx']['addata']['aulast']
+                except:
+                    author = None
+
                 new_object = {
                     # TODO: We previously were using ['pnx']['addata']['btitle'] but that is not always present. We will need to come up with a prioritization order to determine which title to use.
-                    'title': result.get('pnx').get('sort').get('title'),
+                    'title': title,
                     # TODO: Corinna wants us to use ['pnx']['addata']['aulast'] but that author is not always present and we will need to come up with a prioritization order to determine which author to use.
-                    'author': result.get('pnx').get('sort').get('author'),
                     'callNumber': holding['callNumber']
                 }
-                if holding['libraryCode'] in libraries:
+
+                if author:
+                    new_object['author'] = author
+
+                # Add to the list only if that book has not been added for that library AND that library is in the list of libraries we want to include
+                if holding['libraryCode'] not in already_added_libraries and holding['libraryCode'] in libraries:
+                    already_added_libraries.append(holding['libraryCode'])
+
                     if not holding['libraryCode'] in reduced_results:
                         reduced_results[holding['libraryCode']] = []
                     reduced_results[holding['libraryCode']].append(new_object)

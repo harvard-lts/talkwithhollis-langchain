@@ -92,7 +92,7 @@ class LLMWorker():
         print("hollis_prompt_result")
         print(hollis_prompt_result)
 
-        if hollis_prompt_result is None or len(hollis_prompt_result['keywords']) == 0:
+        if hollis_prompt_result is None or 'keywords' not in hollis_prompt_result or len(hollis_prompt_result['keywords']) == 0:
             
             hollis_no_keywords_prompt = await self.hollis_prompt.get_hollis_no_keywords_prompt()
 
@@ -113,11 +113,54 @@ class LLMWorker():
             primo_api_response = requests.get(primo_api_request)
 
             # Step 2: Write logic to filter, reduce, and prioritize data from HOLLIS using python methods and LLMs
+
+            # TODO: Only send books that are available to shrink_results_for_llm. Books can have more than one holding, assuming that holdings are where
+            # availability is stored, this will mean 'books with at least one holding that is available'.
             reduced_results = self.primo_utils.shrink_results_for_llm(primo_api_response.json()['docs'][0:max_results_to_llm], hollis_prompt_result['libraries'])
             print(reduced_results)
             print(reduced_results.keys())
             
-            # Step 3: Context injection into the chat prompt
+            # Step 3: Format the book list response. 
+            return await self.build_response(reduced_results)
+            
+    async def build_response(self, reduced_results):
+        # Config decides whether we go to the llm or just format the response through python code
+        # Original functionality was using the llm, but since it's just organizing json we can accomplish the same result faster with python code
+        # Functionality has been left in, but configured off, in case we find a more novel way to analyze the results using the llm in the future
+        if settings.llm_do_response_formatting == 'false':
+            # Generate Python response string
+            response = " Here are some books I found for you:\n\n\n"
+            libraries = self.file_utils.convert_libraries_csv_to_json()
+            for library_code in reduced_results:
+                for library in json.loads(libraries):
+                    if library["Library Code"] == library_code:
+                        response += library["Display name in Primo API"] + "\n"
+                        break
+                
+                response += self.get_library_hours(library_code)
+
+                counter = 1
+                for book in reduced_results[library_code]:
+                    response += str(counter) + ". " + ', '.join(book['title'])
+                    if 'author' in book:
+                        response += " / " + ', '.join(book['author'])
+                    response += "\n"
+
+                    if 'callNumber' in book:
+                        callNumber = book['callNumber']
+                        # Need to slice off the opening and closing parenthesis from call numbers, if they exist
+                        if callNumber[0] == '(':
+                            callNumber = callNumber[1:]
+
+                        if callNumber[len(callNumber) - 1] == ')':
+                            callNumber = callNumber[:-1]
+                        response += "   " + callNumber
+                    response += "\n"
+                    counter += 1
+                response += "\n"
+            print(response)
+            return response
+        else:
             chat_template = await self.chat_prompt.get_chat_prompt_template()
             chain = chat_template | self.llm
             human_query_string = "Context:\n[CONTEXT]\n" + json.dumps(reduced_results) + "\n[/CONTEXT]\n\n The hours for all libraries are 9:00am - 5:00pm."
@@ -128,3 +171,7 @@ class LLMWorker():
             print('chat_result')
             print(chat_result)
             return chat_result
+
+    def get_library_hours(self, library_code):
+        # TODO: LibCal integration here
+        return "9:00am - 5:00pm\n"
