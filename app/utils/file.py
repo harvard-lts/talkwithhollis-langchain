@@ -1,4 +1,6 @@
 import csv, json
+import os
+from datetime import datetime
 import pandas as pd
 
 class FileUtils():
@@ -39,6 +41,25 @@ class FileUtils():
     async def get_libraries_json(self):
         libraries_json = await self.open_json_file('app/schemas/libraries.json')
         return libraries_json
+    
+    async def get_and_init_library_cache_file(self):
+        filename = "./data/library_hour_cache.json"
+        does_json_exist = os.path.exists(filename)
+
+        if not does_json_exist:
+            os.makedirs(os.path.dirname(filename), exist_ok=True)
+            new_file_json = {
+                'timestamp': datetime.now().strftime("%m/%d/%Y, %H:%M:%S"),
+                'libraries': []
+            }
+            await self.write_cached_library_hours_json(new_file_json)
+            return new_file_json
+        else:
+            return await self.open_json_file('data/library_hour_cache.json')
+    
+    async def write_cached_library_hours_json(self, library_hours_json):
+        with open('data/library_hour_cache.json', 'w') as f:
+            json.dump(library_hours_json, f)
 
     # https://stackoverflow.com/questions/10574520/extract-json-from-text
     async def get_json_from_paragraph(self, paragraph):
