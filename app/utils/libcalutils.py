@@ -14,7 +14,6 @@ class LibCalUtils():
 	async def get_library_hours(self):
 		# Get cached hours
 		cached_library_hours_json = await self.file_utils.get_and_init_library_cache_file()
-
 		time_now = datetime.now()
 		cached_time = datetime.strptime(cached_library_hours_json['timestamp'], "%m/%d/%Y, %H:%M:%S")
 		difference = time_now - cached_time
@@ -26,7 +25,7 @@ class LibCalUtils():
 				cached_library_hours_json['libraries'] = formatted_hours
 				cached_library_hours_json['timestamp'] = time_now.strftime("%m/%d/%Y, %H:%M:%S")
 				await self.file_utils.write_cached_library_hours_json(cached_library_hours_json)
-				return cached_library_hours_json
+				return cached_library_hours_json['libraries']
 		else:
 				# Do not do the refresh
 				return cached_library_hours_json['libraries']

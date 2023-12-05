@@ -138,7 +138,11 @@ class LLMWorker():
                     if library["Library Code"] == library_code:
                         response += library["Display name in Primo API"] + "\n"
                         break
-                response += library_hours[library_code] + "\n"
+
+                if library_code in library_hours:
+                    response += library_hours[library_code] + "\n"
+                else:
+                    response += "Operating Hours unknown, please check library website\n"
 
                 counter = 1
                 for book in reduced_results[library_code]:
