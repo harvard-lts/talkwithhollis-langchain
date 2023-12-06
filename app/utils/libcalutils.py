@@ -15,6 +15,7 @@ class LibCalUtils():
 		# Get cached hours
 		cached_library_hours_json = await self.file_utils.get_and_init_library_cache_file()
     if cached_library_hours_json is None:
+        print('Error: Unable to get library hours. cached_library_hours_json is None')
         return None
     
 		time_now = datetime.now()
