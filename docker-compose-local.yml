@@ -9,7 +9,6 @@ services:
     #command: 'tail -f /dev/null'
     volumes:
       - './:/home/twhadm'
-      - '/home/twhadm/node_modules'
       # Uncomment to use a profile defined in ~/.aws/credentials
       #- $HOME/.aws/credentials:/home/twhadm/.aws/credentials:ro
     ports:

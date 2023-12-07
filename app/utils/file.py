@@ -46,16 +46,21 @@ class FileUtils():
         filename = "./data/library_hour_cache.json"
         does_json_exist = os.path.exists(filename)
 
-        if not does_json_exist:
-            os.makedirs(os.path.dirname(filename), exist_ok=True)
-            new_file_json = {
-                'timestamp': datetime.now().strftime("%m/%d/%Y, %H:%M:%S"),
-                'libraries': []
-            }
-            await self.write_cached_library_hours_json(new_file_json)
-            return new_file_json
-        else:
-            return await self.open_json_file('data/library_hour_cache.json')
+        library_cache_json = None
+        try:
+            if not does_json_exist:
+                os.makedirs(os.path.dirname(filename), exist_ok=True)
+                new_file_json = {
+                    'timestamp': datetime.now().strftime("%m/%d/%Y, %H:%M:%S"),
+                    'libraries': []
+                }
+                await self.write_cached_library_hours_json(new_file_json)
+                library_cache_json = new_file_json
+            else:
+                library_cache_json = await self.open_json_file('data/library_hour_cache.json')
+        except Exception as e:
+            print(e)
+        return library_cache_json
     
     async def write_cached_library_hours_json(self, library_hours_json):
         with open('data/library_hour_cache.json', 'w') as f:
