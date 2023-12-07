@@ -140,7 +140,7 @@ class LLMWorker():
                         break
 
                 if library_hours is not None and library_code in library_hours:
-                    response += library_hours[library_code] + "\n"
+                        response += library_hours[library_code] + "\n"
                 else:
                     response += "Operating Hours unknown, please check library website\n"
 
@@ -179,4 +179,4 @@ class LLMWorker():
 
     async def get_library_hours(self):
         libcal_utils = LibCalUtils()
-        return LibCalUtils.get_library_hours(libcal_utils)
+        return await LibCalUtils.get_library_hours(libcal_utils)
