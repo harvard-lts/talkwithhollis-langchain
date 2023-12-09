@@ -163,7 +163,9 @@ class LLMWorker():
                     response += "\n"
                     counter += 1
                 response += "\n"
-            response += "Here is the link to the full search results: {}".format(self.primo_api_request)
+            # TODO: Create a hollis link for the search results (instead of a link to the primo api)
+            # TODO: Display the link as clickable in the react app (it just displays the plain text right now)
+            response += "<a href='{}' target='_blank'>Click here to view the full search results in HOLLIS</a>".format(self.primo_api_request)
             print(response)
             return response
         else:
