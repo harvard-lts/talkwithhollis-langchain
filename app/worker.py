@@ -108,10 +108,10 @@ class LLMWorker():
             print(no_keyword_result)
             return no_keyword_result
         else:
-            primo_api_request = self.primo_utils.generate_primo_api_request(hollis_prompt_result)
-            print(primo_api_request)
+            self.primo_api_request = self.primo_utils.generate_primo_api_request(hollis_prompt_result)
+            print(self.primo_api_request)
 
-            primo_api_response = requests.get(primo_api_request)
+            primo_api_response = requests.get(self.primo_api_request)
 
             # Step 2: Write logic to filter, reduce, and prioritize data from HOLLIS using python methods and LLMs
 
@@ -163,6 +163,7 @@ class LLMWorker():
                     response += "\n"
                     counter += 1
                 response += "\n"
+            response += "Here is the link to the full search results: {}".format(self.primo_api_request)
             print(response)
             return response
         else:
