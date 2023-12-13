@@ -6,13 +6,29 @@ class PrimoUtils():
         self.primo_api_key = settings.primo_api_key
         self.primo_api_host = settings.primo_api_host
         self.primo_api_limit = settings.primo_api_limit
+        self.hollis_api_host = settings.hollis_api_host
+        self.default_params = f"scope=default_scope&tab=books&vid=HVD2&limit={self.primo_api_limit}&offset=0"
 
     def generate_primo_api_request(self, llm_response):
-        primo_api_request = self.primo_api_host + f"?scope=default_scope&tab=books&vid=HVD2&limit={self.primo_api_limit}&offset=0&apikey={self.primo_api_key}&q=any,contains,{'%20'.join(llm_response['keywords'])}&multiFacets=facet_rtype,include,books"
+        primo_api_query = self.generate_primo_query(llm_response)
+        primo_api_request = f"{self.primo_api_host}?{self.default_params}&apikey={self.primo_api_key}&{primo_api_query}&multiFacets=facet_rtype,include,books"
         if len(llm_response['libraries']) > 0:
             primo_api_request += "%7C,%7Cfacet_library,include," + '%7C,%7Cfacet_library,include,'.join(llm_response['libraries'])
         primo_api_request += "%7C,%7Cfacet_tlevel,include,available_onsite"
         return primo_api_request
+
+    def generate_hollis_api_request(self, llm_response):
+        primo_api_query = self.generate_primo_query(llm_response)
+        hollis_api_request = f"{self.hollis_api_host}?{self.default_params}&{primo_api_query}"
+        if len(llm_response['libraries']) > 0:
+            # TOCO: Convert query params to mfacet
+            # mfacet=library,include,WID,1,lk&
+            hollis_api_request += "%7C,%7Cfacet_library,include," + '%7C,%7Cfacet_library,include,'.join(llm_response['libraries'])
+        hollis_api_request = "facet=tlevel,include,available_onsite,lk&facet=rtype,include,books,lk"
+        return primo_api_request
+
+    def generate_primo_query(self, llm_response):
+        return f"q=any,contains,{'%20'.join(llm_response['keywords'])}"
 
     def shrink_results_for_llm(self, results, libraries):
         reduced_results = {}
