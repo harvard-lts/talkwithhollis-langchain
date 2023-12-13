@@ -20,12 +20,15 @@ class PrimoUtils():
     def generate_hollis_api_request(self, llm_response):
         primo_api_query = self.generate_primo_query(llm_response)
         hollis_api_request = f"{self.hollis_api_host}?{self.default_params}&{primo_api_query}"
+        library_query = ""
         if len(llm_response['libraries']) > 0:
-            # TOCO: Convert query params to mfacet
-            # mfacet=library,include,WID,1,lk&
-            hollis_api_request += "%7C,%7Cfacet_library,include," + '%7C,%7Cfacet_library,include,'.join(llm_response['libraries'])
-        hollis_api_request = "facet=tlevel,include,available_onsite,lk&facet=rtype,include,books,lk"
-        return primo_api_request
+          for library in llm_response['libraries']:
+            library_query += f"mfacet=library,include,{library},1,lk&"
+          # remove trailing &
+          library_query = library_query[:-1]
+        hollis_api_request += f"&{library_query}"
+        hollis_api_request += "&facet=tlevel,include,available_onsite,lk&facet=rtype,include,books,lk"
+        return hollis_api_request
 
     def generate_primo_query(self, llm_response):
         return f"q=any,contains,{'%20'.join(llm_response['keywords'])}"

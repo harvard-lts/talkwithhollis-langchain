@@ -109,7 +109,9 @@ class LLMWorker():
             return no_keyword_result
         else:
             self.primo_api_request = self.primo_utils.generate_primo_api_request(hollis_prompt_result)
+            self.hollis_api_request = self.primo_utils.generate_hollis_api_request(hollis_prompt_result)
             print(self.primo_api_request)
+            print(self.hollis_api_request)
 
             primo_api_response = requests.get(self.primo_api_request)
 
@@ -165,7 +167,7 @@ class LLMWorker():
                 response += "\n"
             # TODO: Create a hollis link for the search results (instead of a link to the primo api)
             # TODO: Display the link as clickable in the react app (it just displays the plain text right now)
-            response += "<a href='{}' target='_blank'>Click here to view the full search results in HOLLIS</a>".format(self.primo_api_request)
+            response += "<a href='{}' target='_blank'>Click here to view the full search results in HOLLIS</a>".format(self.hollis_api_request)
             print(response)
             return response
         else:
