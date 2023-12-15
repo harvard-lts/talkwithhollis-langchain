@@ -26,3 +26,5 @@ LIBCAL_CLIENT_ID=client_id
 LIBCAL_CLIENT_SECRET=client_secret
 LIBCAL_TOKEN_API_ROUTE=libcal_token_api_route
 LIBCAL_HOURS_API_ROUTE=libcal_hours_api_route
+
+HOLLIS_API_HOST=https://qa.hollis.harvard.edu/primo-explore/search
