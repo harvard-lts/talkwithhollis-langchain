@@ -76,3 +76,21 @@ class PrimoUtils():
                         reduced_results[holding['libraryCode']] = []
                     reduced_results[holding['libraryCode']].append(new_object)
         return reduced_results
+    
+    def get_available_results_up_to_limit(self, primo_results, libraries, result_limit):
+        # This method is to create a list, up to the configured result limit, of books that correspond to availability at the requested libraries
+        print("==========================================================================")
+        print("get_available_results_up_to_limit")
+        print(libraries)
+
+        filtered_results = []
+        for result in primo_results:
+            # Check results until we find an amount that meet the criteria equal equal to the limit
+            filtered_results.append(result)
+
+            if len(filtered_results) >= result_limit:
+                break
+        
+        print("==========================================================================")
+        return filtered_results
+
