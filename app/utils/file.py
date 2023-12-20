@@ -42,6 +42,10 @@ class FileUtils():
         libraries_json = await self.open_json_file('app/schemas/libraries.json')
         return libraries_json
     
+    async def get_libraries_sublocations_json(self):
+        libraries_sublocations_json = await self.open_json_file('app/schemas/libraries_acceptable_sublocations.json')
+        return libraries_sublocations_json
+    
     async def get_and_init_library_cache_file(self):
         filename = "./data/library_hour_cache.json"
         does_json_exist = os.path.exists(filename)

@@ -117,9 +117,8 @@ class LLMWorker():
 
             # Step 2: Write logic to filter, reduce, and prioritize data from HOLLIS using python methods and LLMs
 
-            # TODO
-            filtered_results = self.primo_utils.get_available_results_up_to_limit(primo_api_response.json()['docs'], hollis_prompt_result['libraries'], max_results_to_llm)
-            reduced_results = self.primo_utils.shrink_results_for_llm(primo_api_response.json()['docs'][0:max_results_to_llm], hollis_prompt_result['libraries'])
+            filtered_results = await self.primo_utils.get_available_results_up_to_limit(primo_api_response.json()['docs'], hollis_prompt_result['libraries'], max_results_to_llm)
+            reduced_results = self.primo_utils.shrink_results_for_llm(filtered_results, hollis_prompt_result['libraries'])
             print(reduced_results)
             print(reduced_results.keys())
             
