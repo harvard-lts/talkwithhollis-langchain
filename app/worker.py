@@ -93,7 +93,7 @@ class LLMWorker():
         print("hollis_prompt_result")
         print(hollis_prompt_result)
 
-        if hollis_prompt_result is None or hollis_prompt_result.get('keywords') is None or len(hollis_prompt_result.get('keywords')) == 0:
+        if hollis_prompt_result is None or isinstance(hollis_prompt_result, str) or hollis_prompt_result.get('keywords') is None or len(hollis_prompt_result.get('keywords')) == 0:
             
             hollis_no_keywords_prompt = await self.hollis_prompt.get_hollis_no_keywords_prompt()
 
