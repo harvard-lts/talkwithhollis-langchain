@@ -1,0 +1,361 @@
+{
+	"AJP": {
+		"GEN": {
+			"count": 121,
+			"displayLocation": "GEN"
+		},
+		"RR": {
+			"count": 5507,
+			"displayLocation": "Reading Room"
+		},
+		"VCENTER": {
+			"count": 109,
+			"displayLocation": "Visitor Center"
+		}
+	},
+	"BAK": {
+		"CORE": {
+			"count": 2619,
+			"displayLocation": "Stamps Reading Room -- Core Collection"
+		},
+		"OVERS": {
+			"count": 10428,
+			"displayLocation": "Stacks -- LC Oversize"
+		},
+		"SCHWA": {
+			"count": 124,
+			"displayLocation": "Stamps Reading Room -- HBS Art & Artifacts Book Collection"
+		},
+		"STLC": {
+			"count": 83615,
+			"displayLocation": "Stacks -- LC Books"
+		}
+	},
+	"CAB": {
+		"GEN": {
+			"count": 40479,
+			"displayLocation": "GEN"
+		}
+	},
+	"MED": {
+		"CYDHL": {
+			"count": 102,
+			"displayLocation": "Children Youth Books Collection"
+		},
+		"DIB": {
+			"count": 190,
+			"displayLocation": "Diversity, Inclusion and Belonging Coll"
+		},
+		"FANON": {
+			"count": 621,
+			"displayLocation": "Fanon"
+		},
+		"GEN": {
+			"count": 42111,
+			"displayLocation": "GEN"
+		},
+		"GMD": {
+			"count": 1040,
+			"displayLocation": "Graphic Medicine Collection"
+		},
+		"HIM": {
+			"count": 993,
+			"displayLocation": "Humanities in Medicine"
+		},
+		"JCSW": {
+			"count": 164,
+			"displayLocation": "JCSW Women and Medicine"
+		}
+	},
+	"MCZ": {
+		"BIRD": {
+			"count": 1331,
+			"displayLocation": "Bird"
+		},
+		"ENTO": {
+			"count": 792,
+			"displayLocation": "Entomology Dept."
+		},
+		"FISH": {
+			"count": 504,
+			"displayLocation": "Ichthyology Dept."
+		},
+		"GEN": {
+			"count": 39092,
+			"displayLocation": "GEN"
+		},
+		"HERP": {
+			"count": 1752,
+			"displayLocation": "Herp."
+		},
+		"INVTP": {
+			"count": 3047,
+			"displayLocation": "Invertebrate Paleontology Collection"
+		},
+		"INVZ": {
+			"count": 713,
+			"displayLocation": "Invertebrate Zoology Dept."
+		},
+		"MAMM": {
+			"count": 553,
+			"displayLocation": "Mammals Dept."
+		},
+		"MARIN": {
+			"count": 202,
+			"displayLocation": "Marine Invertebrates Collection"
+		},
+		"MOLL": {
+			"count": 1489,
+			"displayLocation": "Mollusks Dept."
+		},
+		"VERTP": {
+			"count": 1434,
+			"displayLocation": "Vertebrate Paleontology Collection"
+		}
+	},
+	"FAL": {
+		"FALLC": {
+			"count": 38446,
+			"displayLocation": "FAL-LC"
+		},
+		"GEN": {
+			"count": 98016,
+			"displayLocation": "GEN"
+		},
+		"RUBGEN": {
+			"count": 6664,
+			"displayLocation": "Rubel General Collections"
+		},
+		"RUBLC": {
+			"count": 10910,
+			"displayLocation": "RUB-LC"
+		}
+	},
+	"DES": {
+		"GEN": {
+			"count": 133617,
+			"displayLocation": "GEN"
+		},
+		"OVERS": {
+			"count": 5079,
+			"displayLocation": "Oversize"
+		},
+		"REFST": {
+			"count": 248,
+			"displayLocation": "Reference STAT"
+		}
+	},
+	"FUN": {
+		"DAGEN": {
+			"count": 9938,
+			"displayLocation": "Davis Center for Russian and Eurasian Studies"
+		},
+		"DOGEN": {
+			"count": 974,
+			"displayLocation": "Documentation Center on Contemporary Japan"
+		},
+		"GEN": {
+			"count": 686,
+			"displayLocation": "GEN"
+		}
+	},
+	"GUT": {
+		"GEN": {
+			"count": 43290,
+			"displayLocation": "GEN"
+		},
+		"JUV": {
+			"count": 1620,
+			"displayLocation": "Juvenile"
+		}
+	},
+	"DIV": {
+		"FOL": {
+			"count": 3176,
+			"displayLocation": "Folio"
+		},
+		"GEN": {
+			"count": 77001,
+			"displayLocation": "GEN"
+		},
+		"OLDD": {
+			"count": 10566,
+			"displayLocation": "OLD DIV"
+		},
+		"OLDDF": {
+			"count": 149,
+			"displayLocation": "OLD DIV folio"
+		}
+	},
+	"KSG": {
+		"CIRCD": {
+			"count": 209,
+			"displayLocation": "Circ Desk"
+		},
+		"DIB": {
+			"count": 373,
+			"displayLocation": "Diversity, Inclusion and Belonging Coll"
+		},
+		"GEN": {
+			"count": 15894,
+			"displayLocation": "GEN"
+		},
+		"WPC": {
+			"count": 112,
+			"displayLocation": "Working Papers Collection"
+		}
+	},
+	"LAW": {
+		"GEN": {
+			"count": 113804,
+			"displayLocation": "GEN"
+		}
+	},
+	"HYL": {
+		"C": {
+			"count": 101037,
+			"displayLocation": "(C)"
+		},
+		"GEN": {
+			"count": 186702,
+			"displayLocation": "GEN"
+		},
+		"J": {
+			"count": 85193,
+			"displayLocation": "(J)"
+		},
+		"K": {
+			"count": 51422,
+			"displayLocation": "(K)"
+		},
+		"V": {
+			"count": 12163,
+			"displayLocation": "(V)"
+		},
+		"W": {
+			"count": 28845,
+			"displayLocation": "(W)"
+		}
+	},
+	"WOL": {
+		"CHTH": {
+			"count": 1002,
+			"displayLocation": "Charts Section H"
+		},
+		"CHTS": {
+			"count": 460,
+			"displayLocation": "Charts Section S"
+		},
+		"DISSH": {
+			"count": 1081,
+			"displayLocation": "Dissertation Collection H"
+		},
+		"FOLCH": {
+			"count": 161,
+			"displayLocation": "Folio Charts Section H"
+		},
+		"FOLCS": {
+			"count": 97,
+			"displayLocation": "Folio Charts Section S"
+		},
+		"FOLH": {
+			"count": 578,
+			"displayLocation": "Folio H"
+		},
+		"FOLS": {
+			"count": 231,
+			"displayLocation": "Folio S"
+		},
+		"GENH": {
+			"count": 15894,
+			"displayLocation": "GENH"
+		},
+		"GENS": {
+			"count": 16765,
+			"displayLocation": "GENS"
+		},
+		"PCHTH": {
+			"count": 85,
+			"displayLocation": "Portfolio Charts Section H"
+		},
+		"PCHTS": {
+			"count": 65,
+			"displayLocation": "Portfolio Charts Section S"
+		}
+	},
+	"LAM": {
+		"FARNS": {
+			"count": 6424,
+			"displayLocation": "FARNSWORTH"
+		},
+		"FCORL": {
+			"count": 72,
+			"displayLocation": "FARNSWORTH CORLISS LAMONT COLLECTION"
+		},
+		"GEN": {
+			"count": 138297,
+			"displayLocation": "GEN"
+		},
+		"POEGEN": {
+			"count": 7996,
+			"displayLocation": "POEGEN"
+		}
+	},
+	"MUS": {
+		"GEN": {
+			"count": 38936,
+			"displayLocation": "GEN"
+		},
+		"SEEG": {
+			"count": 2439,
+			"displayLocation": "Seeger Room"
+		}
+	},
+	"SEC": {
+		"GEN": {
+			"count": 775,
+			"displayLocation": "GEN"
+		}
+	},
+	"TOZ": {
+		"GEN": {
+			"count": 26675,
+			"displayLocation": "GEN"
+		},
+		"IKC": {
+			"count": 86,
+			"displayLocation": "Indigenous Knowledge Collection"
+		},
+		"TOZLC": {
+			"count": 12864,
+			"displayLocation": "TOZ-LC"
+		}
+	},
+	"WID": {
+		"GEN": {
+			"count": 713621,
+			"displayLocation": "GEN"
+		},
+		"TIBET": {
+			"count": 1393,
+			"displayLocation": "Tibetan Collection"
+		},
+		"WIDHE": {
+			"count": 5993,
+			"displayLocation": "WID-LC Hebrew"
+		},
+		"WIDLC": {
+			"count": 711543,
+			"displayLocation": "WID-LC"
+		},
+		"WIDME": {
+			"count": 37500,
+			"displayLocation": "WID-LC Mid East"
+		},
+		"WIDYI": {
+			"count": 485,
+			"displayLocation": "WID-LC Yiddish"
+		}
+	}
+}
+

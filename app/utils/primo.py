@@ -1,4 +1,7 @@
+import copy
 import os
+
+from .file import FileUtils
 from app.config import settings
 
 class PrimoUtils():
@@ -76,3 +79,30 @@ class PrimoUtils():
                         reduced_results[holding['libraryCode']] = []
                     reduced_results[holding['libraryCode']].append(new_object)
         return reduced_results
+    
+    async def get_available_results_up_to_limit(self, primo_results, libraries, result_limit):
+        # This method is to create a list, up to the configured result limit, of books that correspond to availability at the requested libraries
+        acceptable_library_sublocations = await FileUtils().get_libraries_sublocations_json()
+
+        filtered_results = []
+        for result in primo_results:
+            # Check results until we find an amount that meet the criteria equal equal to the limit
+            relevant_holdings = []
+            for holding in result.get('delivery', {}).get('holding', []):
+                # check if the holding is at a requested library and available
+                libraryCode = holding.get('libraryCode')
+                if libraryCode in libraries and holding['availabilityStatus'] == 'available':
+                    # if so, we check against that library's allowed sublocation codes (only books in certain sublocations can be checked out)
+                    if holding['subLocationCode'] in acceptable_library_sublocations[libraryCode].keys():
+                        relevant_holdings.append(holding)
+
+            if len(relevant_holdings) > 0:
+                transformed_result = copy.deepcopy(result)
+                transformed_result['delivery']['holding'] = relevant_holdings
+                filtered_results.append(transformed_result)
+
+            if len(filtered_results) >= result_limit:
+                break
+
+        return filtered_results
+
