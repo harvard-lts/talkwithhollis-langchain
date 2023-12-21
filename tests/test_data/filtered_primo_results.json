@@ -1,0 +1,2929 @@
+[
+	{
+		 "enrichment":{
+				"virtualBrowseObject":{
+					 "callNumber":"Ac T34",
+					 "isVirtualBrowseEnabled":true,
+					 "callNumberBrowseField":"browse_callnumber.V2"
+				}
+		 },
+		 "delivery":{
+				"availabilityLinks":[
+					 "detailsGetit1"
+				],
+				"physicalItemTextCodes":"",
+				"displayLocation":false,
+				"availabilityLinksUrl":[
+					 ""
+				],
+				"link":[
+					 {
+							"displayLabel":"thumbnail",
+							"hyperlinkText":"",
+							"inst4opac":"01HVD",
+							"linkURL":"https://books.google.com/books?bibkeys=OCLC:40820982,ISBN:1575728818&jscmd=viewapi&callback=updateGBSCover",
+							"linkType":"http://purl.org/pnx/linkType/thumbnail",
+							"@id":"_:0"
+					 },
+					 {
+							"displayLabel":"$$Eworldcat",
+							"hyperlinkText":"",
+							"inst4opac":"01HVD",
+							"linkURL":"http://www.worldcat.org/search?q=no%3A40820982",
+							"linkType":"http://purl.org/pnx/linkType/linktouc",
+							"@id":"_:1"
+					 },
+					 {
+							"displayLabel":"thumbnail",
+							"linkURL":"https://books.google.com/books?bibkeys=OCLC:40820982,ISBN:1575728818&jscmd=viewapi&callback=updateGBSCover",
+							"linkType":"http://purl.org/pnx/linkType/thumbnail",
+							"@id":"_:2"
+					 }
+				],
+				"availability":[
+					 "available_in_institution"
+				],
+				"additionalLocations":true,
+				"displayedAvailability":"available_in_institution",
+				"holding":[
+					 {
+							"matchForHoldings":[
+								 {
+										"holdingRecord":"852##b",
+										"matchOn":"MainLocation"
+								 },
+								 {
+										"holdingRecord":"852##c",
+										"matchOn":"SecondaryLocation"
+								 }
+							],
+							"subLocationCode":"RR",
+							"ilsApiId":"",
+							"libraryCode":"AJP",
+							"isValidUser":true,
+							"mainLocation":"AJP",
+							"callNumber":"(Ac T34 )",
+							"adaptorid":"ALMA_01",
+							"organization":"01HVD",
+							"holdingURL":"OVP",
+							"@id":"_:0",
+							"availabilityStatus":"available",
+							"subLocation":"Reading Room",
+							"holdId":""
+					 }
+				],
+				"bestlocation":{
+					 "matchForHoldings":[
+							{
+								 "holdingRecord":"852##b",
+								 "matchOn":"MainLocation"
+							},
+							{
+								 "holdingRecord":"852##c",
+								 "matchOn":"SecondaryLocation"
+							}
+					 ],
+					 "mainLocation":"AJP",
+					 "subLocationCode":"RR",
+					 "callNumber":"(Ac T34 )",
+					 "organization":"01HVD",
+					 "libraryCode":"AJP",
+					 "@id":"_:0",
+					 "availabilityStatus":"available",
+					 "subLocation":"Reading Room",
+					 "holdId":"",
+					 "isValidUser":true
+				},
+				"deliveryCategory":[
+					 "Alma-P"
+				],
+				"serviceMode":[
+					 "activate"
+				],
+				"feDisplayOtherLocations":false,
+				"GetIt1":[
+					 {
+							"links":[
+								 {
+										"isLinktoOnline":false,
+										"displayText":"Almagetit",
+										"hyperlinkText":"",
+										"getItTabText":"alma_tab1_avail",
+										"link":"https://hvd-psb.alma.exlibrisgroup.com/view/uresolver/01HVD_INST/openurl?ctx_enc=info:ofi/enc:UTF-8&ctx_id=10_1&ctx_tim=2023-12-21T21%3A55%3A40IST&ctx_ver=Z39.88-2004&url_ctx_fmt=info:ofi/fmt:kev:mtx:ctx&url_ver=Z39.88-2004&rfr_id=info:sid/primo.exlibrisgroup.com-01HVD_ALMA&rft_dat=ie=01HVD_INST:212174895960003941,language=eng,view=HVD2&svc_dat=getit&user_ip={{userIp}}&rft.aulast=Theodorou&rft.au=Theodorou,%20Rod&rft.isbn=1575728818&rft.place=Des%20Plaines,%20Ill.&rft.local_attribute=990142840400203941&rfe.kind=available&rft.genre=book&rft.pub=Heinemann%20Library &rft.title=Birds&rft.date=2000&rfe.chron=Birds&rfe.dcType=book&env_type=test",
+										"@id":"_:0"
+								 }
+							],
+							"category":"Alma-P"
+					 }
+				]
+		 },
+		 "@rta_link":"https://harvard-primoalma-stage.hosted.exlibrisgroup.com/primo_library/libweb/webservices/rest/v1/rta/HVD2?recordInformation=212174895960003941|,|01HVD_ALMA|,|01HVD|,|Alma|,|01HVD_ALMA212174895960003941|,|$$I01HVD$$LAJP$$1Reading Room$$2(Ac T34 )$$Savailable$$X01HVD_INST$$YAJP$$ZRR$$P1|,|$$I01HVD$$Savailable|,|Alma-P|,|01HVD|,|01HVD_INST:212174895960003941|,|__NO_VALUE__|,|__NO_VALUE__|,|HVD_ALEPH014284040|,|__NO_VALUE__",
+		 "context":"L",
+		 "adaptor":"Local Search Engine",
+		 "pnx":{
+				"delivery":{
+					 "institution":[
+							"01HVD"
+					 ],
+					 "delcategory":[
+							"Alma-P"
+					 ]
+				},
+				"display":{
+					 "lds17":[
+							"Animal babies"
+					 ],
+					 "lds38":[
+							"Animal babies $$QAnimal babies"
+					 ],
+					 "creationdate":[
+							"c2000"
+					 ],
+					 "lds19":[
+							"(Animal babies.)"
+					 ],
+					 "subject":[
+							"Birds -- Infancy -- Juvenile literature.",
+							"Parental behavior in animals -- Juvenile literature."
+					 ],
+					 "description":[
+							"Introduces the birth, development, care, feeding, and characteristics of baby birds."
+					 ],
+					 "language":[
+							"eng"
+					 ],
+					 "source":[
+							"01HVD_ALMA"
+					 ],
+					 "type":[
+							"book"
+					 ],
+					 "title":[
+							"Birds"
+					 ],
+					 "availpnx":[
+							"available"
+					 ],
+					 "lds02":[
+							"40820982"
+					 ],
+					 "lds01":[
+							"990142840400203941"
+					 ],
+					 "lds45":[
+							"Amniotes",
+							"Vertebrates"
+					 ],
+					 "lds03":[
+							"<a href=\"http://id.lib.harvard.edu/alma/990142840400203941/catalog\">http://id.lib.harvard.edu/alma/990142840400203941/catalog</a>"
+					 ],
+					 "lds06":[
+							"What Is a Bird? -- Making a Nest -- Laying Eggs -- Hatchlings -- Feeding the Hatchlings -- Life in the Nest -- Learning to Fly -- Finding Food -- Staying Safe -- Taking Care of a Baby -- Growing up -- Birds and Other Animals."
+					 ],
+					 "identifier":[
+							"$$CISBN$$V1575728818 (lib. bdg.); $$CISBN$$V9781575728810 (lib. bdg.)"
+					 ],
+					 "lds05":[
+							"Heinemann Library"
+					 ],
+					 "creator":[
+							"Theodorou, Rod. $$QTheodorou, Rod."
+					 ],
+					 "availinstitution":[
+							"$$I01HVD$$Savailable"
+					 ],
+					 "format":[
+							"32 p. : col. ill. ; 23 cm."
+					 ],
+					 "availlibrary":[
+							"$$I01HVD$$LAJP$$1Reading Room$$2(Ac T34 )$$Savailable$$X01HVD_INST$$YAJP$$ZRR$$P1"
+					 ],
+					 "publisher":[
+							"Des Plaines, Ill. : Heinemann Library, c2000."
+					 ],
+					 "lds30":[
+							"Juvenile works.$$QJuvenile works."
+					 ],
+					 "lds11":[
+							"Des Plaines, Ill. : Heinemann Library"
+					 ],
+					 "lds13":[
+							"Includes bibliographical references (p. 31) and index."
+					 ],
+					 "lds14":[
+							"Rod Theodorou."
+					 ]
+				},
+				"control":{
+					 "recordid":[
+							"01HVD_ALMA212174895960003941"
+					 ],
+					 "sourceid":[
+							"01HVD_ALMA"
+					 ],
+					 "almaid":[
+							"01HVD_INST:212174895960003941"
+					 ],
+					 "originalsourceid":[
+							"01HVD"
+					 ],
+					 "sourceformat":[
+							"MARC21"
+					 ],
+					 "sourcerecordid":[
+							"212174895960003941"
+					 ],
+					 "sourcesystem":[
+							"Alma"
+					 ],
+					 "addsrcrecordid":[
+							"HVD_ALEPH014284040"
+					 ]
+				},
+				"sort":{
+					 "creationdate":[
+							"2000"
+					 ],
+					 "author":[
+							"Theodorou, Rod."
+					 ],
+					 "title":[
+							"Birds /"
+					 ]
+				},
+				"frbr":{
+					 "t":[
+							1
+					 ],
+					 "k1":[
+							"$$K(OCoLC)40820982 $$AA"
+					 ]
+				},
+				"dedup":{
+					 "f6":[
+							"2000"
+					 ],
+					 "f7":[
+							"birds"
+					 ],
+					 "c5":[
+							"990142840400203941"
+					 ],
+					 "f8":[
+							"ilu"
+					 ],
+					 "f9":[
+							"32 p. :"
+					 ],
+					 "t":[
+							1
+					 ],
+					 "f10":[
+							"heinemann library"
+					 ],
+					 "f20":[
+							"990142840400203941"
+					 ],
+					 "f11":[
+							"theodorou rod"
+					 ],
+					 "f3":[
+							"1575728818;9781575728810"
+					 ],
+					 "f5":[
+							"birds"
+					 ]
+				},
+				"facets":{
+					 "frbrtype":[
+							"6"
+					 ],
+					 "creatorcontrib":[
+							"Theodorou, Rod"
+					 ],
+					 "creationdate":[
+							"2000"
+					 ],
+					 "newrecords":[
+							"20180918_207"
+					 ],
+					 "rsrctype":[
+							"books"
+					 ],
+					 "language":[
+							"eng"
+					 ],
+					 "collection":[
+							"Harvard Core"
+					 ],
+					 "prefilter":[
+							"books"
+					 ],
+					 "lfc07":[
+							"Animal babies"
+					 ],
+					 "toplevel":[
+							"available",
+							"available_onsite"
+					 ],
+					 "library":[
+							"AJP"
+					 ],
+					 "atoz":[
+							"B"
+					 ],
+					 "frbrgroupid":[
+							"107335760"
+					 ],
+					 "genre":[
+							"Juvenile literature",
+							"Juvenile works"
+					 ],
+					 "topic":[
+							"Birds–Infancy–Juvenile literature",
+							"Parental behavior in animals–Juvenile literature",
+							"Birds",
+							"Animals–Infancy",
+							"Parental behavior in animals",
+							"Birds–Infancy"
+					 ]
+				},
+				"enrichment":{
+					 "classificationlcc":[
+							"QL676.2"
+					 ]
+				},
+				"search":{
+					 "creationdate":[
+							"2000"
+					 ],
+					 "subject":[
+							"Birds Infancy Juvenile literature.",
+							"Parental behavior in animals Juvenile literature.",
+							"Birds.",
+							"Animals Infancy.",
+							"Parental behavior in animals.",
+							"Birds Infancy.",
+							"Care of the young (Animal behavior)",
+							"Maternal behavior in animals",
+							"Parental care in animals",
+							"Parenting in animals",
+							"Paternal behavior in animals",
+							"Paternalism in animals",
+							"Baby birds",
+							"Birds Nestlings",
+							"Fledglings (Birds)",
+							"Nestlings (Birds)",
+							"Aves",
+							"Avian fauna",
+							"Avifauna",
+							"Wild birds",
+							"Juvenile works."
+					 ],
+					 "isbn":[
+							"1575728818",
+							"9781575728810"
+					 ],
+					 "rsrctype":[
+							"book"
+					 ],
+					 "description":[
+							"Introduces the birth, development, care, feeding, and characteristics of baby birds."
+					 ],
+					 "toc":[
+							"What Is a Bird? -- Making a Nest -- Laying Eggs -- Hatchlings -- Feeding the Hatchlings -- Life in the Nest -- Learning to Fly -- Finding Food -- Staying Safe -- Taking Care of a Baby -- Growing up -- Birds and Other Animals."
+					 ],
+					 "title":[
+							"Birds /"
+					 ],
+					 "startdate":[
+							"20000101"
+					 ],
+					 "lsr30":[
+							"Juvenile literature.",
+							"Juvenile works."
+					 ],
+					 "general":[
+							"^^^99018053^",
+							"Includes bibliographical references (p. 31) and index."
+					 ],
+					 "scope":[
+							"01HVD_ALMA",
+							"HVD_AJP",
+							"01HVD"
+					 ],
+					 "lsr38":[
+							"Animal babies"
+					 ],
+					 "sourceid":[
+							"01HVD_ALMA"
+					 ],
+					 "lsr40":[
+							"eng"
+					 ],
+					 "creatorcontrib":[
+							"Theodorou, Rod.",
+							"Theodoro, Rod",
+							"Rod Theodorou."
+					 ],
+					 "lsr04":[
+							"Heinemann Library,"
+					 ],
+					 "lsr02":[
+							"40820982"
+					 ],
+					 "lsr01":[
+							"990142840400203941",
+							"014284040",
+							"14284040"
+					 ],
+					 "lsr43":[
+							"AcT34"
+					 ],
+					 "addtitle":[
+							"Animal babies",
+							"Animal babies.",
+							"What Is a Bird? -- Making a Nest -- Laying Eggs -- Hatchlings -- Feeding the Hatchlings -- Life in the Nest -- Learning to Fly -- Finding Food -- Staying Safe -- Taking Care of a Baby -- Growing up -- Birds and Other Animals."
+					 ],
+					 "lsr42":[
+							"ilu"
+					 ],
+					 "addsrcrecordid":[
+							"990142840400203941"
+					 ],
+					 "lsr41":[
+							"AJPRR"
+					 ],
+					 "recordid":[
+							"01HVD_ALMA212174895960003941"
+					 ],
+					 "enddate":[
+							"20001231"
+					 ],
+					 "lsr05":[
+							"Des Plaines, Ill. :"
+					 ]
+				},
+				"links":{
+					 "thumbnail":[
+							"$$Tgoogle_thumb"
+					 ],
+					 "uri":[
+							"$$Aisbn$$V1575728818$$U(uri) http://www.isbnsearch.org/isbn/1575728818",
+							"$$Aisbn$$V9781575728810$$U(uri) http://www.isbnsearch.org/isbn/9781575728810",
+							"$$Aoclc_nr$$V(OCoLC)40820982$$U(uri) http://www.worldcat.org/oclc/40820982",
+							"$$Acreatorcontrib$$VTheodorou, Rod$$U(uri) http://id.loc.gov/authorities/names/n93075929$$U(uri) http://viaf.org/viaf/sourceID/LC|n93075929",
+							"$$Asubject$$VBirds -- Infancy -- Juvenile literature$$U(uri) http://id.loc.gov/authorities/subjects/sh85014310",
+							"$$Asubject$$VParental behavior in animals -- Juvenile literature$$U(uri) http://id.loc.gov/authorities/subjects/sh2008108910"
+					 ],
+					 "linktouc":[
+							"$$Tworldcat_oclc$$Eworldcat"
+					 ]
+				},
+				"ranking":{
+					 "booster2":[
+							"1"
+					 ],
+					 "booster1":[
+							"1"
+					 ]
+				},
+				"addata":{
+					 "date":[
+							"2000"
+					 ],
+					 "aulast":[
+							"Theodorou"
+					 ],
+					 "notes":[
+							"Includes bibliographical references (p. 31) and index."
+					 ],
+					 "cop":[
+							"Des Plaines, Ill."
+					 ],
+					 "isbn":[
+							"1575728818",
+							"9781575728810"
+					 ],
+					 "format":[
+							"book"
+					 ],
+					 "ristype":[
+							"BOOK"
+					 ],
+					 "mis1":[
+							"212174895960003941"
+					 ],
+					 "oclcid":[
+							"40820982"
+					 ],
+					 "abstract":[
+							"Introduces the birth, development, care, feeding, and characteristics of baby birds."
+					 ],
+					 "aufirst":[
+							"Rod."
+					 ],
+					 "lccn":[
+							"^^^99018053^"
+					 ],
+					 "seriestitle":[
+							"Animal babies"
+					 ],
+					 "au":[
+							"Theodorou, Rod"
+					 ],
+					 "genre":[
+							"book"
+					 ],
+					 "btitle":[
+							"Birds"
+					 ],
+					 "pub":[
+							"Heinemann Library"
+					 ],
+					 "risdate":[
+							"2000"
+					 ]
+				},
+				"browse":{
+					 "institution":[
+							"01HVD"
+					 ],
+					 "author":[
+							"$$DTheodorou, Rod$$ETheodorou, Rod$$I41-LIBRARY_OF_CONGRESS-n 93075929$$PY",
+							"$$DTheodoro, Rod$$ETheodoro, Rod$$I41-LIBRARY_OF_CONGRESS-n 93075929$$PN"
+					 ],
+					 "subject":[
+							"$$DBirds -- Infancy -- Juvenile literature$$EBirds Infancy Juvenile literature$$I41-LIBRARY_OF_CONGRESS-sh 85014310$$PY",
+							"$$DParental behavior in animals -- Juvenile literature$$EParental behavior in animals Juvenile literature$$I41-LIBRARY_OF_CONGRESS-sh2008108910$$PY",
+							"$$DAves$$EAves$$I41-LIBRARY_OF_CONGRESS-sh 85014310$$PN",
+							"$$DAvian fauna$$EAvian fauna$$I41-LIBRARY_OF_CONGRESS-sh 85014310$$PN",
+							"$$DAvifauna$$EAvifauna$$I41-LIBRARY_OF_CONGRESS-sh 85014310$$PN",
+							"$$DWild birds$$EWild birds$$I41-LIBRARY_OF_CONGRESS-sh 85014310$$PN"
+					 ],
+					 "callnumber":[
+							"$$I01HVD$$DAc T34$$EAC T0000034$$T8"
+					 ],
+					 "title":[
+							"$$DBirds$$EBirds",
+							"$$DAnimal babies$$EAnimal babies"
+					 ]
+				}
+		 },
+		 "@id":"https://harvard-primoalma-stage.hosted.exlibrisgroup.com/primo_library/libweb/webservices/rest/primo-explore/v1/pnxs/L/01HVD_ALMA212174895960003941"
+	},
+	{
+		 "enrichment":{
+				"virtualBrowseObject":{
+					 "callNumber":"Ac Al2",
+					 "isVirtualBrowseEnabled":true,
+					 "callNumberBrowseField":"browse_callnumber.V2"
+				}
+		 },
+		 "delivery":{
+				"availabilityLinks":[
+					 "detailsGetit1"
+				],
+				"physicalItemTextCodes":"",
+				"displayLocation":false,
+				"availabilityLinksUrl":[
+					 ""
+				],
+				"link":[
+					 {
+							"displayLabel":"thumbnail",
+							"hyperlinkText":"",
+							"inst4opac":"01HVD",
+							"linkURL":"https://books.google.com/books?bibkeys=OCLC:54930095,ISBN:0618307222&jscmd=viewapi&callback=updateGBSCover",
+							"linkType":"http://purl.org/pnx/linkType/thumbnail",
+							"@id":"_:0"
+					 },
+					 {
+							"displayLabel":"$$Eworldcat",
+							"hyperlinkText":"",
+							"inst4opac":"01HVD",
+							"linkURL":"http://www.worldcat.org/search?q=no%3A54930095",
+							"linkType":"http://purl.org/pnx/linkType/linktouc",
+							"@id":"_:1"
+					 },
+					 {
+							"displayLabel":"thumbnail",
+							"linkURL":"https://books.google.com/books?bibkeys=OCLC:54930095,ISBN:0618307222&jscmd=viewapi&callback=updateGBSCover",
+							"linkType":"http://purl.org/pnx/linkType/thumbnail",
+							"@id":"_:2"
+					 }
+				],
+				"availability":[
+					 "available_in_institution"
+				],
+				"additionalLocations":true,
+				"displayedAvailability":"available_in_institution",
+				"holding":[
+					 {
+							"matchForHoldings":[
+								 {
+										"holdingRecord":"852##b",
+										"matchOn":"MainLocation"
+								 },
+								 {
+										"holdingRecord":"852##c",
+										"matchOn":"SecondaryLocation"
+								 }
+							],
+							"subLocationCode":"RR",
+							"ilsApiId":"",
+							"libraryCode":"AJP",
+							"isValidUser":true,
+							"mainLocation":"AJP",
+							"callNumber":"(Ac Al2 )",
+							"adaptorid":"ALMA_01",
+							"organization":"01HVD",
+							"holdingURL":"OVP",
+							"@id":"_:0",
+							"availabilityStatus":"available",
+							"subLocation":"Reading Room",
+							"holdId":""
+					 }
+				],
+				"bestlocation":{
+					 "matchForHoldings":[
+							{
+								 "holdingRecord":"852##b",
+								 "matchOn":"MainLocation"
+							},
+							{
+								 "holdingRecord":"852##c",
+								 "matchOn":"SecondaryLocation"
+							}
+					 ],
+					 "mainLocation":"AJP",
+					 "subLocationCode":"RR",
+					 "callNumber":"(Ac Al2 )",
+					 "organization":"01HVD",
+					 "libraryCode":"AJP",
+					 "@id":"_:0",
+					 "availabilityStatus":"available",
+					 "subLocation":"Reading Room",
+					 "holdId":"",
+					 "isValidUser":true
+				},
+				"deliveryCategory":[
+					 "Alma-P"
+				],
+				"serviceMode":[
+					 "activate"
+				],
+				"feDisplayOtherLocations":false,
+				"GetIt1":[
+					 {
+							"links":[
+								 {
+										"isLinktoOnline":false,
+										"displayText":"Almagetit",
+										"hyperlinkText":"",
+										"getItTabText":"alma_tab1_avail",
+										"link":"https://hvd-psb.alma.exlibrisgroup.com/view/uresolver/01HVD_INST/openurl?ctx_enc=info:ofi/enc:UTF-8&ctx_id=10_1&ctx_tim=2023-12-21T21%3A55%3A40IST&ctx_ver=Z39.88-2004&url_ctx_fmt=info:ofi/fmt:kev:mtx:ctx&url_ver=Z39.88-2004&rfr_id=info:sid/primo.exlibrisgroup.com-01HVD_ALMA&rft_dat=ie=01HVD_INST:212139200550003941,language=eng,view=HVD2&svc_dat=getit&user_ip={{userIp}}&rft.aulast=Peterson&rft.au=Peterson,%20Roger%20Tory&rft.isbn=0618307222&rft.place=Boston&rft.local_attribute=990128046100203941&rfe.kind=available&rft.genre=book&rft.pub=Houghton%20Mifflin &rft.title=Birds&rft.date=2003&rfe.chron=Birds&rfe.dcType=book&env_type=test",
+										"@id":"_:0"
+								 }
+							],
+							"category":"Alma-P"
+					 }
+				]
+		 },
+		 "@rta_link":"https://harvard-primoalma-stage.hosted.exlibrisgroup.com/primo_library/libweb/webservices/rest/v1/rta/HVD2?recordInformation=212139200550003941|,|01HVD_ALMA|,|01HVD|,|Alma|,|01HVD_ALMA212139200550003941|,|$$I01HVD$$LAJP$$1Reading Room$$2(Ac Al2 )$$Savailable$$X01HVD_INST$$YAJP$$ZRR$$P1|,|$$I01HVD$$Savailable|,|Alma-P|,|01HVD|,|01HVD_INST:212139200550003941|,|__NO_VALUE__|,|__NO_VALUE__|,|HVD_ALEPH012804610|,|__NO_VALUE__",
+		 "context":"L",
+		 "adaptor":"Local Search Engine",
+		 "pnx":{
+				"delivery":{
+					 "institution":[
+							"01HVD"
+					 ],
+					 "delcategory":[
+							"Alma-P"
+					 ]
+				},
+				"display":{
+					 "lds17":[
+							"Peterson field guide color-in books"
+					 ],
+					 "lds38":[
+							"Peterson field guide series $$QPeterson field guide series"
+					 ],
+					 "creationdate":[
+							"[2003]"
+					 ],
+					 "lds19":[
+							"(Peterson field guide series.)"
+					 ],
+					 "subject":[
+							"Birds -- North America -- Identification.",
+							"Coloring books."
+					 ],
+					 "language":[
+							"eng"
+					 ],
+					 "source":[
+							"01HVD_ALMA"
+					 ],
+					 "type":[
+							"book"
+					 ],
+					 "title":[
+							"Birds"
+					 ],
+					 "contributor":[
+							"Alden, Peter.$$QAlden, Peter.",
+							"Sill, John.$$QSill, John.",
+							"Peterson, Roger Tory, 1908-1996. --Field guide to the birds coloring book. --$$QPeterson, Roger Tory, 1908-1996."
+					 ],
+					 "availpnx":[
+							"available"
+					 ],
+					 "lds02":[
+							"54930095"
+					 ],
+					 "lds01":[
+							"990128046100203941"
+					 ],
+					 "lds45":[
+							"Picture books"
+					 ],
+					 "lds03":[
+							"<a href=\"http://id.lib.harvard.edu/alma/990128046100203941/catalog\">http://id.lib.harvard.edu/alma/990128046100203941/catalog</a>"
+					 ],
+					 "identifier":[
+							"$$CISBN$$V0618307222 (pbk.); $$CISBN$$V9780618307227 (pbk.)"
+					 ],
+					 "lds05":[
+							"Houghton Mifflin"
+					 ],
+					 "creator":[
+							"Peterson, Roger Tory, 1908-1996. $$QPeterson, Roger Tory, 1908-1996."
+					 ],
+					 "availinstitution":[
+							"$$I01HVD$$Savailable"
+					 ],
+					 "format":[
+							"64 p. : ill. ; 28 cm. + over 230 stickers"
+					 ],
+					 "availlibrary":[
+							"$$I01HVD$$LAJP$$1Reading Room$$2(Ac Al2 )$$Savailable$$X01HVD_INST$$YAJP$$ZRR$$P1"
+					 ],
+					 "publisher":[
+							"Boston : Houghton Mifflin, [2003]"
+					 ],
+					 "lds11":[
+							"Boston : Houghton Mifflin"
+					 ],
+					 "lds13":[
+							"Originally published: A field guide to the birds coloring book. 1982."
+					 ],
+					 "lds14":[
+							"Roger Tory Peterson and Peter Alden ; illustrations by John Sill."
+					 ]
+				},
+				"control":{
+					 "recordid":[
+							"01HVD_ALMA212139200550003941"
+					 ],
+					 "sourceid":[
+							"01HVD_ALMA"
+					 ],
+					 "almaid":[
+							"01HVD_INST:212139200550003941"
+					 ],
+					 "originalsourceid":[
+							"01HVD"
+					 ],
+					 "sourceformat":[
+							"MARC21"
+					 ],
+					 "sourcerecordid":[
+							"212139200550003941"
+					 ],
+					 "sourcesystem":[
+							"Alma"
+					 ],
+					 "addsrcrecordid":[
+							"HVD_ALEPH012804610"
+					 ]
+				},
+				"sort":{
+					 "creationdate":[
+							"2003"
+					 ],
+					 "author":[
+							"Peterson, Roger Tory, 1908-1996."
+					 ],
+					 "title":[
+							"Birds /"
+					 ]
+				},
+				"frbr":{
+					 "t":[
+							1
+					 ],
+					 "k1":[
+							"$$K(OCoLC)54930095 $$AA"
+					 ]
+				},
+				"dedup":{
+					 "f6":[
+							"2003"
+					 ],
+					 "f7":[
+							"birds"
+					 ],
+					 "c5":[
+							"990128046100203941"
+					 ],
+					 "f8":[
+							"mau"
+					 ],
+					 "f9":[
+							"64 p. :"
+					 ],
+					 "t":[
+							1
+					 ],
+					 "f10":[
+							"houghton mifflin"
+					 ],
+					 "f20":[
+							"990128046100203941"
+					 ],
+					 "f11":[
+							"peterson roger tory 1908 1996"
+					 ],
+					 "f3":[
+							"0618307222;9780618307227"
+					 ],
+					 "f5":[
+							"birds"
+					 ]
+				},
+				"facets":{
+					 "frbrtype":[
+							"6"
+					 ],
+					 "creatorcontrib":[
+							"Peterson, Roger Tory, 1908-1996",
+							"Alden, Peter",
+							"Sill, John"
+					 ],
+					 "creationdate":[
+							"2003"
+					 ],
+					 "newrecords":[
+							"20180918_501"
+					 ],
+					 "rsrctype":[
+							"books"
+					 ],
+					 "language":[
+							"eng"
+					 ],
+					 "collection":[
+							"Harvard Core"
+					 ],
+					 "lfc01":[
+							"North America"
+					 ],
+					 "lfc06":[
+							"Field guide to the birds coloring book"
+					 ],
+					 "prefilter":[
+							"books"
+					 ],
+					 "lfc07":[
+							"Peterson field guide series"
+					 ],
+					 "toplevel":[
+							"available",
+							"available_onsite"
+					 ],
+					 "library":[
+							"AJP"
+					 ],
+					 "atoz":[
+							"B"
+					 ],
+					 "frbrgroupid":[
+							"107303152"
+					 ],
+					 "genre":[
+							"Identification"
+					 ],
+					 "topic":[
+							"Birds–North America–Identification",
+							"Coloring books"
+					 ]
+				},
+				"enrichment":{
+					 "classificationlcc":[
+							"QL681"
+					 ]
+				},
+				"search":{
+					 "creationdate":[
+							"2003",
+							"1982"
+					 ],
+					 "subject":[
+							"Birds North America Identification.",
+							"Coloring books.",
+							"Painting books"
+					 ],
+					 "isbn":[
+							"0618307222",
+							"9780618307227"
+					 ],
+					 "rsrctype":[
+							"book"
+					 ],
+					 "title":[
+							"Birds /"
+					 ],
+					 "startdate":[
+							"20030101"
+					 ],
+					 "lsr31":[
+							"North America"
+					 ],
+					 "lsr30":[
+							"Identification."
+					 ],
+					 "general":[
+							"^^2003279665",
+							"Originally published: A field guide to the birds coloring book. 1982."
+					 ],
+					 "scope":[
+							"01HVD_ALMA",
+							"HVD_AJP",
+							"01HVD"
+					 ],
+					 "lsr38":[
+							"Peterson field guide series"
+					 ],
+					 "sourceid":[
+							"01HVD_ALMA"
+					 ],
+					 "lsr40":[
+							"eng"
+					 ],
+					 "creatorcontrib":[
+							"Peterson, Roger Tory, 1908-1996.",
+							"ピーターソンロジヤー, 1908-1996",
+							"Roger Tory Peterson and Peter Alden ; illustrations by John Sill.",
+							"Alden, Peter.",
+							"Sill, John."
+					 ],
+					 "lsr04":[
+							"Houghton Mifflin,"
+					 ],
+					 "lsr02":[
+							"54930095"
+					 ],
+					 "lsr01":[
+							"990128046100203941",
+							"012804610",
+							"12804610"
+					 ],
+					 "lsr43":[
+							"AcAl2"
+					 ],
+					 "addtitle":[
+							"Peterson field guide color-in books",
+							"Field guide to the birds coloring book.",
+							"Peterson field guide series.",
+							"Peterson field guides"
+					 ],
+					 "lsr42":[
+							"mau"
+					 ],
+					 "addsrcrecordid":[
+							"990128046100203941"
+					 ],
+					 "lsr41":[
+							"AJPRR"
+					 ],
+					 "recordid":[
+							"01HVD_ALMA212139200550003941"
+					 ],
+					 "enddate":[
+							"20031231"
+					 ],
+					 "lsr05":[
+							"Boston :"
+					 ]
+				},
+				"links":{
+					 "thumbnail":[
+							"$$Tgoogle_thumb"
+					 ],
+					 "uri":[
+							"$$Aisbn$$V0618307222$$U(uri) http://www.isbnsearch.org/isbn/0618307222",
+							"$$Aisbn$$V9780618307227$$U(uri) http://www.isbnsearch.org/isbn/9780618307227",
+							"$$Aoclc_nr$$V(OCoLC)54930095$$U(uri) http://www.worldcat.org/oclc/54930095",
+							"$$Acreatorcontrib$$VPeterson, Roger Tory$$U(uri) http://id.loc.gov/authorities/names/n79120711$$U(uri) http://viaf.org/viaf/sourceID/LC|n79120711",
+							"$$Acreatorcontrib$$VAlden, Peter$$U(uri) http://id.loc.gov/authorities/names/n80045064$$U(uri) http://viaf.org/viaf/sourceID/LC|n80045064",
+							"$$Acreatorcontrib$$VSill, John$$U(uri) http://id.loc.gov/authorities/names/n82090769$$U(uri) http://viaf.org/viaf/sourceID/LC|n82090769",
+							"$$Asubject$$VBirds -- North America -- Identification$$U(uri) http://id.loc.gov/authorities/subjects/sh2007102030",
+							"$$Asubject$$VColoring books$$U(uri) http://id.loc.gov/authorities/subjects/sh85096854"
+					 ],
+					 "linktouc":[
+							"$$Tworldcat_oclc$$Eworldcat"
+					 ]
+				},
+				"ranking":{
+					 "booster2":[
+							"1"
+					 ],
+					 "booster1":[
+							"1"
+					 ]
+				},
+				"addata":{
+					 "date":[
+							"2003"
+					 ],
+					 "aulast":[
+							"Peterson",
+							"Alden",
+							"Sill"
+					 ],
+					 "cop":[
+							"Boston"
+					 ],
+					 "isbn":[
+							"0618307222",
+							"9780618307227"
+					 ],
+					 "format":[
+							"book"
+					 ],
+					 "ristype":[
+							"BOOK"
+					 ],
+					 "mis1":[
+							"212139200550003941"
+					 ],
+					 "oclcid":[
+							"54930095"
+					 ],
+					 "aufirst":[
+							"Roger Tory,",
+							"Peter.",
+							"John."
+					 ],
+					 "addau":[
+							"Alden, Peter",
+							"Sill, John",
+							"Peterson, Roger Tory"
+					 ],
+					 "lccn":[
+							"^^2003279665"
+					 ],
+					 "seriestitle":[
+							"Peterson field guide series"
+					 ],
+					 "au":[
+							"Peterson, Roger Tory"
+					 ],
+					 "genre":[
+							"book"
+					 ],
+					 "btitle":[
+							"Birds"
+					 ],
+					 "pub":[
+							"Houghton Mifflin"
+					 ],
+					 "risdate":[
+							"2003"
+					 ]
+				},
+				"browse":{
+					 "institution":[
+							"01HVD"
+					 ],
+					 "author":[
+							"$$DPeterson, Roger Tory, 1908-1996$$EPeterson, Roger Tory, 1908-1996$$I41-LIBRARY_OF_CONGRESS-n 79120711$$PY",
+							"$$Dピーターソンロジヤー, 1908-1996$$Eピーターソンロジヤー, 1908-1996$$I41-LIBRARY_OF_CONGRESS-n 79120711$$PN",
+							"$$DAlden, Peter$$EAlden, Peter$$I41-LIBRARY_OF_CONGRESS-n 80045064$$PY",
+							"$$DSill, John$$ESill, John$$I41-LIBRARY_OF_CONGRESS-n 82090769$$PY",
+							"$$DPeterson, Roger Tory, 1908-1996$$EPeterson, Roger Tory, 1908-1996"
+					 ],
+					 "subject":[
+							"$$DBirds -- North America -- Identification$$EBirds North America Identification$$I41-LIBRARY_OF_CONGRESS-sh2007102030$$PY",
+							"$$DColoring books$$EColoring books$$I41-LIBRARY_OF_CONGRESS-sh 85096854$$PY",
+							"$$DPainting books$$EPainting books$$I41-LIBRARY_OF_CONGRESS-sh 85096854$$PN"
+					 ],
+					 "callnumber":[
+							"$$I01HVD$$DAc Al2$$EAC AL0000002$$T8"
+					 ],
+					 "title":[
+							"$$DBirds$$EBirds",
+							"$$DPeterson field guide color-in books$$EPeterson field guide color-in books",
+							"$$DField guide to the birds coloring book$$EField guide to the birds coloring book",
+							"$$DPeterson field guide series$$EPeterson field guide series",
+							"$$DPeterson field guides$$EPeterson field guides"
+					 ]
+				}
+		 },
+		 "@id":"https://harvard-primoalma-stage.hosted.exlibrisgroup.com/primo_library/libweb/webservices/rest/primo-explore/v1/pnxs/L/01HVD_ALMA212139200550003941"
+	},
+	{
+		 "enrichment":{
+				"virtualBrowseObject":{
+					 "callNumber":"CC79.5.B57 S47 2009X",
+					 "isVirtualBrowseEnabled":true,
+					 "callNumberBrowseField":"browse_callnumber.0.V2"
+				}
+		 },
+		 "delivery":{
+				"availabilityLinks":[
+					 "detailsGetit1"
+				],
+				"physicalItemTextCodes":"",
+				"displayLocation":true,
+				"availabilityLinksUrl":[
+					 ""
+				],
+				"link":[
+					 {
+							"displayLabel":"thumbnail",
+							"hyperlinkText":"",
+							"inst4opac":"01HVD",
+							"linkURL":"https://books.google.com/books?bibkeys=OCLC:298670805,ISBN:9780521866170&jscmd=viewapi&callback=updateGBSCover",
+							"linkType":"http://purl.org/pnx/linkType/thumbnail",
+							"@id":"_:0"
+					 },
+					 {
+							"displayLabel":"Acquired by the Dr. James Harvey Gaul Memorial Book Fund",
+							"hyperlinkText":"Acquired by the Dr. James Harvey Gaul Memorial Book Fund",
+							"inst4opac":"01HVD",
+							"linkURL":"https://nrs.harvard.edu/urn-3:hul.EBKPLL:415_565225 ",
+							"linkType":"http://purl.org/pnx/linkType/lln02",
+							"@id":"_:1"
+					 },
+					 {
+							"displayLabel":"$$Eworldcat",
+							"hyperlinkText":"",
+							"inst4opac":"01HVD",
+							"linkURL":"http://www.worldcat.org/search?q=no%3A298670805",
+							"linkType":"http://purl.org/pnx/linkType/linktouc",
+							"@id":"_:2"
+					 },
+					 {
+							"displayLabel":"thumbnail",
+							"linkURL":"https://books.google.com/books?bibkeys=OCLC:298670805,ISBN:9780521866170&jscmd=viewapi&callback=updateGBSCover",
+							"linkType":"http://purl.org/pnx/linkType/thumbnail",
+							"@id":"_:3"
+					 }
+				],
+				"availability":[
+					 "available_in_institution"
+				],
+				"additionalLocations":true,
+				"displayedAvailability":"available_in_institution",
+				"holding":[
+					 {
+							"matchForHoldings":[
+								 {
+										"holdingRecord":"852##b",
+										"matchOn":"MainLocation"
+								 },
+								 {
+										"holdingRecord":"852##c",
+										"matchOn":"SecondaryLocation"
+								 }
+							],
+							"subLocationCode":"TOZLC",
+							"ilsApiId":"",
+							"libraryCode":"TOZ",
+							"isValidUser":true,
+							"mainLocation":"TOZ",
+							"callNumber":"(CC79.5.B57 S47 2009 )",
+							"adaptorid":"ALMA_01",
+							"organization":"01HVD",
+							"holdingURL":"OVP",
+							"@id":"_:1",
+							"availabilityStatus":"available",
+							"subLocation":"TOZ-LC",
+							"holdId":""
+					 }
+				],
+				"bestlocation":{
+					 "matchForHoldings":[
+							{
+								 "holdingRecord":"852##b",
+								 "matchOn":"MainLocation"
+							},
+							{
+								 "holdingRecord":"852##c",
+								 "matchOn":"SecondaryLocation"
+							}
+					 ],
+					 "mainLocation":"DDO",
+					 "subLocationCode":"GEN",
+					 "callNumber":"(CC79.5.B57 S47 2009X )",
+					 "organization":"01HVD",
+					 "libraryCode":"DDO",
+					 "@id":"_:0",
+					 "availabilityStatus":"available",
+					 "subLocation":"GEN",
+					 "holdId":"",
+					 "isValidUser":true
+				},
+				"deliveryCategory":[
+					 "Alma-P"
+				],
+				"serviceMode":[
+					 "activate"
+				],
+				"feDisplayOtherLocations":true,
+				"GetIt1":[
+					 {
+							"links":[
+								 {
+										"isLinktoOnline":false,
+										"displayText":"Almagetit",
+										"hyperlinkText":"",
+										"getItTabText":"alma_tab1_avail",
+										"link":"https://hvd-psb.alma.exlibrisgroup.com/view/uresolver/01HVD_INST/openurl?ctx_enc=info:ofi/enc:UTF-8&ctx_id=10_1&ctx_tim=2023-12-21T21%3A55%3A40IST&ctx_ver=Z39.88-2004&url_ctx_fmt=info:ofi/fmt:kev:mtx:ctx&url_ver=Z39.88-2004&rfr_id=info:sid/primo.exlibrisgroup.com-01HVD_ALMA&rft_dat=ie=01HVD_INST:212145270030003941,language=eng,view=HVD2&svc_dat=getit&user_ip={{userIp}}&rft.aulast=Serjeantson&rft.au=Serjeantson,%20D.%20(Dale)&rft.isbn=9780521866170&rft.place=New%20York&rft.local_attribute=990125639740203941&rfe.place=GEN&rfe.kind=available&rft.genre=book&rft.pub=Cambridge%20University%20Press &rft.title=Birds&rft.date=2009&rfe.chron=Birds&rfe.dcType=book&env_type=test",
+										"@id":"_:0"
+								 }
+							],
+							"category":"Alma-P"
+					 }
+				]
+		 },
+		 "@rta_link":"https://harvard-primoalma-stage.hosted.exlibrisgroup.com/primo_library/libweb/webservices/rest/v1/rta/HVD2?recordInformation=212145270030003941|,|01HVD_ALMA|,|01HVD|,|Alma|,|01HVD_ALMA212145270030003941|,|$$I01HVD$$LDDO$$1GEN$$2(CC79.5.B57 S47 2009X )$$Savailable$$X01HVD_INST$$YDDO$$ZGEN$$P1|$$I01HVD$$LTOZ$$1TOZ-LC$$2(CC79.5.B57 S47 2009 )$$Savailable$$X01HVD_INST$$YTOZ$$ZTOZLC$$P2|,|$$I01HVD$$Savailable|,|Alma-P|,|01HVD|,|01HVD_INST:212145270030003941|,|__NO_VALUE__|,|__NO_VALUE__|,|HVD_ALEPH012563974|,|__NO_VALUE__",
+		 "context":"L",
+		 "adaptor":"Local Search Engine",
+		 "pnx":{
+				"delivery":{
+					 "institution":[
+							"01HVD"
+					 ],
+					 "delcategory":[
+							"Alma-P"
+					 ]
+				},
+				"display":{
+					 "lds06":[
+							"Biology, behaviour and anatomy -- Ageing, sexing and pathology -- Identification, recording and quantification -- Natural taphonomy recovery -- Taphonomy : human modifications and element survival -- Eggs and eggshell -- Feathers, skins and other products -- Tools and ornaments -- Wild birds as food -- The domestic chicken -- Other domestic birds -- Sport and pleasure -- Birds in symbol and ritual -- Birds in the environment."
+					 ],
+					 "lds17":[
+							"Cambridge manuals in archaeology"
+					 ],
+					 "identifier":[
+							"$$CISBN$$V9780521866170 (hardback); $$CISBN$$V0521866170 (hardback); $$CISBN$$V9780521758581 (pbk.); $$CISBN$$V0521758580 (pbk.)"
+					 ],
+					 "lds05":[
+							"Cambridge University Press"
+					 ],
+					 "lds38":[
+							"Cambridge manuals in archaeology $$QCambridge manuals in archaeology"
+					 ],
+					 "creator":[
+							"Serjeantson, D. (Dale) $$QSerjeantson, D. (Dale)"
+					 ],
+					 "creationdate":[
+							"2009"
+					 ],
+					 "lds19":[
+							"(Cambridge manuals in archaeology.)"
+					 ],
+					 "availinstitution":[
+							"$$I01HVD$$Savailable"
+					 ],
+					 "subject":[
+							"Bird remains (Archaeology)",
+							"Human-animal relationships -- History",
+							"Birds -- History"
+					 ],
+					 "format":[
+							"xxvi, 486 p. : ill. ; 26 cm."
+					 ],
+					 "language":[
+							"eng"
+					 ],
+					 "availlibrary":[
+							"$$I01HVD$$LDDO$$1GEN$$2(CC79.5.B57 S47 2009X )$$Savailable$$X01HVD_INST$$YDDO$$ZGEN$$P1",
+							"$$I01HVD$$LTOZ$$1TOZ-LC$$2(CC79.5.B57 S47 2009 )$$Savailable$$X01HVD_INST$$YTOZ$$ZTOZLC$$P2"
+					 ],
+					 "source":[
+							"01HVD_ALMA"
+					 ],
+					 "type":[
+							"book"
+					 ],
+					 "title":[
+							"Birds"
+					 ],
+					 "publisher":[
+							"New York : Cambridge University Press, 2009."
+					 ],
+					 "availpnx":[
+							"available"
+					 ],
+					 "lds11":[
+							"New York : Cambridge University Press"
+					 ],
+					 "lds02":[
+							"298670805"
+					 ],
+					 "lds13":[
+							"Includes bibliographical references (p. [423]-464) and index."
+					 ],
+					 "lds01":[
+							"990125639740203941"
+					 ],
+					 "lds03":[
+							"<a href=\"http://id.lib.harvard.edu/alma/990125639740203941/catalog\">http://id.lib.harvard.edu/alma/990125639740203941/catalog</a>"
+					 ],
+					 "lds14":[
+							"Dale Serjeantson."
+					 ]
+				},
+				"control":{
+					 "recordid":[
+							"01HVD_ALMA212145270030003941"
+					 ],
+					 "sourceid":[
+							"01HVD_ALMA"
+					 ],
+					 "almaid":[
+							"01HVD_INST:212145270030003941"
+					 ],
+					 "originalsourceid":[
+							"01HVD"
+					 ],
+					 "sourceformat":[
+							"MARC21"
+					 ],
+					 "sourcerecordid":[
+							"212145270030003941"
+					 ],
+					 "sourcesystem":[
+							"Alma"
+					 ],
+					 "addsrcrecordid":[
+							"HVD_ALEPH012563974"
+					 ]
+				},
+				"sort":{
+					 "creationdate":[
+							"2009"
+					 ],
+					 "author":[
+							"Serjeantson, D. (Dale)"
+					 ],
+					 "title":[
+							"Birds /"
+					 ]
+				},
+				"frbr":{
+					 "t":[
+							1
+					 ],
+					 "k1":[
+							"$$K9780521866170$$AA",
+							"$$K0521866170$$AA",
+							"$$K9780521758581$$AA",
+							"$$K0521758580$$AA",
+							"$$K(OCoLC)298670805 $$AA"
+					 ],
+					 "k3":[
+							"$$Kbirds$$AT"
+					 ]
+				},
+				"dedup":{
+					 "c5":[
+							"990125639740203941"
+					 ],
+					 "t":[
+							1
+					 ],
+					 "f20":[
+							"990125639740203941"
+					 ]
+				},
+				"facets":{
+					 "frbrtype":[
+							"6"
+					 ],
+					 "creatorcontrib":[
+							"Serjeantson, D. (Dale)"
+					 ],
+					 "creationdate":[
+							"2009"
+					 ],
+					 "newrecords":[
+							"20180918_694"
+					 ],
+					 "rsrctype":[
+							"books"
+					 ],
+					 "classificationlcc":[
+							"C - Auxiliary sciences of history–Archaeology–Philosophy. Theory–Methodology"
+					 ],
+					 "language":[
+							"eng"
+					 ],
+					 "collection":[
+							"Harvard Core"
+					 ],
+					 "prefilter":[
+							"books"
+					 ],
+					 "lfc38":[
+							"Cambridge manuals in archaeology"
+					 ],
+					 "lfc07":[
+							"Cambridge manuals in archaeology"
+					 ],
+					 "toplevel":[
+							"available",
+							"available_onsite"
+					 ],
+					 "library":[
+							"DDO",
+							"TOZ"
+					 ],
+					 "atoz":[
+							"B"
+					 ],
+					 "frbrgroupid":[
+							"125498692"
+					 ],
+					 "topic":[
+							"Bird remains (Archaeology)",
+							"Human-animal relationships–History",
+							"Birds–History",
+							"Vogels",
+							"Paleozoölogie"
+					 ]
+				},
+				"enrichment":{
+					 "classificationlcc":[
+							"CC79.5.B57"
+					 ]
+				},
+				"search":{
+					 "creationdate":[
+							"2009"
+					 ],
+					 "subject":[
+							"Bird remains (Archaeology)",
+							"Human-animal relationships History",
+							"Birds History.",
+							"Vogels.",
+							"Paleozoölogie."
+					 ],
+					 "isbn":[
+							"9780521866170",
+							"0521866170",
+							"9780521758581",
+							"0521758580"
+					 ],
+					 "rsrctype":[
+							"book"
+					 ],
+					 "toc":[
+							"Biology, behaviour and anatomy -- Ageing, sexing and pathology -- Identification, recording and quantification -- Natural taphonomy recovery -- Taphonomy : human modifications and element survival -- Eggs and eggshell -- Feathers, skins and other products -- Tools and ornaments -- Wild birds as food -- The domestic chicken -- Other domestic birds -- Sport and pleasure -- Birds in symbol and ritual -- Birds in the environment."
+					 ],
+					 "title":[
+							"Birds"
+					 ],
+					 "startdate":[
+							"20090101"
+					 ],
+					 "lsr30":[
+							"illustrations"
+					 ],
+					 "general":[
+							"^^2009000905",
+							"Includes bibliographical references (p. [423]-464) and index."
+					 ],
+					 "scope":[
+							"01HVD_ALMA",
+							"HVD_DDO",
+							"HVD_TOZ",
+							"01HVD"
+					 ],
+					 "lsr38":[
+							"Cambridge manuals in archaeology"
+					 ],
+					 "sourceid":[
+							"01HVD_ALMA"
+					 ],
+					 "lsr40":[
+							"eng"
+					 ],
+					 "creatorcontrib":[
+							"Serjeantson, D. (Dale)",
+							"Dale Serjeantson."
+					 ],
+					 "lsr04":[
+							"Cambridge University Press,"
+					 ],
+					 "lsr02":[
+							"298670805"
+					 ],
+					 "lsr01":[
+							"990125639740203941",
+							"012563974",
+							"12563974"
+					 ],
+					 "addtitle":[
+							"Cambridge manuals in archaeology",
+							"Cambridge manuals in archaeology.",
+							"Biology, behaviour and anatomy -- Ageing, sexing and pathology -- Identification, recording and quantification -- Natural taphonomy recovery -- Taphonomy : human modifications and element survival -- Eggs and eggshell -- Feathers, skins and other products -- Tools and ornaments -- Wild birds as food -- The domestic chicken -- Other domestic birds -- Sport and pleasure -- Birds in symbol and ritual -- Birds in the environment."
+					 ],
+					 "lsr42":[
+							"nyu"
+					 ],
+					 "addsrcrecordid":[
+							"990125639740203941"
+					 ],
+					 "lsr41":[
+							"DDOGEN",
+							"TOZTOZLC"
+					 ],
+					 "recordid":[
+							"01HVD_ALMA212145270030003941"
+					 ],
+					 "enddate":[
+							"20091231"
+					 ],
+					 "lsr06":[
+							"415_565225"
+					 ],
+					 "lsr05":[
+							"New York :"
+					 ]
+				},
+				"links":{
+					 "thumbnail":[
+							"$$Tgoogle_thumb"
+					 ],
+					 "lln02":[
+							"$$Uhttps://nrs.harvard.edu/urn-3:hul.EBKPLL:415_565225 $$DAcquired by the Dr. James Harvey Gaul Memorial Book Fund"
+					 ],
+					 "uri":[
+							"$$Aisbn$$V9780521866170$$U(uri) http://www.isbnsearch.org/isbn/9780521866170",
+							"$$Aisbn$$V0521866170$$U(uri) http://www.isbnsearch.org/isbn/0521866170",
+							"$$Aisbn$$V9780521758581$$U(uri) http://www.isbnsearch.org/isbn/9780521758581",
+							"$$Aisbn$$V0521758580$$U(uri) http://www.isbnsearch.org/isbn/0521758580",
+							"$$Aoclc_nr$$V(OCoLC)298670805$$U(uri) http://www.worldcat.org/oclc/298670805"
+					 ],
+					 "linktouc":[
+							"$$Tworldcat_oclc$$Eworldcat"
+					 ]
+				},
+				"ranking":{
+					 "booster2":[
+							"1"
+					 ],
+					 "booster1":[
+							"1"
+					 ]
+				},
+				"addata":{
+					 "date":[
+							"2009"
+					 ],
+					 "aulast":[
+							"Serjeantson"
+					 ],
+					 "notes":[
+							"Includes bibliographical references (p. [423]-464) and index."
+					 ],
+					 "cop":[
+							"New York"
+					 ],
+					 "isbn":[
+							"9780521866170",
+							"0521866170",
+							"9780521758581",
+							"0521758580"
+					 ],
+					 "format":[
+							"book"
+					 ],
+					 "ristype":[
+							"BOOK"
+					 ],
+					 "mis1":[
+							"212145270030003941"
+					 ],
+					 "oclcid":[
+							"298670805"
+					 ],
+					 "aufirst":[
+							"D."
+					 ],
+					 "lad02":[
+							"available"
+					 ],
+					 "lad01":[
+							"GEN"
+					 ],
+					 "lccn":[
+							"^^2009000905"
+					 ],
+					 "seriestitle":[
+							"Cambridge manuals in archaeology"
+					 ],
+					 "au":[
+							"Serjeantson, D. (Dale)"
+					 ],
+					 "genre":[
+							"book"
+					 ],
+					 "btitle":[
+							"Birds"
+					 ],
+					 "pub":[
+							"Cambridge University Press"
+					 ],
+					 "risdate":[
+							"2009"
+					 ]
+				},
+				"browse":{
+					 "institution":[
+							"01HVD"
+					 ],
+					 "author":[
+							"$$DSerjeantson, D. (Dale)$$ESerjeantson, D. (Dale)"
+					 ],
+					 "subject":[
+							"$$DBird remains (Archaeology)$$EBird remains (Archaeology)",
+							"$$DHuman-animal relationships -- History$$EHuman-animal relationships History",
+							"$$DBirds -- History$$EBirds History"
+					 ],
+					 "callnumber":[
+							"$$I01HVD$$DCC79.5.B57 S47 2009X$$ECC   795           B 57   S 47   2009 X$$T0",
+							"$$I01HVD$$DCC79.5.B57 S47 2009$$ECC   795           B 57   S 47   2009$$T0"
+					 ],
+					 "title":[
+							"$$DBirds$$EBirds",
+							"$$DCambridge manuals in archaeology$$ECambridge manuals in archaeology"
+					 ]
+				}
+		 },
+		 "@id":"https://harvard-primoalma-stage.hosted.exlibrisgroup.com/primo_library/libweb/webservices/rest/primo-explore/v1/pnxs/L/01HVD_ALMA212145270030003941"
+	},
+	{
+		 "enrichment":{
+				"virtualBrowseObject":{
+					 "callNumber":"Ga 110.356",
+					 "isVirtualBrowseEnabled":true,
+					 "callNumberBrowseField":"browse_callnumber.ZHCL"
+				}
+		 },
+		 "delivery":{
+				"availabilityLinks":[
+					 "detailsGetit1"
+				],
+				"physicalItemTextCodes":"",
+				"displayLocation":true,
+				"availabilityLinksUrl":[
+					 ""
+				],
+				"link":[
+					 {
+							"displayLabel":"thumbnail",
+							"hyperlinkText":"",
+							"inst4opac":"01HVD",
+							"linkURL":"https://books.google.com/books?bibkeys=OCLC:20094416,ISBN:085668287X&jscmd=viewapi&callback=updateGBSCover",
+							"linkType":"http://purl.org/pnx/linkType/thumbnail",
+							"@id":"_:0"
+					 },
+					 {
+							"displayLabel":"$$Eworldcat",
+							"hyperlinkText":"",
+							"inst4opac":"01HVD",
+							"linkURL":"http://www.worldcat.org/search?q=no%3A20094416",
+							"linkType":"http://purl.org/pnx/linkType/linktouc",
+							"@id":"_:1"
+					 },
+					 {
+							"displayLabel":"thumbnail",
+							"linkURL":"https://books.google.com/books?bibkeys=OCLC:20094416,ISBN:085668287X&jscmd=viewapi&callback=updateGBSCover",
+							"linkType":"http://purl.org/pnx/linkType/thumbnail",
+							"@id":"_:2"
+					 }
+				],
+				"availability":[
+					 "available_in_institution"
+				],
+				"additionalLocations":true,
+				"displayedAvailability":"available_in_institution",
+				"holding":[
+					 {
+							"matchForHoldings":[
+								 {
+										"holdingRecord":"852##b",
+										"matchOn":"MainLocation"
+								 },
+								 {
+										"holdingRecord":"852##c",
+										"matchOn":"SecondaryLocation"
+								 }
+							],
+							"subLocationCode":"GEN",
+							"ilsApiId":"",
+							"libraryCode":"LAM",
+							"isValidUser":true,
+							"mainLocation":"LAM",
+							"callNumber":"(PA3875.A8 B5 x, 1987 )",
+							"adaptorid":"ALMA_01",
+							"organization":"01HVD",
+							"holdingURL":"OVP",
+							"@id":"_:1",
+							"availabilityStatus":"available",
+							"subLocation":"GEN",
+							"holdId":""
+					 }
+				],
+				"bestlocation":{
+					 "matchForHoldings":[
+							{
+								 "holdingRecord":"852##b",
+								 "matchOn":"MainLocation"
+							},
+							{
+								 "holdingRecord":"852##c",
+								 "matchOn":"SecondaryLocation"
+							}
+					 ],
+					 "mainLocation":"HEL",
+					 "subLocationCode":"GEN",
+					 "callNumber":"(PA3877 .A8x 1987 )",
+					 "organization":"01HVD",
+					 "libraryCode":"HEL",
+					 "@id":"_:0",
+					 "availabilityStatus":"available",
+					 "subLocation":"GEN",
+					 "holdId":"",
+					 "isValidUser":true
+				},
+				"deliveryCategory":[
+					 "Alma-P"
+				],
+				"serviceMode":[
+					 "activate"
+				],
+				"feDisplayOtherLocations":true,
+				"GetIt1":[
+					 {
+							"links":[
+								 {
+										"isLinktoOnline":false,
+										"displayText":"Almagetit",
+										"hyperlinkText":"",
+										"getItTabText":"alma_tab1_avail",
+										"link":"https://hvd-psb.alma.exlibrisgroup.com/view/uresolver/01HVD_INST/openurl?ctx_enc=info:ofi/enc:UTF-8&ctx_id=10_1&ctx_tim=2023-12-21T21%3A55%3A40IST&ctx_ver=Z39.88-2004&url_ctx_fmt=info:ofi/fmt:kev:mtx:ctx&url_ver=Z39.88-2004&rfr_id=info:sid/primo.exlibrisgroup.com-01HVD_ALMA&rft_dat=ie=01HVD_INST:211729738050003941,language=eng,view=HVD2&svc_dat=getit&user_ip={{userIp}}&rft.aulast=Sommerstein&rft.au=Aristophanes&rft.isbn=085668287X&rft.place=Wiltshire,%20England&rft.local_attribute=990000948030203941&rfe.kind=available&rft.genre=book&rft.pub=Aris%20%26%20Phillips%20Ltd. &rft.title=Birds&rft.date=1987&rfe.chron=Birds&rfe.dcType=book&env_type=test",
+										"@id":"_:0"
+								 }
+							],
+							"category":"Alma-P"
+					 }
+				]
+		 },
+		 "@rta_link":"https://harvard-primoalma-stage.hosted.exlibrisgroup.com/primo_library/libweb/webservices/rest/v1/rta/HVD2?recordInformation=211729738050003941|,|01HVD_ALMA|,|01HVD|,|Alma|,|01HVD_ALMA211729738050003941|,|$$I01HVD$$LHEL$$1GEN$$2(PA3877 .A8x 1987 )$$Savailable$$X01HVD_INST$$YHEL$$ZGEN$$P1|$$I01HVD$$LLAM$$1GEN$$2(PA3875.A8 B5 x, 1987 )$$Savailable$$X01HVD_INST$$YLAM$$ZGEN$$P2|$$I01HVD$$LSMY$$1GEN$$2(Ga 110.356 )$$Scheck_holdings$$X01HVD_INST$$YSMY$$ZGEN$$P3|$$I01HVD$$LWID$$1WID-LC$$2(PA3877 .A8x 1987 )$$Sunavailable$$X01HVD_INST$$YWID$$ZWIDLC$$P4|,|$$I01HVD$$Savailable|,|Alma-P|,|01HVD|,|01HVD_INST:211729738050003941|,|__NO_VALUE__|,|__NO_VALUE__|,|HVD_ALEPH000094803|,|__NO_VALUE__",
+		 "context":"L",
+		 "adaptor":"Local Search Engine",
+		 "pnx":{
+				"delivery":{
+					 "institution":[
+							"01HVD"
+					 ],
+					 "delcategory":[
+							"Alma-P"
+					 ]
+				},
+				"display":{
+					 "lds17":[
+							"The Comedies of Aristophanes ; vol. 6"
+					 ],
+					 "lds38":[
+							"Aristophanes. Works. English & Greek. 1980 ; v. 6 $$QAristophanes. Works. English & Greek. 1980"
+					 ],
+					 "creationdate":[
+							"c1987"
+					 ],
+					 "lds19":[
+							"(Aristophanes. Works. English & Greek. 1980 ; v. 6.)"
+					 ],
+					 "subject":[
+							"Greek drama (Comedy) -- Translations into English.",
+							"Birds -- Drama.",
+							"Gods, Greek -- Drama.",
+							"Imaginary societies -- Drama.",
+							"Athens (Greece) -- Social life and customs -- Drama."
+					 ],
+					 "language":[
+							"eng;grc"
+					 ],
+					 "source":[
+							"01HVD_ALMA"
+					 ],
+					 "type":[
+							"book"
+					 ],
+					 "title":[
+							"Birds"
+					 ],
+					 "contributor":[
+							"Sommerstein, Alan H.$$QSommerstein, Alan H."
+					 ],
+					 "availpnx":[
+							"available"
+					 ],
+					 "lds02":[
+							"20094416",
+							"14145580",
+							"15592875"
+					 ],
+					 "lds01":[
+							"990000948030203941"
+					 ],
+					 "lds45":[
+							"Greek drama"
+					 ],
+					 "lds03":[
+							"<a href=\"http://id.lib.harvard.edu/alma/990000948030203941/catalog\">http://id.lib.harvard.edu/alma/990000948030203941/catalog</a>"
+					 ],
+					 "identifier":[
+							"$$CISBN$$V085668287X; $$CISBN$$V0856682888 (pbk.); $$CISBN$$V0856681679 (U.K.); $$CISBN$$V0856681776; $$CISBN$$V0856681725 (U.K. : pbk.); $$CISBN$$V0865161011 (U.S.A. : cloth); $$CISBN$$V086516102X (U.S.A. : limp)"
+					 ],
+					 "lds05":[
+							"Aris & Phillips Ltd."
+					 ],
+					 "creator":[
+							"Aristophanes. $$QAristophanes."
+					 ],
+					 "availinstitution":[
+							"$$I01HVD$$Savailable"
+					 ],
+					 "format":[
+							"xv, 311 p. ; 22 cm."
+					 ],
+					 "availlibrary":[
+							"$$I01HVD$$LHEL$$1GEN$$2(PA3877 .A8x 1987 )$$Savailable$$X01HVD_INST$$YHEL$$ZGEN$$P1",
+							"$$I01HVD$$LLAM$$1GEN$$2(PA3875.A8 B5 x, 1987 )$$Savailable$$X01HVD_INST$$YLAM$$ZGEN$$P2",
+							"$$I01HVD$$LSMY$$1GEN$$2(Ga 110.356 )$$Scheck_holdings$$X01HVD_INST$$YSMY$$ZGEN$$P3",
+							"$$I01HVD$$LWID$$1WID-LC$$2(PA3877 .A8x 1987 )$$Sunavailable$$X01HVD_INST$$YWID$$ZWIDLC$$P4"
+					 ],
+					 "publisher":[
+							"Wiltshire, England : Aris & Phillips Ltd., c1987."
+					 ],
+					 "lds30":[
+							"Comedies.$$QComedies.",
+							"Drama.$$QDrama."
+					 ],
+					 "lds11":[
+							"Wiltshire, England : Aris & Phillips Ltd."
+					 ],
+					 "lds10":[
+							"Drama in Greek, to ca 500 - Greek-English parallel texts"
+					 ],
+					 "lds13":[
+							"Translation of: Ornithes.",
+							"English and Greek.",
+							"Includes bibliographical references."
+					 ],
+					 "lds12":[
+							"Online version: Aristophanes. Birds. English & Greek. Birds. Wiltshire, England : Aris & Phillips Ltd., ©1987 (OCoLC)575417743"
+					 ],
+					 "lds34":[
+							"Birds. English & Greek$$QBirds."
+					 ],
+					 "lds14":[
+							"edited with translation and notes by Alan H. Sommerstein."
+					 ]
+				},
+				"control":{
+					 "recordid":[
+							"01HVD_ALMA211729738050003941"
+					 ],
+					 "sourceid":[
+							"01HVD_ALMA"
+					 ],
+					 "almaid":[
+							"01HVD_INST:211729738050003941"
+					 ],
+					 "originalsourceid":[
+							"01HVD"
+					 ],
+					 "sourceformat":[
+							"MARC21"
+					 ],
+					 "sourcerecordid":[
+							"211729738050003941"
+					 ],
+					 "sourcesystem":[
+							"Alma"
+					 ],
+					 "addsrcrecordid":[
+							"HVD_ALEPH000094803"
+					 ]
+				},
+				"sort":{
+					 "creationdate":[
+							"1987"
+					 ],
+					 "author":[
+							"Aristophanes."
+					 ],
+					 "title":[
+							"Birds /"
+					 ]
+				},
+				"frbr":{
+					 "t":[
+							1
+					 ],
+					 "k1":[
+							"$$K(OCoLC)20094416 $$AA",
+							"$$K(OCoLC)14145580 $$AA",
+							"$$K(OCoLC)15592875 $$AA",
+							"$$K(OCoLC)575417743 $$AA"
+					 ]
+				},
+				"dedup":{
+					 "f6":[
+							"1987"
+					 ],
+					 "f7":[
+							"birds"
+					 ],
+					 "c5":[
+							"990000948030203941"
+					 ],
+					 "f8":[
+							"enk"
+					 ],
+					 "f9":[
+							"xv, 311 p. ;"
+					 ],
+					 "t":[
+							1
+					 ],
+					 "f10":[
+							"aris phillips ltd"
+					 ],
+					 "f20":[
+							"990000948030203941"
+					 ],
+					 "f11":[
+							"aristophanes"
+					 ],
+					 "f3":[
+							"085668287X;0856682888;0856681679;0856681776;0856681725;0865161011;086516102X"
+					 ],
+					 "f5":[
+							"birds"
+					 ]
+				},
+				"facets":{
+					 "frbrtype":[
+							"6"
+					 ],
+					 "creatorcontrib":[
+							"Aristophanes",
+							"Sommerstein, Alan H"
+					 ],
+					 "creationdate":[
+							"1987"
+					 ],
+					 "newrecords":[
+							"20180918_338"
+					 ],
+					 "rsrctype":[
+							"books"
+					 ],
+					 "language":[
+							"eng",
+							"grc"
+					 ],
+					 "collection":[
+							"Harvard Core"
+					 ],
+					 "lfc01":[
+							"Athens (Greece)"
+					 ],
+					 "lfc06":[
+							"Birds"
+					 ],
+					 "prefilter":[
+							"books"
+					 ],
+					 "lfc07":[
+							"Works. 1980"
+					 ],
+					 "toplevel":[
+							"available",
+							"available_onsite"
+					 ],
+					 "library":[
+							"HEL",
+							"LAM",
+							"SMY",
+							"WID"
+					 ],
+					 "atoz":[
+							"B"
+					 ],
+					 "frbrgroupid":[
+							"110428165"
+					 ],
+					 "genre":[
+							"Drama",
+							"Comedies"
+					 ],
+					 "topic":[
+							"Greek drama (Comedy)–Translations into English",
+							"Birds–Drama",
+							"Gods, Greek–Drama",
+							"Imaginary societies–Drama",
+							"Athens (Greece)–Social life and customs Drama",
+							"Drama in Greek, to ca 500 - Greek-English parallel texts"
+					 ]
+				},
+				"enrichment":{
+					 "classificationlcc":[
+							"PA3877",
+							"PA3875.A8"
+					 ]
+				},
+				"search":{
+					 "creationdate":[
+							"1987"
+					 ],
+					 "subject":[
+							"Greek drama (Comedy) Translations into English.",
+							"Birds Drama.",
+							"Gods, Greek Drama.",
+							"Imaginary societies Drama.",
+							"Athens (Greece) Social life and customs Drama.",
+							"Aḟiny (Greece)",
+							"Atene (Greece)",
+							"Atʻēnkʻ (Greece)",
+							"Ateny (Greece)",
+							"Athen (Greece)",
+							"Athēna (Greece)",
+							"Athēnai (Greece)",
+							"Athènes (Greece)",
+							"Athinai (Greece)",
+							"Athīnā (Greece)",
+							"Drama in Greek, to ca 500 - Greek-English parallel texts",
+							"Comedies.",
+							"Drama."
+					 ],
+					 "isbn":[
+							"085668287X",
+							"0856682888",
+							"0856681679",
+							"0856681776",
+							"0856681725",
+							"0865161011",
+							"086516102X"
+					 ],
+					 "rsrctype":[
+							"book"
+					 ],
+					 "title":[
+							"Birds /"
+					 ],
+					 "startdate":[
+							"19870101"
+					 ],
+					 "lsr31":[
+							"Athens (Greece)",
+							"Aḟiny (Greece)",
+							"Atene (Greece)",
+							"Atʻēnkʻ (Greece)",
+							"Ateny (Greece)",
+							"Athen (Greece)",
+							"Athēna (Greece)",
+							"Athēnai (Greece)",
+							"Athènes (Greece)",
+							"Athinai (Greece)",
+							"Athīnā (Greece)"
+					 ],
+					 "lsr30":[
+							"Drama.",
+							"Comedies."
+					 ],
+					 "general":[
+							"^^^88183283^//r954",
+							"Translation of: Ornithes.",
+							"English and Greek.",
+							"Includes bibliographical references."
+					 ],
+					 "scope":[
+							"01HVD_ALMA",
+							"HVD_HEL",
+							"HVD_LAM",
+							"HVD_SMY",
+							"HVD_WID",
+							"01HVD"
+					 ],
+					 "lsr38":[
+							"Aristophanes. Works. English & Greek. 1980",
+							"6"
+					 ],
+					 "sourceid":[
+							"01HVD_ALMA"
+					 ],
+					 "lsr40":[
+							"eng",
+							"grc"
+					 ],
+					 "creatorcontrib":[
+							"Aristophanes.",
+							"Aristofan",
+							"Arystofanes",
+							"Aristophane",
+							"Aristofane",
+							"Arisutopanesu",
+							"Arisutofanesu",
+							"Aristófanes",
+							"אריסטופאנוס",
+							"אריסטופאנס",
+							"אריסטופאנס. כספי זיוה",
+							"אריסטופניס",
+							"אריסטופנס",
+							"Ἀριστοφάνης",
+							"edited with translation and notes by Alan H. Sommerstein.",
+							"Sommerstein, Alan H."
+					 ],
+					 "lsr04":[
+							"Aris & Phillips Ltd.,"
+					 ],
+					 "lsr02":[
+							"20094416",
+							"15592875",
+							"14145580"
+					 ],
+					 "lsr01":[
+							"990000948030203941",
+							"000094803",
+							"94803"
+					 ],
+					 "lsr43":[
+							"Ga110356"
+					 ],
+					 "addtitle":[
+							"Works.",
+							"The Comedies of Aristophanes ;",
+							"Birds. English & Greek. Birds."
+					 ],
+					 "lsr42":[
+							"enk"
+					 ],
+					 "addsrcrecordid":[
+							"990000948030203941"
+					 ],
+					 "lsr41":[
+							"HELGEN",
+							"LAMGEN",
+							"SMYGEN",
+							"WIDWIDLC"
+					 ],
+					 "recordid":[
+							"01HVD_ALMA211729738050003941"
+					 ],
+					 "enddate":[
+							"19871231"
+					 ],
+					 "alttitle":[
+							"Birds. English & Greek"
+					 ],
+					 "lsr05":[
+							"Wiltshire, England :"
+					 ]
+				},
+				"links":{
+					 "thumbnail":[
+							"$$Tgoogle_thumb"
+					 ],
+					 "uri":[
+							"$$Aisbn$$V085668287X$$U(uri) http://www.isbnsearch.org/isbn/085668287X",
+							"$$Aisbn$$V0856682888$$U(uri) http://www.isbnsearch.org/isbn/0856682888",
+							"$$Aisbn$$V0856681679$$U(uri) http://www.isbnsearch.org/isbn/0856681679",
+							"$$Aisbn$$V0856681776$$U(uri) http://www.isbnsearch.org/isbn/0856681776",
+							"$$Aisbn$$V0856681725$$U(uri) http://www.isbnsearch.org/isbn/0856681725",
+							"$$Aisbn$$V0865161011$$U(uri) http://www.isbnsearch.org/isbn/0865161011",
+							"$$Aisbn$$V086516102X$$U(uri) http://www.isbnsearch.org/isbn/086516102X",
+							"$$Aoclc_nr$$V(OCoLC)20094416$$U(uri) http://www.worldcat.org/oclc/20094416",
+							"$$Aoclc_nr$$V(OCoLC)14145580$$U(uri) http://www.worldcat.org/oclc/14145580",
+							"$$Aoclc_nr$$V(OCoLC)15592875$$U(uri) http://www.worldcat.org/oclc/15592875",
+							"$$Acreatorcontrib$$VAristophanes$$U(uri) http://id.loc.gov/authorities/names/n79072756$$U(uri) http://viaf.org/viaf/sourceID/LC|n79072756",
+							"$$Acreatorcontrib$$VSommerstein, Alan H$$U(uri) http://id.loc.gov/authorities/names/n50013103$$U(uri) http://viaf.org/viaf/sourceID/LC|n50013103",
+							"$$Asubject$$VGreek drama (Comedy) -- Translations into English$$U(uri) http://id.loc.gov/authorities/subjects/sh85057142",
+							"$$Asubject$$VBirds -- Drama$$U(uri) http://id.loc.gov/authorities/subjects/sh2009117153",
+							"$$Asubject$$VGods, Greek -- Drama$$U(uri) http://id.loc.gov/authorities/subjects/sh2008118224",
+							"$$Asubject$$VImaginary societies -- Drama$$U(uri) http://id.loc.gov/authorities/subjects/sh2008123036",
+							"$$Asubject$$VAthens (Greece) -- Social life and customs -- Drama$$U(uri) http://id.loc.gov/authorities/names/n79018143$$U(uri) http://viaf.org/viaf/sourceID/LC|n79018143"
+					 ],
+					 "linktouc":[
+							"$$Tworldcat_oclc$$Eworldcat"
+					 ]
+				},
+				"ranking":{
+					 "booster2":[
+							"1"
+					 ],
+					 "booster1":[
+							"1"
+					 ]
+				},
+				"addata":{
+					 "date":[
+							"1987"
+					 ],
+					 "aulast":[
+							"Sommerstein"
+					 ],
+					 "notes":[
+							"Includes bibliographical references."
+					 ],
+					 "cop":[
+							"Wiltshire, England"
+					 ],
+					 "isbn":[
+							"085668287X",
+							"0856682888",
+							"0856681679",
+							"0856681776",
+							"0856681725",
+							"0865161011",
+							"086516102X"
+					 ],
+					 "format":[
+							"book"
+					 ],
+					 "ristype":[
+							"BOOK"
+					 ],
+					 "mis1":[
+							"211729738050003941"
+					 ],
+					 "oclcid":[
+							"20094416",
+							"14145580",
+							"15592875"
+					 ],
+					 "aufirst":[
+							"Alan H."
+					 ],
+					 "addau":[
+							"Sommerstein, Alan H"
+					 ],
+					 "lccn":[
+							"^^^88183283^//r954"
+					 ],
+					 "seriestitle":[
+							"Aristophanes. Works. English & Greek. 1980 ; v. 6"
+					 ],
+					 "au":[
+							"Aristophanes"
+					 ],
+					 "seriesau":[
+							"Aristophanes"
+					 ],
+					 "genre":[
+							"book"
+					 ],
+					 "btitle":[
+							"Birds"
+					 ],
+					 "pub":[
+							"Aris & Phillips Ltd."
+					 ],
+					 "risdate":[
+							"1987"
+					 ]
+				},
+				"browse":{
+					 "institution":[
+							"01HVD"
+					 ],
+					 "author":[
+							"$$DAristophanes$$EAristophanes$$I41-LIBRARY_OF_CONGRESS-n 79072756$$PY",
+							"$$DAristofan$$EAristofan$$I41-LIBRARY_OF_CONGRESS-n 79072756$$PN",
+							"$$DArystofanes$$EArystofanes$$I41-LIBRARY_OF_CONGRESS-n 79072756$$PN",
+							"$$DAristophane$$EAristophane$$I41-LIBRARY_OF_CONGRESS-n 79072756$$PN",
+							"$$DAristofane$$EAristofane$$I41-LIBRARY_OF_CONGRESS-n 79072756$$PN",
+							"$$DArisutopanesu$$EArisutopanesu$$I41-LIBRARY_OF_CONGRESS-n 79072756$$PN",
+							"$$DArisutofanesu$$EArisutofanesu$$I41-LIBRARY_OF_CONGRESS-n 79072756$$PN",
+							"$$DAristófanes$$EAristófanes$$I41-LIBRARY_OF_CONGRESS-n 79072756$$PN",
+							"$$Dאריסטופאנוס$$Eאריסטופאנוס$$I41-LIBRARY_OF_CONGRESS-n 79072756$$PN",
+							"$$Dאריסטופאנס$$Eאריסטופאנס$$I41-LIBRARY_OF_CONGRESS-n 79072756$$PN",
+							"$$Dאריסטופאנס. כספי זיוה$$Eאריסטופאנס. כספי זיוה$$I41-LIBRARY_OF_CONGRESS-n 79072756$$PN",
+							"$$Dאריסטופניס$$Eאריסטופניס$$I41-LIBRARY_OF_CONGRESS-n 79072756$$PN",
+							"$$Dאריסטופנס$$Eאריסטופנס$$I41-LIBRARY_OF_CONGRESS-n 79072756$$PN",
+							"$$DἈριστοφάνης$$EἈριστοφάνης$$I41-LIBRARY_OF_CONGRESS-n 79072756$$PN",
+							"$$DSommerstein, Alan H$$ESommerstein, Alan H$$I41-LIBRARY_OF_CONGRESS-n 50013103$$PY",
+							"$$DAristophanes$$EAristophanes"
+					 ],
+					 "subject":[
+							"$$DGreek drama (Comedy) -- Translations into English$$EGreek drama (Comedy) Translations into English$$I41-LIBRARY_OF_CONGRESS-sh 85057142$$PY",
+							"$$DBirds -- Drama$$EBirds Drama$$I41-LIBRARY_OF_CONGRESS-sh2009117153$$PY",
+							"$$DGods, Greek -- Drama$$EGods, Greek Drama$$I41-LIBRARY_OF_CONGRESS-sh2008118224$$PY",
+							"$$DImaginary societies -- Drama$$EImaginary societies Drama$$I41-LIBRARY_OF_CONGRESS-sh2008123036$$PY",
+							"$$DAthens (Greece) -- Social life and customs -- Drama$$EAthens (Greece) Social life and customs Drama$$I41-LIBRARY_OF_CONGRESS-n 79018143$$PY",
+							"$$DAḟiny (Greece)$$EAḟiny (Greece)$$I41-LIBRARY_OF_CONGRESS-n 79018143$$PN",
+							"$$DAtene (Greece)$$EAtene (Greece)$$I41-LIBRARY_OF_CONGRESS-n 79018143$$PN",
+							"$$DAtʻēnkʻ (Greece)$$EAtʻēnkʻ (Greece)$$I41-LIBRARY_OF_CONGRESS-n 79018143$$PN",
+							"$$DAteny (Greece)$$EAteny (Greece)$$I41-LIBRARY_OF_CONGRESS-n 79018143$$PN",
+							"$$DAthen (Greece)$$EAthen (Greece)$$I41-LIBRARY_OF_CONGRESS-n 79018143$$PN",
+							"$$DAthēna (Greece)$$EAthēna (Greece)$$I41-LIBRARY_OF_CONGRESS-n 79018143$$PN",
+							"$$DAthēnai (Greece)$$EAthēnai (Greece)$$I41-LIBRARY_OF_CONGRESS-n 79018143$$PN",
+							"$$DAthènes (Greece)$$EAthènes (Greece)$$I41-LIBRARY_OF_CONGRESS-n 79018143$$PN",
+							"$$DAthinai (Greece)$$EAthinai (Greece)$$I41-LIBRARY_OF_CONGRESS-n 79018143$$PN",
+							"$$DAthīnā (Greece)$$EAthīnā (Greece)$$I41-LIBRARY_OF_CONGRESS-n 79018143$$PN"
+					 ],
+					 "callnumber":[
+							"$$I01HVD$$DPA3877 .A8x 1987$$EPA 3877            A 8 X   1987$$T0",
+							"$$I01HVD$$DPA3875.A8 B5 x, 1987$$EPA 3875            A 8   B 5   X ,   1987$$T0",
+							"$$I01HVD$$DGa 110.356$$Ega        00110 00356 0000 0000 0000 $$TZHCL"
+					 ],
+					 "title":[
+							"$$DBirds$$EBirds",
+							"$$DThe Comedies of Aristophanes$$EThe Comedies of Aristophanes",
+							"$$DWorks. 1980$$EWorks. 1980"
+					 ]
+				}
+		 },
+		 "@id":"https://harvard-primoalma-stage.hosted.exlibrisgroup.com/primo_library/libweb/webservices/rest/primo-explore/v1/pnxs/L/01HVD_ALMA211729738050003941"
+	},
+	{
+		 "enrichment":{
+				"virtualBrowseObject":{
+					 "callNumber":"PN1997.B475 P35 1998",
+					 "isVirtualBrowseEnabled":true,
+					 "callNumberBrowseField":"browse_callnumber.0.V2"
+				}
+		 },
+		 "delivery":{
+				"availabilityLinks":[
+					 "detailsGetit1"
+				],
+				"physicalItemTextCodes":"",
+				"displayLocation":true,
+				"availabilityLinksUrl":[
+					 ""
+				],
+				"link":[
+					 {
+							"displayLabel":"thumbnail",
+							"hyperlinkText":"",
+							"inst4opac":"01HVD",
+							"linkURL":"https://books.google.com/books?bibkeys=OCLC:39840722,ISBN:0851706517&jscmd=viewapi&callback=updateGBSCover",
+							"linkType":"http://purl.org/pnx/linkType/thumbnail",
+							"@id":"_:0"
+					 },
+					 {
+							"displayLabel":"$$Eworldcat",
+							"hyperlinkText":"",
+							"inst4opac":"01HVD",
+							"linkURL":"http://www.worldcat.org/search?q=no%3A39840722",
+							"linkType":"http://purl.org/pnx/linkType/linktouc",
+							"@id":"_:1"
+					 },
+					 {
+							"displayLabel":"thumbnail",
+							"linkURL":"https://books.google.com/books?bibkeys=OCLC:39840722,ISBN:0851706517&jscmd=viewapi&callback=updateGBSCover",
+							"linkType":"http://purl.org/pnx/linkType/thumbnail",
+							"@id":"_:2"
+					 }
+				],
+				"availability":[
+					 "available_in_institution"
+				],
+				"additionalLocations":true,
+				"displayedAvailability":"available_in_institution",
+				"holding":[
+					 {
+							"matchForHoldings":[
+								 {
+										"holdingRecord":"852##b",
+										"matchOn":"MainLocation"
+								 },
+								 {
+										"holdingRecord":"852##c",
+										"matchOn":"SecondaryLocation"
+								 }
+							],
+							"subLocationCode":"GEN",
+							"ilsApiId":"",
+							"libraryCode":"LAM",
+							"isValidUser":true,
+							"mainLocation":"LAM",
+							"callNumber":"(PN1997.B475 P35 1998 )",
+							"adaptorid":"ALMA_01",
+							"organization":"01HVD",
+							"holdingURL":"OVP",
+							"@id":"_:0",
+							"availabilityStatus":"available",
+							"subLocation":"GEN",
+							"holdId":""
+					 },
+					 {
+							"matchForHoldings":[
+								 {
+										"holdingRecord":"852##b",
+										"matchOn":"MainLocation"
+								 },
+								 {
+										"holdingRecord":"852##c",
+										"matchOn":"SecondaryLocation"
+								 }
+							],
+							"subLocationCode":"WIDLC",
+							"ilsApiId":"",
+							"libraryCode":"WID",
+							"isValidUser":true,
+							"mainLocation":"WID",
+							"callNumber":"(PN1997.B4753 P34 1998x )",
+							"adaptorid":"ALMA_01",
+							"organization":"01HVD",
+							"holdingURL":"OVP",
+							"@id":"_:1",
+							"availabilityStatus":"available",
+							"subLocation":"WID-LC",
+							"holdId":""
+					 }
+				],
+				"bestlocation":{
+					 "matchForHoldings":[
+							{
+								 "holdingRecord":"852##b",
+								 "matchOn":"MainLocation"
+							},
+							{
+								 "holdingRecord":"852##c",
+								 "matchOn":"SecondaryLocation"
+							}
+					 ],
+					 "mainLocation":"LAM",
+					 "subLocationCode":"GEN",
+					 "callNumber":"(PN1997.B475 P35 1998 )",
+					 "organization":"01HVD",
+					 "libraryCode":"LAM",
+					 "@id":"_:0",
+					 "availabilityStatus":"available",
+					 "subLocation":"GEN",
+					 "holdId":"",
+					 "isValidUser":true
+				},
+				"deliveryCategory":[
+					 "Alma-P"
+				],
+				"serviceMode":[
+					 "activate"
+				],
+				"feDisplayOtherLocations":true,
+				"GetIt1":[
+					 {
+							"links":[
+								 {
+										"isLinktoOnline":false,
+										"displayText":"Almagetit",
+										"hyperlinkText":"",
+										"getItTabText":"alma_tab1_avail",
+										"link":"https://hvd-psb.alma.exlibrisgroup.com/view/uresolver/01HVD_INST/openurl?ctx_enc=info:ofi/enc:UTF-8&ctx_id=10_1&ctx_tim=2023-12-21T21%3A55%3A40IST&ctx_ver=Z39.88-2004&url_ctx_fmt=info:ofi/fmt:kev:mtx:ctx&url_ver=Z39.88-2004&rfr_id=info:sid/primo.exlibrisgroup.com-01HVD_ALMA&rft_dat=ie=01HVD_INST:212038723830003941,language=eng,view=HVD2&svc_dat=getit&user_ip={{userIp}}&rft.aulast=Paglia&rft.au=Paglia,%20Camille&rft.isbn=0851706517&rft.place=London&rft.local_attribute=990078361120203941&rfe.kind=available&rft.genre=book&rft.pub=British%20Film%20Institute &rft.title=The%20Birds&rft.date=1998&rfe.chron=The%20Birds&rfe.dcType=book&env_type=test",
+										"@id":"_:0"
+								 }
+							],
+							"category":"Alma-P"
+					 }
+				]
+		 },
+		 "@rta_link":"https://harvard-primoalma-stage.hosted.exlibrisgroup.com/primo_library/libweb/webservices/rest/v1/rta/HVD2?recordInformation=212038723830003941|,|01HVD_ALMA|,|01HVD|,|Alma|,|01HVD_ALMA212038723830003941|,|$$I01HVD$$LLAM$$1GEN$$2(PN1997.B475 P35 1998 )$$Savailable$$X01HVD_INST$$YLAM$$ZGEN$$P1|$$I01HVD$$LWID$$1WID-LC$$2(PN1997.B4753 P34 1998x )$$Savailable$$X01HVD_INST$$YWID$$ZWIDLC$$P2|,|$$I01HVD$$Savailable|,|Alma-P|,|01HVD|,|01HVD_INST:212038723830003941|,|__NO_VALUE__|,|__NO_VALUE__|,|HVD_ALEPH007836112|,|__NO_VALUE__",
+		 "context":"L",
+		 "adaptor":"Local Search Engine",
+		 "pnx":{
+				"delivery":{
+					 "institution":[
+							"01HVD"
+					 ],
+					 "delcategory":[
+							"Alma-P"
+					 ]
+				},
+				"display":{
+					 "lds17":[
+							"BFI film classics"
+					 ],
+					 "lds38":[
+							"BFI film classics $$QBFI film classics"
+					 ],
+					 "creationdate":[
+							"1998"
+					 ],
+					 "lds19":[
+							"(BFI film classics.)"
+					 ],
+					 "subject":[
+							"Birds (Motion picture)"
+					 ],
+					 "description":[
+							"The Birds (1963) was the first film Alfred Hitchcock made after Psycho. Drawn from a Daphne Du Maurier story as well as contemporary newspaper reports of bird attacks in California, The Birds featured the icy blonde Tippi Hedren in her first starring role. A film about anxiety, sexual power, and the violence of nature, it is quintessential Hitchcock. Camille Paglia, in a virtuoso study, draws together the film's aesthetic, technical and mythical qualities, and analyzes its depiction of gender and family relations.--From publisher description."
+					 ],
+					 "language":[
+							"eng"
+					 ],
+					 "source":[
+							"01HVD_ALMA"
+					 ],
+					 "type":[
+							"book"
+					 ],
+					 "title":[
+							"The Birds"
+					 ],
+					 "availpnx":[
+							"available"
+					 ],
+					 "lds02":[
+							"39840722"
+					 ],
+					 "lds01":[
+							"990078361120203941"
+					 ],
+					 "lds03":[
+							"<a href=\"http://id.lib.harvard.edu/alma/990078361120203941/catalog\">http://id.lib.harvard.edu/alma/990078361120203941/catalog</a>"
+					 ],
+					 "lds06":[
+							"The birds."
+					 ],
+					 "identifier":[
+							"$$CISBN$$V0851706517 (pbk.)"
+					 ],
+					 "lds05":[
+							"British Film Institute"
+					 ],
+					 "creator":[
+							"Paglia, Camille, 1947- $$QPaglia, Camille, 1947-"
+					 ],
+					 "availinstitution":[
+							"$$I01HVD$$Savailable"
+					 ],
+					 "format":[
+							"104 p. : ill. (some col.) ; 19 cm."
+					 ],
+					 "availlibrary":[
+							"$$I01HVD$$LLAM$$1GEN$$2(PN1997.B475 P35 1998 )$$Savailable$$X01HVD_INST$$YLAM$$ZGEN$$P1",
+							"$$I01HVD$$LWID$$1WID-LC$$2(PN1997.B4753 P34 1998x )$$Savailable$$X01HVD_INST$$YWID$$ZWIDLC$$P2"
+					 ],
+					 "publisher":[
+							"London : British Film Institute, 1998."
+					 ],
+					 "lds11":[
+							"London : British Film Institute"
+					 ],
+					 "lds13":[
+							"Includes bibliographical references (p. 103)."
+					 ],
+					 "lds12":[
+							"Online version: Paglia, Camille, 1947- Birds. London : BFI Pub., 1998 (OCoLC)607052953"
+					 ],
+					 "lds14":[
+							"Camille Paglia."
+					 ]
+				},
+				"control":{
+					 "recordid":[
+							"01HVD_ALMA212038723830003941"
+					 ],
+					 "sourceid":[
+							"01HVD_ALMA"
+					 ],
+					 "almaid":[
+							"01HVD_INST:212038723830003941"
+					 ],
+					 "originalsourceid":[
+							"01HVD"
+					 ],
+					 "sourceformat":[
+							"MARC21"
+					 ],
+					 "sourcerecordid":[
+							"212038723830003941"
+					 ],
+					 "sourcesystem":[
+							"Alma"
+					 ],
+					 "addsrcrecordid":[
+							"HVD_ALEPH007836112"
+					 ]
+				},
+				"sort":{
+					 "creationdate":[
+							"1998"
+					 ],
+					 "author":[
+							"Paglia, Camille, 1947-"
+					 ],
+					 "title":[
+							"Birds /"
+					 ]
+				},
+				"frbr":{
+					 "t":[
+							1
+					 ],
+					 "k1":[
+							"$$K(OCoLC)39840722 $$AA",
+							"$$K(OCoLC)607052953 $$AA"
+					 ]
+				},
+				"dedup":{
+					 "f6":[
+							"1998"
+					 ],
+					 "f7":[
+							"birds"
+					 ],
+					 "c5":[
+							"990078361120203941"
+					 ],
+					 "f8":[
+							"enk"
+					 ],
+					 "f9":[
+							"104 p. :"
+					 ],
+					 "t":[
+							1
+					 ],
+					 "f10":[
+							"british film institute"
+					 ],
+					 "f20":[
+							"990078361120203941"
+					 ],
+					 "f11":[
+							"paglia camille 1947"
+					 ],
+					 "f3":[
+							"0851706517"
+					 ],
+					 "f5":[
+							"birds"
+					 ]
+				},
+				"facets":{
+					 "frbrtype":[
+							"6"
+					 ],
+					 "creatorcontrib":[
+							"Paglia, Camille, 1947-"
+					 ],
+					 "creationdate":[
+							"1998"
+					 ],
+					 "newrecords":[
+							"20180918_416"
+					 ],
+					 "rsrctype":[
+							"books"
+					 ],
+					 "language":[
+							"eng"
+					 ],
+					 "collection":[
+							"Harvard Core"
+					 ],
+					 "lfc06":[
+							"Birds (Motion picture)"
+					 ],
+					 "prefilter":[
+							"books"
+					 ],
+					 "lfc07":[
+							"BFI film classics"
+					 ],
+					 "toplevel":[
+							"available",
+							"available_onsite"
+					 ],
+					 "library":[
+							"LAM",
+							"WID"
+					 ],
+					 "atoz":[
+							"B"
+					 ],
+					 "frbrgroupid":[
+							"112909007"
+					 ],
+					 "topic":[
+							"Birds (Motion picture)"
+					 ]
+				},
+				"enrichment":{
+					 "classificationlcc":[
+							"PN1997.B475"
+					 ]
+				},
+				"search":{
+					 "sourceid":[
+							"01HVD_ALMA"
+					 ],
+					 "lsr40":[
+							"eng"
+					 ],
+					 "creatorcontrib":[
+							"Paglia, Camille, 1947-",
+							"Camille Paglia."
+					 ],
+					 "creationdate":[
+							"1998"
+					 ],
+					 "subject":[
+							"Birds (Motion picture)",
+							"Alfred Hitchcock's The birds (Motion picture)",
+							"Uccelli (Motion picture)"
+					 ],
+					 "isbn":[
+							"0851706517"
+					 ],
+					 "lsr04":[
+							"British Film Institute,"
+					 ],
+					 "rsrctype":[
+							"book"
+					 ],
+					 "description":[
+							"The Birds (1963) was the first film Alfred Hitchcock made after Psycho. Drawn from a Daphne Du Maurier story as well as contemporary newspaper reports of bird attacks in California, The Birds featured the icy blonde Tippi Hedren in her first starring role. A film about anxiety, sexual power, and the violence of nature, it is quintessential Hitchcock. Camille Paglia, in a virtuoso study, draws together the film's aesthetic, technical and mythical qualities, and analyzes its depiction of gender and family relations.--From publisher description."
+					 ],
+					 "toc":[
+							"The birds."
+					 ],
+					 "lsr02":[
+							"39840722"
+					 ],
+					 "lsr01":[
+							"990078361120203941",
+							"007836112",
+							"7836112"
+					 ],
+					 "title":[
+							"The Birds /"
+					 ],
+					 "startdate":[
+							"19980101"
+					 ],
+					 "addtitle":[
+							"BFI film classics",
+							"BFI film classics.",
+							"Birds.",
+							"The birds."
+					 ],
+					 "lsr42":[
+							"enk"
+					 ],
+					 "addsrcrecordid":[
+							"990078361120203941"
+					 ],
+					 "lsr41":[
+							"LAMGEN",
+							"WIDWIDLC"
+					 ],
+					 "recordid":[
+							"01HVD_ALMA212038723830003941"
+					 ],
+					 "general":[
+							"^^^98215540^",
+							"Includes bibliographical references (p. 103)."
+					 ],
+					 "enddate":[
+							"19981231"
+					 ],
+					 "scope":[
+							"01HVD_ALMA",
+							"HVD_LAM",
+							"HVD_WID",
+							"01HVD"
+					 ],
+					 "lsr05":[
+							"London :"
+					 ],
+					 "lsr38":[
+							"BFI film classics"
+					 ]
+				},
+				"links":{
+					 "thumbnail":[
+							"$$Tgoogle_thumb"
+					 ],
+					 "uri":[
+							"$$Aisbn$$V0851706517$$U(uri) http://www.isbnsearch.org/isbn/0851706517",
+							"$$Aoclc_nr$$V(OCoLC)39840722$$U(uri) http://www.worldcat.org/oclc/39840722",
+							"$$Acreatorcontrib$$VPaglia, Camille$$U(uri) http://id.loc.gov/authorities/names/n88230565$$U(uri) http://viaf.org/viaf/sourceID/LC|n88230565",
+							"$$Asubject$$VBirds (Motion picture)$$U(uri) http://id.loc.gov/authorities/names/n98048584$$U(uri) http://viaf.org/viaf/sourceID/LC|n98048584"
+					 ],
+					 "linktouc":[
+							"$$Tworldcat_oclc$$Eworldcat"
+					 ]
+				},
+				"ranking":{
+					 "booster2":[
+							"1"
+					 ],
+					 "booster1":[
+							"1"
+					 ]
+				},
+				"addata":{
+					 "date":[
+							"1998"
+					 ],
+					 "aulast":[
+							"Paglia"
+					 ],
+					 "notes":[
+							"Includes bibliographical references (p. 103)."
+					 ],
+					 "cop":[
+							"London"
+					 ],
+					 "isbn":[
+							"0851706517"
+					 ],
+					 "format":[
+							"book"
+					 ],
+					 "ristype":[
+							"BOOK"
+					 ],
+					 "mis1":[
+							"212038723830003941"
+					 ],
+					 "oclcid":[
+							"39840722"
+					 ],
+					 "abstract":[
+							"The Birds (1963) was the first film Alfred Hitchcock made after Psycho. Drawn from a Daphne Du Maurier story as well as contemporary newspaper reports of bird attacks in California, The Birds featured the icy blonde Tippi Hedren in her first starring role. A film about anxiety, sexual power, and the violence of nature, it is quintessential Hitchcock. Camille Paglia, in a virtuoso study, draws together the film's aesthetic, technical and mythical qualities, and analyzes its depiction of gender and family relations.--From publisher description."
+					 ],
+					 "aufirst":[
+							"Camille,"
+					 ],
+					 "lccn":[
+							"^^^98215540^"
+					 ],
+					 "seriestitle":[
+							"BFI film classics"
+					 ],
+					 "au":[
+							"Paglia, Camille"
+					 ],
+					 "genre":[
+							"book"
+					 ],
+					 "btitle":[
+							"The Birds"
+					 ],
+					 "pub":[
+							"British Film Institute"
+					 ],
+					 "risdate":[
+							"1998"
+					 ]
+				},
+				"browse":{
+					 "institution":[
+							"01HVD"
+					 ],
+					 "author":[
+							"$$DPaglia, Camille, 1947-$$EPaglia, Camille, 1947-$$I41-LIBRARY_OF_CONGRESS-n 88230565$$PY"
+					 ],
+					 "subject":[
+							"$$DBirds (Motion picture)$$EBirds (Motion picture)$$I41-LIBRARY_OF_CONGRESS-n 98048584$$PY",
+							"$$DAlfred Hitchcock's The birds (Motion picture)$$EAlfred Hitchcock's The birds (Motion picture)$$I41-LIBRARY_OF_CONGRESS-n 98048584$$PN",
+							"$$DUccelli (Motion picture)$$EUccelli (Motion picture)$$I41-LIBRARY_OF_CONGRESS-n 98048584$$PN"
+					 ],
+					 "callnumber":[
+							"$$I01HVD$$DPN1997.B475 P35 1998$$EPN 1997            B 475   P 35   1998$$T0",
+							"$$I01HVD$$DPN1997.B4753 P34 1998x$$EPN 1997            B 4753   P 34   1998 X$$T0"
+					 ],
+					 "title":[
+							"$$DThe Birds$$EBirds",
+							"$$DBFI film classics$$EBFI film classics"
+					 ]
+				}
+		 },
+		 "@id":"https://harvard-primoalma-stage.hosted.exlibrisgroup.com/primo_library/libweb/webservices/rest/primo-explore/v1/pnxs/L/01HVD_ALMA212038723830003941"
+	}
+]
