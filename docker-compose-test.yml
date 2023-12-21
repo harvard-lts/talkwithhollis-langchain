@@ -6,8 +6,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    #command: 'tail -f /dev/null'
-    command: ['pytest']
+    environment:
+        - ENVIRONMENT=test
+    command: ['pytest', '-vv']
     volumes:
       - './:/home/twhadm'
       # Uncomment to use a profile defined in ~/.aws/credentials

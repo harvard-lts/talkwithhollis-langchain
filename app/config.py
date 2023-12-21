@@ -1,4 +1,5 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
+import os
 
 class Settings(BaseSettings):
     openai_api_key: str = "placeholder"
@@ -19,7 +20,10 @@ class Settings(BaseSettings):
     libcal_hours_api_route: str
     hollis_api_host: str = "https://qa.hollis.harvard.edu/primo-explore/search"
 
-    model_config = SettingsConfigDict(env_file = '.env')
+    if os.environ.get('ENVIRONMENT') == 'test':
+        model_config = SettingsConfigDict(env_file = 'test.env')
+    else:
+        model_config = SettingsConfigDict(env_file = '.env')
 
 settings = Settings()
 
