@@ -87,3 +87,17 @@ class FileUtils():
                             pass
             i += 1
         return result
+
+    # Check if the text is in paragraph form and remove any JSON syntax if necessary
+    async def extract_paragraph(self, text):
+        try:
+            if 'messages' in text and isinstance(text['messages'], list):
+                for message in text['messages']:
+                    if 'message' in message and isinstance(message['message'], str):
+                        return message['message']
+        except (KeyError, TypeError):
+            # Handle cases where the dictionary structure doesn't match the expected structure
+            return text
+
+        # If the dictionary structure doesn't match the expected structure, return original
+        return text

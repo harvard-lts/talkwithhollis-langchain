@@ -105,6 +105,7 @@ class LLMWorker():
             )
 
             no_keyword_result = conversation_with_summary.predict(input=human_input_text)
+            no_keyword_result = await self.file_utils.extract_paragraph(no_keyword_result)
             print(no_keyword_result)
             return no_keyword_result
         else:
@@ -126,6 +127,7 @@ class LLMWorker():
             return await self.build_response(reduced_results)
             
     async def build_response(self, reduced_results):
+        reduced_results = await self.file_utils.extract_paragraph(reduced_results)
         # Config decides whether we go to the llm or just format the response through python code
         # Original functionality was using the llm, but since it's just organizing json we can accomplish the same result faster with python code
         # Functionality has been left in, but configured off, in case we find a more novel way to analyze the results using the llm in the future
