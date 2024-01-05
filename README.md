@@ -61,3 +61,9 @@ AWS_BEDROCK_PROFILE_NAME=talkwithhollis
 ```
 
 The `~/.aws/credentials` file is mounted into the app container as a volume in `docker-compose-local.yml`.
+
+## Running Unit Tests
+
+```
+docker-compose -f docker-compose-test.yml up --build --force-recreate
+```
