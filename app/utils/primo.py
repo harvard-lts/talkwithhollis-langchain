@@ -1,5 +1,6 @@
 import copy
 import os
+import re
 
 from .file import FileUtils
 from app.config import settings
@@ -56,15 +57,18 @@ class PrimoUtils():
                 except:
                     title = result['pnx']['addata']['jtitle']
 
+                permalink = result.get('pnx', {}).get('display', {}).get('lds03', {})
+                if permalink and len(permalink) > 0:
+                    title = "<a href='{}' target='_blank'>{}</a>".format(re.search(r'href=\"(.*?)\"', permalink[0]).group(1), ', '.join(title))
+                    print(title)
+
                 try:
                     author = result['pnx']['addata']['aulast']
                 except:
                     author = None
 
                 new_object = {
-                    # TODO: We previously were using ['pnx']['addata']['btitle'] but that is not always present. We will need to come up with a prioritization order to determine which title to use.
                     'title': title,
-                    # TODO: Corinna wants us to use ['pnx']['addata']['aulast'] but that author is not always present and we will need to come up with a prioritization order to determine which author to use.
                     'callNumber': holding['callNumber']
                 }
 
