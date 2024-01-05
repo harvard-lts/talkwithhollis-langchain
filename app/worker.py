@@ -149,7 +149,7 @@ class LLMWorker():
 
                 counter = 1
                 for book in reduced_results[library_code]:
-                    response += str(counter) + ". " + ', '.join(book['title'])
+                    response += str(counter) + ". " + book['title']
                     if 'author' in book:
                         response += " / " + ', '.join(book['author'])
                     response += "\n"
