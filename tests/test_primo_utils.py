@@ -1,4 +1,6 @@
 import json, os
+import pytest
+import asyncio
 
 from app.utils.primo import PrimoUtils
 
@@ -7,6 +9,12 @@ llm_result_multiple_keywords_and_libraries = {'keywords': ['abc123', 'def456', '
 
 with open(os.path.abspath('./tests/test_data/filtered_primo_results.json')) as f:
     filtered_primo_results = json.load(f)
+
+with open(os.path.abspath('./tests/test_data/unfiltered_primo_results.json')) as f:
+	unfiltered_primo_results = json.load(f)
+
+with open(os.path.abspath('./app/schemas/libraries_acceptable_sublocations.json')) as f:
+	libraries_acceptable_sublocations = json.load(f)
 
 def test_generate_primo_api_request():
 	primo_utils = PrimoUtils()
@@ -38,6 +46,47 @@ def test_generate_primo_query_multiple_keywords_and_libraries():
 	result = primo_utils.generate_primo_query(llm_result_multiple_keywords_and_libraries)
 	assert result == 'q=any,contains,abc123%20def456%20ghi789'
 
-# def test_shrink_results_for_llm():
-# 	# TODO: Further testing for these methods
-# 	assert 123 == 456
+@pytest.mark.asyncio
+async def test_get_available_results_up_to_limit():
+	primo_utils = PrimoUtils()
+	result = await primo_utils.get_available_results_up_to_limit(unfiltered_primo_results, ["LAM", "GUT", "WID"], 10)
+	assert len(result) == 10
+
+	# Ensure that only records only contain matching holdings, the rest should be filtered out
+	for record in result:
+		for holding in record['delivery']['holding']:
+			assert holding['libraryCode'] in ["LAM", "GUT", "WID"]
+
+			# also ensure that these holdings are only in acceptable sublocations
+			sublocations_for_library = libraries_acceptable_sublocations[holding['libraryCode']].keys()
+			assert holding['subLocationCode'] in sublocations_for_library
+
+def test_shrink_results_for_llm():
+	primo_utils = PrimoUtils()
+	result = primo_utils.shrink_results_for_llm(filtered_primo_results, ["AJP", "TOZ", "LAM", "WID"])
+
+	ajp_results = result['AJP']
+	ajp_results[0]['title'] == "<a href='http://id.lib.harvard.edu/alma/990142840400203941/catalog' target='_blank'>Birds</a>"
+	ajp_results[0]['callNumber'] == "(Ac T34 )"
+	ajp_results[0]['author'] == ["Theodorou"]
+	ajp_results[1]['title'] == "<a href='http://id.lib.harvard.edu/alma/990128046100203941/catalog' target='_blank'>Birds</a>"
+	ajp_results[1]['callNumber'] == "(Ac Al2 )"
+	ajp_results[1]['author'] == ["Peterson", "Alden", "Sill"]
+
+	toz_results = result['TOZ']
+	toz_results[0]['title'] == "<a href='http://id.lib.harvard.edu/alma/990125639740203941/catalog' target='_blank'>Birds</a>"
+	toz_results[0]['callNumber'] == "(CC79.5.B57 S47 2009 )"
+	toz_results[0]['author'] == ["Serjeantson"]
+
+	lam_results = result['LAM']
+	lam_results[0]['title'] == "<a href='http://id.lib.harvard.edu/alma/990000948030203941/catalog' target='_blank'>Birds</a>"
+	lam_results[0]['callNumber'] == "(PA3875.A8 B5 x, 1987 )"
+	lam_results[0]['author'] == ["Sommerstein"]
+	lam_results[1]['title'] == "<a href='http://id.lib.harvard.edu/alma/990078361120203941/catalog' target='_blank'>The Birds</a>"
+	lam_results[1]['callNumber'] == "(PN1997.B475 P35 1998 )"
+	lam_results[1]['author'] == ["Paglia"]
+
+	wid_results = result['WID']
+	wid_results[0]['title'] == "<a href='http://id.lib.harvard.edu/alma/990078361120203941/catalog' target='_blank'>The Birds</a>"
+	wid_results[0]['callNumber'] == "(PN1997.B4753 P34 1998x )"
+	wid_results[0]['author'] == ["Paglia"]
