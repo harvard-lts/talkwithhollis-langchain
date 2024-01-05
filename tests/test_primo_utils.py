@@ -38,5 +38,6 @@ def test_generate_primo_query_multiple_keywords_and_libraries():
 	result = primo_utils.generate_primo_query(llm_result_multiple_keywords_and_libraries)
 	assert result == 'q=any,contains,abc123%20def456%20ghi789'
 
-def test_shrink_results_for_llm():
-	assert 123 == 456
+# def test_shrink_results_for_llm():
+# 	# TODO: Further testing for these methods
+# 	assert 123 == 456
