@@ -1,0 +1,20 @@
+version: '3.7'
+services:
+
+  twhapi-test:
+    container_name: twhapi-test
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+        - ENVIRONMENT=test
+    command: ['pytest', '-vv']
+    volumes:
+      - './:/home/twhadm'
+      # Uncomment to use a profile defined in ~/.aws/credentials
+      #- $HOME/.aws/credentials:/home/twhadm/.aws/credentials:ro
+    networks:
+      - "twhnet"
+networks:
+  twhnet:
+    name: "twhnet"
