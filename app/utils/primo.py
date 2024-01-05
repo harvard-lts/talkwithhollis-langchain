@@ -60,7 +60,6 @@ class PrimoUtils():
                 permalink = result.get('pnx', {}).get('display', {}).get('lds03', {})
                 if permalink and len(permalink) > 0:
                     title = "<a href='{}' target='_blank'>{}</a>".format(re.search(r'href=\"(.*?)\"', permalink[0]).group(1), ', '.join(title))
-                    print(title)
 
                 try:
                     author = result['pnx']['addata']['aulast']
