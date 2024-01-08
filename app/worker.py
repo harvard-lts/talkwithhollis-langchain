@@ -149,18 +149,18 @@ class LLMWorker():
 
                 counter = 1
                 for book in reduced_results[library_code]:
-                    response += str(counter) + ". " + book['title']
+                    response += str(counter) + ". " + book.get('title')
                     if 'author' in book:
-                        response += " / " + ', '.join(book['author'])
+                        response += " / " + ', '.join(book.get('author'))
                     response += "\n"
 
                     if 'callNumber' in book:
-                        callNumber = book['callNumber']
+                        callNumber = book.get('callNumber')
                         # Need to slice off the opening and closing parenthesis from call numbers, if they exist
-                        if callNumber[0] == '(':
+                        if callNumber and callNumber[0] == '(':
                             callNumber = callNumber[1:]
 
-                        if callNumber[len(callNumber) - 1] == ')':
+                        if callNumber and callNumber[len(callNumber) - 1] == ')':
                             callNumber = callNumber[:-1]
                         response += "   " + callNumber
                     response += "\n"
