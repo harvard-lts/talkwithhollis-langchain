@@ -16,6 +16,4 @@ WORKDIR /home/${APP_ID_NAME}
 
 USER ${APP_ID_NAME}
 
-RUN mkdir -p /home/${APP_ID_NAME}/data
-
 CMD ["uvicorn", "app.main:app", "--proxy-headers", "--host", "0.0.0.0", "--port", "80"]
