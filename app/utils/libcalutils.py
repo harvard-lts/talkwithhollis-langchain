@@ -94,3 +94,10 @@ class LibCalUtils():
             response = await client.post(settings.libcal_token_api_route, content=post_body, headers={"Content-Type": "application/json"})
         access_token = response.json().get('access_token')
         return access_token
+    
+    async def is_open_now(self, library_hours):
+        # Takes a library hours string and returns True if the library is currently open, False otherwise
+        # We can assume that all times and libraries use EST, TODO: we currently do not account for users in different timezones
+        libcal_times_dictionary = await self.file_utils.open_json_file('app/schemas/libcal_times_dictionary.json')
+        print(libcal_times_dictionary)
+        return True

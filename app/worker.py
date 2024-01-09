@@ -143,7 +143,11 @@ class LLMWorker():
                         break
 
                 if library_hours is not None and library_code in library_hours:
-                        response += library_hours[library_code] + "\n"
+                        response += library_hours[library_code]
+                        open = await self.is_open_now(library_hours[library_code])
+                        if open:
+                            response += " <span class='open_now'>(OPEN NOW)</span>"
+                        response += "\n"
                 else:
                     response += "Operating Hours unknown, please check library website\n"
 
@@ -186,3 +190,7 @@ class LLMWorker():
     async def get_library_hours(self):
         libcal_utils = LibCalUtils()
         return await LibCalUtils.get_library_hours(libcal_utils)
+    
+    async def is_open_now(self, library_hours):
+        libcal_utils = LibCalUtils()
+        return await libcal_utils.is_open_now(library_hours)
