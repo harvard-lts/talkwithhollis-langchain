@@ -8,13 +8,14 @@ ENV GROUP_ID_NAME=appcommon
 COPY ./requirements.txt /tmp/requirements.txt
 
 RUN pip install --no-cache-dir --upgrade -r /tmp/requirements.txt && \
-  useradd --create-home -u ${APP_ID_NUMBER} ${APP_ID_NAME} && \
-  mkdir -p /home/${APP_ID_NAME}/data
+  useradd --create-home -u ${APP_ID_NUMBER} ${APP_ID_NAME}
 
 COPY --chown=${APP_ID_NAME} ./ /home/${APP_ID_NAME}
 
 WORKDIR /home/${APP_ID_NAME}
 
 USER ${APP_ID_NAME}
+
+RUN mkdir -p /home/${APP_ID_NAME}/data
 
 CMD ["uvicorn", "app.main:app", "--proxy-headers", "--host", "0.0.0.0", "--port", "80"]
