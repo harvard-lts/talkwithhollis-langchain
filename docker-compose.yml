@@ -4,7 +4,7 @@ version: '3.7'
 services:
 
   talkwithhollis-api:
-    image: artifactory.huit.harvard.edu/lts/talkwithhollis-api:latest
+    image: artifactory.huit.harvard.edu/lts/talkwithhollis-api-dev:latest
     build:
       context: .
       dockerfile: Dockerfile
