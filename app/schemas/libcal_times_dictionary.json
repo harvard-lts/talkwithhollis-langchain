@@ -1,11 +1,18 @@
 {
 	"exact_matches": [
-		"Open 24 Hours"
+		{
+			"match_string": "Open 24 Hours",
+			"is_open": true
+		},
+		{
+			"match_string": "Closed",
+			"is_open": false
+		}
 	],
-	"regexes": [
+	"regex_matches": [
 		{
 			"example": "Open from 10:00am to 4:00pm",
-			"regular_expression": "((1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm]))",
+			"regex_match": "((1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm]))",
 			"intended_results": 2
 		}
 	]
