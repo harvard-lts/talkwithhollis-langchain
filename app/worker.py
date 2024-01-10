@@ -139,16 +139,25 @@ class LLMWorker():
             for library_code in reduced_results:
                 for library in json.loads(libraries):
                     if library["Library Code"] == library_code:
-                        response += library["Display name in Primo API"] + "\n"
+                        response += "<span class='library_title'>" + library["Display name in Primo API"] + "</span>" + "\n"
                         break
 
                 if library_hours is not None and library_code in library_hours:
-                        response += library_hours[library_code] + "\n"
+                        response += "<span class='library_hours'>" + library_hours[library_code] + "</span>"
+                        open = await self.is_open_now(library_hours[library_code])
+                        if open:
+                            response += " <span class='open_now'>(OPEN NOW)</span>"
+                        response += "\n"
                 else:
                     response += "Operating Hours unknown, please check library website\n"
 
                 counter = 1
+                start_book_list = True
                 for book in reduced_results[library_code]:
+                    if start_book_list:
+                        response += "<span class='book_list'>"
+                        start_book_list = False
+
                     response += str(counter) + ". " + book.get('title')
                     if 'author' in book:
                         response += " / " + ', '.join(book.get('author'))
@@ -165,7 +174,7 @@ class LLMWorker():
                         response += "   " + callNumber
                     response += "\n"
                     counter += 1
-                response += "\n"
+                response += "</span>\n"
             # TODO: Create a hollis link for the search results (instead of a link to the primo api)
             # TODO: Display the link as clickable in the react app (it just displays the plain text right now)
             response += "<a href='{}' target='_blank'>Click here to view the full search results in HOLLIS</a>".format(self.hollis_api_request)
@@ -186,3 +195,7 @@ class LLMWorker():
     async def get_library_hours(self):
         libcal_utils = LibCalUtils()
         return await LibCalUtils.get_library_hours(libcal_utils)
+    
+    async def is_open_now(self, library_hours):
+        libcal_utils = LibCalUtils()
+        return await libcal_utils.is_open_now(library_hours)

@@ -1,10 +1,12 @@
-import os
+import os, re
 import asyncio
 from datetime import datetime
 from app.config import settings
 import httpx
 import json
 
+import pytz
+from pytz import timezone
 from .file import FileUtils
 
 class LibCalUtils():
@@ -94,3 +96,39 @@ class LibCalUtils():
             response = await client.post(settings.libcal_token_api_route, content=post_body, headers={"Content-Type": "application/json"})
         access_token = response.json().get('access_token')
         return access_token
+    
+    async def is_open_now(self, library_hours):
+        # Takes a library hours string and returns True if the library is currently open, False otherwise
+        # We can assume that all times and libraries use EST, TODO: we currently do not account for users in different timezones
+        libcal_times_dictionary = await self.file_utils.open_json_file('app/schemas/libcal_times_dictionary.json')
+        # First check for exact matches
+        for match_object in libcal_times_dictionary['exact_matches']:
+            if library_hours == match_object['match_string']:
+                return match_object['is_open']
+        
+        # Then check for regex matches that pull out library hours from the hours string
+        for regex_object in libcal_times_dictionary['regex_matches']:
+            regex_match = regex_object['regex_match']
+            results = re.findall(regex_match, library_hours)
+            library_hours = []
+            for result in results:
+                time = result[0][:-2]
+                period = result[0][-2:]
+                hours, minutes = time.split(":")
+                current_date = datetime.now().date()
+
+                eastern = timezone('US/Eastern')
+
+                if period == "am":
+                    datetime_obj = datetime(current_date.year, current_date.month, current_date.day, int(hours), int(minutes)).replace(tzinfo=eastern)
+                else:
+                    datetime_obj = datetime(current_date.year, current_date.month, current_date.day, int(hours)%12 + 12, int(minutes)).replace(tzinfo=eastern)
+
+                library_hours.append(datetime_obj)
+
+        now = datetime.now(tz=pytz.timezone('US/Eastern'))
+
+        if len(library_hours) == 2 and library_hours[0] < now and library_hours[1] > now:
+            return True
+
+        return False
