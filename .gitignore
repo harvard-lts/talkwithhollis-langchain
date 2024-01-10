@@ -1,5 +1,5 @@
 # Secrets
-*.env
+.env
 
 # Data directory
 data/*
