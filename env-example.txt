@@ -17,7 +17,7 @@ AWS_ACCESS_KEY_ID=key
 AWS_SECRET_ACCESS_KEY=key
 AWS_DEFAULT_REGION=us-east-1
 # Profile name for AWS credentials (required if using credentials file)
-#AWS_BEDROCK_PROFILE_NAME=talkwithhollis
+#AWS_BEDROCK_PROFILE_NAME=example
 AWS_BEDROCK_MODEL_ID=anthropic.claude-instant-v1
 
 # If libcal library hours have not been refreshed in this many seconds, refresh them. Recommended 1 day. (1 day = 86400 seconds)
@@ -27,4 +27,4 @@ LIBCAL_CLIENT_SECRET=client_secret
 LIBCAL_TOKEN_API_ROUTE=libcal_token_api_route
 LIBCAL_HOURS_API_ROUTE=libcal_hours_api_route
 
-HOLLIS_API_HOST=https://qa.hollis.harvard.edu/primo-explore/search
+HOLLIS_API_HOST=https://example.hollis.com/search
