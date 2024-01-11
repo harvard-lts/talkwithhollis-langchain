@@ -139,7 +139,7 @@ class LLMWorker():
             for library_code in reduced_results:
                 for library in json.loads(libraries):
                     if library["Library Code"] == library_code:
-                        response += "<span class='library_title'>" + library["Display name in Primo API"] + "</span>" + "\n"
+                        response += "<span class='library_name'>" + library["Display name in Primo API"] + "</span>" + "\n"
                         break
 
                 if library_hours is not None and library_code in library_hours:
@@ -147,7 +147,7 @@ class LLMWorker():
                         open = await self.is_open_now(library_hours[library_code])
                         if open:
                             response += " <span class='open_now'>(OPEN NOW)</span>"
-                        response += "\n"
+                        response += "\n\n"
                 else:
                     response += "Operating Hours unknown, please check library website\n"
 
