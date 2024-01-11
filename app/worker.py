@@ -146,7 +146,7 @@ class LLMWorker():
                         response += "<span class='library_hours'>" + library_hours[library_code] + "</span>"
                         open = await self.is_open_now(library_hours[library_code])
                         if open:
-                            response += " <span class='open_now'>(OPEN NOW)</span>"
+                            response += "<span class='open_now'>(OPEN NOW)</span>"
                         response += "\n\n"
                 else:
                     response += "Operating Hours unknown, please check library website\n"
