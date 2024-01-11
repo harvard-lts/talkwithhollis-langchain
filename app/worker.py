@@ -134,7 +134,7 @@ class LLMWorker():
         library_hours = await self.get_library_hours()
         if settings.llm_do_response_formatting == 'false':
             # Generate Python response string
-            response = " Here are some books I found for you:\n\n\n"
+            response = "Here are some books I found for you:\n\n\n"
             libraries = self.file_utils.convert_libraries_csv_to_json()
             for library_code in reduced_results:
                 for library in json.loads(libraries):
@@ -146,7 +146,7 @@ class LLMWorker():
                         response += "<span class='library_hours'>" + library_hours[library_code] + "</span>"
                         open = await self.is_open_now(library_hours[library_code])
                         if open:
-                            response += " <span class='open_now'>(OPEN NOW)</span>"
+                            response += "<span class='open_now'>(OPEN NOW)</span>"
                         response += "\n\n"
                 else:
                     response += "Operating Hours unknown, please check library website\n"
@@ -155,9 +155,10 @@ class LLMWorker():
                 start_book_list = True
                 for book in reduced_results[library_code]:
                     if start_book_list:
-                        response += "<span class='book_list'>"
+                        response += "<div class='book_list'>"
                         start_book_list = False
 
+                    response += "<span class='book_item'>"
                     response += str(counter) + ". " + book.get('title')
                     if 'author' in book:
                         response += " / " + ', '.join(book.get('author'))
@@ -172,9 +173,10 @@ class LLMWorker():
                         if callNumber and callNumber[len(callNumber) - 1] == ')':
                             callNumber = callNumber[:-1]
                         response += "   " + callNumber
+                    response += "</span>"
                     response += "\n"
                     counter += 1
-                response += "</span>\n"
+                response += "</div>\n"
             # TODO: Create a hollis link for the search results (instead of a link to the primo api)
             # TODO: Display the link as clickable in the react app (it just displays the plain text right now)
             response += "<a href='{}' target='_blank'>Click here to view the full search results in HOLLIS</a>".format(self.hollis_api_request)
