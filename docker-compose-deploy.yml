@@ -1,6 +1,5 @@
 version: '3.7'
 services:
-
   twhapi:
     container_name: twhapi
     image: 'artifactory.huit.harvard.edu/lts/talkwithhollis-api-qa:latest'
@@ -24,6 +23,8 @@ services:
   twhui:
     container_name: twhui
     image: 'artifactory.huit.harvard.edu/lts/talkwithhollis-ui-qa:latest'
+    env_file:
+      - "/docker/twhadm/config/ui.env"
     ports:
       - "23050:3000"
     deploy:
