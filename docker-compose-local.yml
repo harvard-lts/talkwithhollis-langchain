@@ -12,7 +12,7 @@ services:
       # Uncomment to use a profile defined in ~/.aws/credentials
       #- $HOME/.aws/credentials:/home/twhadm/.aws/credentials:ro
     ports:
-      - "80:80"
+      - "23051:23051"
     networks:
       - "twhnet"
 networks:
