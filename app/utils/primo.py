@@ -57,9 +57,9 @@ class PrimoUtils():
                 except:
                     title = result['pnx']['addata']['jtitle']
 
-                permalink = result.get('pnx', {}).get('display', {}).get('lds03', {})
-                if permalink and len(permalink) > 0:
-                    hollis_link = re.search(r'href=\"(.*?)\"', permalink[0]).group(1)
+                recordId = result.get('pnx', {}).get('control', {}).get('recordid', {})[0]
+                if recordId:
+                    hollis_link = settings.direct_link_base_url + recordId
                     title = "<a href='{}' target='_blank'>{}</a>".format(hollis_link, ', '.join(title))
 
                 try:

@@ -19,6 +19,7 @@ class Settings(BaseSettings):
     libcal_token_api_route: str
     libcal_hours_api_route: str
     hollis_api_host: str = "https://qa.hollis.harvard.edu/primo-explore/search"
+    direct_link_base_url: str
 
     if os.environ.get('ENVIRONMENT') == 'test':
         model_config = SettingsConfigDict(env_file = 'test.env')

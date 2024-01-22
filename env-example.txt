@@ -28,3 +28,4 @@ LIBCAL_TOKEN_API_ROUTE=libcal_token_api_route
 LIBCAL_HOURS_API_ROUTE=libcal_hours_api_route
 
 HOLLIS_API_HOST=https://example.hollis.com/search
+DIRECT_LINK_BASE_URL=https://example.hollis.com/permalink/
