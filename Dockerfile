@@ -1,6 +1,6 @@
 FROM python:3.9
 
-ENV APP_ID_NUMBER=55008
+ENV APP_ID_NUMBER=55028
 ENV APP_ID_NAME=twhadm
 ENV GROUP_ID_NUMBER=1636
 ENV GROUP_ID_NAME=appcommon
@@ -16,4 +16,4 @@ WORKDIR /home/${APP_ID_NAME}
 
 USER ${APP_ID_NAME}
 
-CMD ["uvicorn", "app.main:app", "--proxy-headers", "--host", "0.0.0.0", "--port", "80"]
+CMD ["uvicorn", "app.main:app", "--proxy-headers", "--host", "0.0.0.0", "--port", "23051"]

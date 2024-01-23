@@ -109,4 +109,3 @@ class PrimoUtils():
                 break
 
         return filtered_results
-

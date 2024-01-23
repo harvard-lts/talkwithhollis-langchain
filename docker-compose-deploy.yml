@@ -1,0 +1,43 @@
+version: '3.7'
+services:
+
+  twhapi:
+    container_name: twhapi
+    image: 'artifactory.huit.harvard.edu/lts/talkwithhollis-api-qa:latest'
+    env_file:
+      - "/docker/twhadm/config/api.env"
+    ports:
+      - "23051:23051"
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 512M
+      mode: replicated
+      replicas: 2
+      update_config:
+        parallelism: 1
+        delay: 10s
+        failure_action: rollback
+      restart_policy:
+        condition: any
+  twhui:
+    container_name: twhui
+    image: 'artifactory.huit.harvard.edu/lts/talkwithhollis-ui-qa:latest'
+    env_file:
+      - "/docker/twhadm/config/ui.env"
+    ports:
+      - "23050:3000"
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 512M
+      mode: replicated
+      replicas: 2
+      update_config:
+        parallelism: 1
+        delay: 10s
+        failure_action: rollback
+      restart_policy:
+        condition: any
