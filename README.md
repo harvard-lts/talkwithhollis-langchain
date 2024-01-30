@@ -3,6 +3,10 @@ Talk with HOLLIS: Intelligent semantic book search using Generative AI
 
 # Local development environment
 
+## Configuration file
+
+The quickest way to get started with the local environment setup is to get an existing `.env` file and copy it to the root of the project. Alternatively, copy the env-example.txt file, rename it to `.env`, and update the values as necessary.
+
 ## Docker compose local
 
 Build image with no cache and run containers
