@@ -1,0 +1,41 @@
+name: SAST Scan Python
+
+# This workflow is triggered whenever a new PR is created on the main branch or there a push to the branch
+# This is a SAST workflow for PYTHON projects
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+      -
+jobs:
+  sast_scan:
+    strategy:
+      matrix:
+        version: [ 3.8 , 3.9, 3.10 ]
+    name: Run Bandit Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.1.1
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Install Bandit
+        run: pip install bandit
+
+      - name: Run Bandit Scan
+        run: bandit -ll -ii -r . -f json -o bandit-report.json
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4.3.1
+        if: always()
+        with:
+          name: bandit-findings
+          path: bandit-report.json
