@@ -1,5 +1,5 @@
 #!groovy
-@Library('lts-basic-pipeline@katie-branch') _
+@Library('lts-basic-pipeline@build-only') _
 
 // default values: slackChannel = "lts-jenkins-notifications"
 
