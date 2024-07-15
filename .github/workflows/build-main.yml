@@ -1,0 +1,11 @@
+name: LTS Build Dev/QA Containers
+on:
+  push: 
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-publish-dev-qa:
+    uses: harvard-lts/ga-reusable-workflows/.github/workflows/BuildMain.yml@1.0
+    secrets: inherit
