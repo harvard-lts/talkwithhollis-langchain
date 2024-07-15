@@ -1,0 +1,11 @@
+name: LTS Build Final Production Container
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  publish-prod-container:
+    uses: harvard-lts/ga-reusable-workflows/.github/workflows/BuildProd.yml@1.0
+    secrets: inherit
